@@ -74,14 +74,13 @@ def get_video_id_from_url(url):
 
 def get_video_title(video_url):
     try:
-        response = requests.get(video_url)
-        if response.ok:
-            title_match = re.search(r'"title":"([^"]+)"', response.text)
-            if title_match:
-                return re.sub(r'[\\/*?:"<>|]', '', title_match.group(1))
-    except Exception:
-        pass
-    return "unknown_title"
+        video_id = get_video_id_from_url(video_url)
+        transcript = YouTubeTranscriptApi.get_transcript(video_id)
+        video_info = YouTubeTranscriptApi.get_transcript(video_id, video_id=video_id)
+        return sanitize_filename(video_info['title'])
+    except Exception as e:
+        st.error(f"Error fetching video title: {str(e)}")
+        return "unknown_title"
 
 def fetch_transcript(video_url):
     video_id = get_video_id_from_url(video_url)
