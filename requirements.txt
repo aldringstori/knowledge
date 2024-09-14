@@ -1,4 +1,5 @@
 streamlit
+selenium
 youtube_transcript_api
 pytube
 PyPDF2
