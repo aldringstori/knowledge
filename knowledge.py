@@ -4,7 +4,7 @@ import re
 import json
 import logging
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
-from pytube import Playlist
+from pytube import Playlist, YouTube  # Import YouTube for fetching video titles
 import PyPDF2
 from docx import Document
 from googletrans import Translator
@@ -14,6 +14,7 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.common.by import By
 import time
 import hashlib
+import pandas as pd  # Import pandas for data handling
 
 # Configure logging to an external file 'knowledge.log'
 logging.basicConfig(
@@ -64,11 +65,8 @@ def get_video_id_from_url(url):
 
 def get_video_title(video_url):
     try:
-        video_id = get_video_id_from_url(video_url)
-        if video_id is None:
-            return "unknown_title"
-        transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
-        video_title = transcript_list._video_title  # Access the protected member to get the title
+        yt = YouTube(video_url)
+        video_title = yt.title
         return sanitize_filename(video_title)
     except Exception as e:
         logger.error(f"Error fetching video title: {str(e)}")
@@ -129,15 +127,17 @@ def get_playlist_videos(playlist_url):
         return []
 
 def get_channel_name_from_url(channel_url):
-    parts = channel_url.split('@')
-    if len(parts) > 1:
-        channel_name_part = parts[-1].split('/', 1)[0]
-        logger.info(f"Extracted channel name from URL: {channel_name_part}")
-        return channel_name_part
-    return None
+    match = re.search(r'youtube\.com/[@]?([^/]+)/?', channel_url)
+    if match:
+        channel_name = match.group(1)
+        logger.info(f"Extracted channel name from URL: {channel_name}")
+        return channel_name
+    else:
+        logger.error("Could not extract channel name from URL.")
+        return None
 
 def get_channel_name_from_shorts_url(shorts_url):
-    match = re.search(r"youtube\.com/[@]([^/]+)/shorts", shorts_url)
+    match = re.search(r"youtube\.com/[@]?([^/]+)/shorts", shorts_url)
     if match:
         return match.group(1)
     else:
@@ -145,7 +145,7 @@ def get_channel_name_from_shorts_url(shorts_url):
 
 def fetch_shorts_transcript(shorts_url):
     shorts_url = shorts_url.replace("/shorts/", "/watch?v=")
-    match = re.search(r"v=([a-zA-Z0-9_-]+)", shorts_url)
+    match = re.search(r"v=([a-zA-Z0-9_-]{11})", shorts_url)
     if match is None:
         return None, "Could not find a valid video ID in the URL."
 
@@ -332,28 +332,66 @@ def main():
     with tab3:
         st.header("Channel Videos Transcripts")
         channel_url = st.text_input("Enter YouTube Channel URL:")
-        if st.button("Download All Channel Video Transcripts"):
+        if st.button("Fetch Channel Videos"):
             if channel_url:
-                with st.spinner("Downloading transcripts from channel..."):
-                    logger.info(f"Downloading transcripts from channel URL: {channel_url}")
-                    videos_data = fetch_videos_from_channel_selenium(channel_url)
-                    video_urls = [video[0] for video in videos_data]
-                    if video_urls:
-                        progress_bar = st.progress(0)
-                        for i, video_url in enumerate(video_urls):
-                            transcript = fetch_transcript(video_url)
-                            if transcript:
-                                filename = get_video_title(video_url)
-                                save_transcript_to_text(transcript, filename, config['download_folder'])
-                            progress_bar.progress((i + 1) / len(video_urls))
-                        st.success(f"All available video transcripts downloaded to {config['download_folder']}")
-                        logger.info(f"All available video transcripts downloaded to {config['download_folder']}")
+                with st.spinner("Fetching videos from channel..."):
+                    logger.info(f"Fetching videos from channel URL: {channel_url}")
+                    channel_name = get_channel_name_from_url(channel_url)
+                    if not channel_name:
+                        st.error("Could not extract channel name from URL.")
+                        logger.error("Could not extract channel name from URL.")
                     else:
-                        st.warning("No videos found or unable to process the channel URL.")
-                        logger.warning("No videos found or unable to process the channel URL.")
+                        folder_name = os.path.join(config['download_folder'], channel_name)
+                        create_folder(folder_name)
+                        videos_data = fetch_videos_from_channel_selenium(channel_url)
+                        if videos_data:
+                            # Prepare the table data
+                            video_list = []
+                            for idx, (video_url, video_title) in enumerate(videos_data, start=1):
+                                video_id = get_video_id_from_url(video_url)
+                                video_list.append({
+                                    'ID': idx,
+                                    'Video Title': video_title,
+                                    'Video ID': video_id,
+                                    'Downloaded': ''
+                                })
+                            # Store in session state
+                            st.session_state['video_list'] = video_list
+                            st.session_state['videos_data'] = videos_data
+                            st.session_state['folder_name'] = folder_name
+                        else:
+                            st.warning("No videos found or unable to process the channel URL.")
+                            logger.warning("No videos found or unable to process the channel URL.")
             else:
                 st.warning("Please enter a valid YouTube Channel URL.")
                 logger.warning("No YouTube Channel URL entered.")
+
+        # Display the table if video_list exists
+        if 'video_list' in st.session_state:
+            video_list = st.session_state['video_list']
+            df = pd.DataFrame(video_list)
+            table_placeholder = st.empty()
+            table_placeholder.table(df)
+
+            if st.button("Download All Transcripts"):
+                videos_data = st.session_state['videos_data']
+                folder_name = st.session_state['folder_name']
+                progress_bar = st.progress(0)
+                for i, video in enumerate(video_list):
+                    video_url = videos_data[i][0]
+                    transcript = fetch_transcript(video_url)
+                    if transcript:
+                        filename = get_video_title(video_url)
+                        save_transcript_to_text(transcript, filename, folder_name)
+                        video['Downloaded'] = '✅'
+                    else:
+                        video['Downloaded'] = '❌'
+                    # Update the table
+                    df = pd.DataFrame(video_list)
+                    table_placeholder.table(df)
+                    progress_bar.progress((i + 1) / len(video_list))
+                st.success(f"All available video transcripts downloaded to {folder_name}")
+                logger.info(f"All available video transcripts downloaded to {folder_name}")
 
     with tab4:
         st.header("Channel Shorts Transcripts")
@@ -376,15 +414,20 @@ def main():
                     logger.info(f"Downloading transcripts from playlist URL: {playlist_url}")
                     video_urls = get_playlist_videos(playlist_url)
                     if video_urls:
+                        # Get playlist name
+                        playlist = Playlist(playlist_url)
+                        playlist_name = sanitize_filename(playlist.title)
+                        folder_name = os.path.join(config['download_folder'], playlist_name)
+                        create_folder(folder_name)
                         progress_bar = st.progress(0)
                         for i, video_url in enumerate(video_urls):
                             transcript = fetch_transcript(video_url)
                             if transcript:
                                 filename = get_video_title(video_url)
-                                save_transcript_to_text(transcript, filename, config['download_folder'])
+                                save_transcript_to_text(transcript, filename, folder_name)
                             progress_bar.progress((i + 1) / len(video_urls))
-                        st.success(f"All available playlist transcripts downloaded to {config['download_folder']}")
-                        logger.info(f"All available playlist transcripts downloaded to {config['download_folder']}")
+                        st.success(f"All available playlist transcripts downloaded to {folder_name}")
+                        logger.info(f"All available playlist transcripts downloaded to {folder_name}")
                     else:
                         st.warning("No videos found or unable to process the playlist URL.")
                         logger.warning("No videos found or unable to process the playlist URL.")
