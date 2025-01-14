@@ -6,9 +6,10 @@ from qdrant_client.http import models
 from utils.logging_setup import logger
 from transformers import GPT2Tokenizer
 from models.nanogpt import GPT, GPTConfig
-from typing import List, Dict
+from typing import List, Dict, Optional
 import glob
 import traceback
+import torch.nn.functional as F
 
 
 def setup_qdrant(config):
@@ -16,23 +17,28 @@ def setup_qdrant(config):
     try:
         qdrant_path = config['qdrant_path']
 
+        # Ensure the directory exists with proper permissions
+        os.makedirs(qdrant_path, exist_ok=True)
+
         # First try to remove the lock file if it exists
         lock_file = os.path.join(qdrant_path, '.lock')
         if os.path.exists(lock_file):
             os.remove(lock_file)
             logger.info("Removed existing Qdrant lock file")
 
-        # Ensure directory exists with correct permissions
-        os.makedirs(qdrant_path, exist_ok=True)
-        os.chmod(qdrant_path, 0o755)  # rwxr-xr-x permissions
+        # Set permissions for the qdrant directory
+        os.chmod(qdrant_path, 0o777)  # Full permissions
 
-        # Ensure all files in the directory are writable
+        # Set permissions for all files and subdirectories
         for root, dirs, files in os.walk(qdrant_path):
             for d in dirs:
-                os.chmod(os.path.join(root, d), 0o755)
+                dirpath = os.path.join(root, d)
+                os.chmod(dirpath, 0o777)
             for f in files:
-                os.chmod(os.path.join(root, f), 0o644)  # rw-r--r-- permissions
+                filepath = os.path.join(root, f)
+                os.chmod(filepath, 0o666)
 
+        # Initialize client
         client = QdrantClient(path=qdrant_path)
 
         # Create collection if it doesn't exist
@@ -43,11 +49,22 @@ def setup_qdrant(config):
                 distance=models.Distance.COSINE
             )
         )
+
+        # Set permissions for any newly created files
+        for root, dirs, files in os.walk(qdrant_path):
+            for d in dirs:
+                dirpath = os.path.join(root, d)
+                os.chmod(dirpath, 0o777)
+            for f in files:
+                filepath = os.path.join(root, f)
+                os.chmod(filepath, 0o666)
+
         return client
     except Exception as e:
         logger.error(f"Error setting up Qdrant: {str(e)}")
         logger.error(traceback.format_exc())
         return None
+
 
 def load_model(config):
     """Load or initialize nanoGPT model"""
@@ -78,6 +95,7 @@ def load_model(config):
         logger.error(traceback.format_exc())
         return None
 
+
 def setup_tokenizer():
     """Initialize and configure the tokenizer"""
     try:
@@ -91,12 +109,37 @@ def setup_tokenizer():
         logger.error(traceback.format_exc())
         return None
 
-def ingest_transcripts(client: QdrantClient, config: Dict):
+
+def get_embeddings(tokenizer, text, model):
+    """Get embeddings using the GPT2 model"""
+    with torch.no_grad():
+        inputs = tokenizer(
+            text,
+            return_tensors='pt',
+            padding=True,
+            truncation=True,
+            max_length=512
+        )
+        outputs = model.transformer.wte(inputs.input_ids)
+        # Use mean pooling of the last hidden states
+        embeddings = torch.mean(outputs, dim=1)
+        # Normalize embeddings
+        embeddings = embeddings / embeddings.norm(dim=1, keepdim=True)
+    return embeddings[0]
+
+
+def ingest_transcripts(client: QdrantClient, config: Dict, model=None):
     """Ingest transcripts into Qdrant"""
     try:
         if client is None:
             logger.error("Qdrant client is not initialized")
             return False
+
+        if model is None:
+            model = load_model(config)
+            if model is None:
+                logger.error("Failed to load model for embeddings")
+                return False
 
         transcript_files = glob.glob(os.path.join(config['download_folder'], '**/*.txt'), recursive=True)
         logger.info(f"Found {len(transcript_files)} transcript files to process")
@@ -119,19 +162,7 @@ def ingest_transcripts(client: QdrantClient, config: Dict):
                 for i, chunk in enumerate(chunks):
                     try:
                         chunk_text = tokenizer.decode(chunk)
-
-                        with torch.no_grad():
-                            inputs = tokenizer(
-                                chunk_text,
-                                return_tensors='pt',
-                                padding=True,
-                                truncation=True,
-                                max_length=512
-                            )
-                            # Convert to embeddings using PyTorch operations only
-                            embeddings = inputs.input_ids.float().mean(dim=1)
-                            # Convert to list directly from PyTorch tensor
-                            embedding_list = embeddings.tolist()
+                        embeddings = get_embeddings(tokenizer, chunk_text, model)
 
                         point_id = hash(f"{file_path}_{i}")
                         client.upsert(
@@ -140,7 +171,7 @@ def ingest_transcripts(client: QdrantClient, config: Dict):
                                 models.PointStruct(
                                     id=point_id,
                                     payload={"text": chunk_text, "source": file_path},
-                                    vector=embedding_list
+                                    vector=embeddings.tolist()
                                 )
                             ]
                         )
@@ -165,6 +196,7 @@ def ingest_transcripts(client: QdrantClient, config: Dict):
         logger.error(traceback.format_exc())
         return False
 
+
 def generate_response(model, tokenizer, prompt: str, client: QdrantClient) -> str:
     """Generate response using nanoGPT and context from Qdrant"""
     try:
@@ -173,14 +205,7 @@ def generate_response(model, tokenizer, prompt: str, client: QdrantClient) -> st
             return "I apologize, but the system is not properly initialized."
 
         # Get relevant context from Qdrant
-        with torch.no_grad():
-            inputs = tokenizer(
-                prompt,
-                return_tensors='pt',
-                padding=True,
-                truncation=True
-            )
-            prompt_embedding = torch.mean(inputs.input_ids.float(), dim=1)
+        prompt_embedding = get_embeddings(tokenizer, prompt, model)
 
         search_result = client.search(
             collection_name="transcripts",
@@ -188,27 +213,40 @@ def generate_response(model, tokenizer, prompt: str, client: QdrantClient) -> st
             limit=5
         )
 
-        # Combine context with prompt
-        context = " ".join([hit.payload['text'] for hit in search_result])
-        full_prompt = f"{context}\n\nQuestion: {prompt}\nAnswer:"
+        # Combine context with prompt in a more structured way
+        context_texts = [hit.payload['text'] for hit in search_result]
+        formatted_context = "\n\n".join(context_texts)
 
-        # Generate response
-        input_ids = tokenizer.encode(full_prompt, return_tensors='pt')
+        # Create a more structured prompt
+        full_prompt = f"""Based on the following information:
+
+{formatted_context}
+
+Question: {prompt}
+Answer: Let me provide a clear and helpful response based on the available information."""
+
+        # Generate response with better parameters
+        input_ids = tokenizer(full_prompt, return_tensors='pt', truncation=True, max_length=1024).input_ids
         with torch.no_grad():
             output_ids = model.generate(
                 input_ids,
-                max_new_tokens=100,
-                temperature=0.7,
+                max_new_tokens=30,
+                temperature=0.1,
                 top_k=50
             )
 
         response = tokenizer.decode(output_ids[0], skip_special_tokens=True)
-        return response.split("Answer:")[-1].strip()
+        # Extract just the answer part
+        if "Answer:" in response:
+            response = response.split("Answer:")[-1].strip()
+
+        return response
 
     except Exception as e:
         logger.error(f"Error generating response: {str(e)}")
         logger.error(traceback.format_exc())
         return "I apologize, but I encountered an error while generating the response."
+
 
 def render(config):
     """Render the chat interface"""
@@ -225,7 +263,7 @@ def render(config):
     # Ingest button
     if st.button("Ingest/Update Transcripts"):
         with st.spinner("Ingesting transcripts..."):
-            success = ingest_transcripts(st.session_state.qdrant_client, config)
+            success = ingest_transcripts(st.session_state.qdrant_client, config, model=st.session_state.model)
             if success:
                 st.success("Successfully ingested transcripts!")
             else:
