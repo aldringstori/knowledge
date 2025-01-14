@@ -3,5 +3,9 @@ selenium
 youtube_transcript_api
 pytube
 PyPDF2
-python-docx
+pandas
 googletrans==3.1.0a0
+qdrant-client
+transformers
+torch
+numpy

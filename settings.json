@@ -1,1 +1,5 @@
-{"download_folder": "/run/user/1000/gvfs/google-drive:host=gmail.com,user=aldrinstori/0AB_1kQqAr9X0Uk9PVA/1llyhkRrTmDH3pJnimTwjqg65eh4DmN2B/1FycfjrM3ZNrJOICjMeMe-KC3uQlExksb$ "}
+{
+    "download_folder": "/srv/knowledge/transcriptions",
+    "model_path": "/srv/knowledge/models",
+    "qdrant_path": "/srv/knowledge/qdrant_data"
+}
