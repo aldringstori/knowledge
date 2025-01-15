@@ -1,64 +1,83 @@
 import streamlit as st
-import torch
 import os
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from utils.logging_setup import logger
-from transformers import GPT2Tokenizer
-from models.nanogpt import GPT, GPTConfig
 from typing import List, Dict, Optional
 import glob
 import traceback
-import torch.nn.functional as F
+from sentence_transformers import SentenceTransformer
+import requests
+import torch
+from torch import Tensor
+
+# Initialize models globally
+MINILM_MODEL = None
+
+
+def get_minilm_model():
+    global MINILM_MODEL
+    if MINILM_MODEL is None:
+        MINILM_MODEL = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+    return MINILM_MODEL
+
+
+def test_embeddings():
+    """Test function to verify embeddings are working"""
+    try:
+        logger.info("Starting embeddings test...")
+
+        # Test model loading
+        model = get_minilm_model()
+        logger.info("Model loaded successfully")
+
+        # Test basic encoding
+        test_text = "This is a test sentence."
+        logger.info(f"Testing encoding of: {test_text}")
+
+        embeddings = get_embeddings(test_text)
+        if embeddings is not None:
+            logger.info(f"Test embeddings length: {len(embeddings)}")
+            return True
+
+        logger.error("Embeddings are None")
+        return False
+
+    except Exception as e:
+        logger.error(f"Test embeddings failed: {str(e)}")
+        logger.error(traceback.format_exc())
+        return False
 
 
 def setup_qdrant(config):
     """Initialize Qdrant client"""
     try:
         qdrant_path = config['qdrant_path']
-
-        # Ensure the directory exists with proper permissions
         os.makedirs(qdrant_path, exist_ok=True)
 
-        # First try to remove the lock file if it exists
+        # Remove lock file if it exists
         lock_file = os.path.join(qdrant_path, '.lock')
         if os.path.exists(lock_file):
             os.remove(lock_file)
             logger.info("Removed existing Qdrant lock file")
 
-        # Set permissions for the qdrant directory
-        os.chmod(qdrant_path, 0o777)  # Full permissions
-
-        # Set permissions for all files and subdirectories
+        # Set permissions
+        os.chmod(qdrant_path, 0o777)
         for root, dirs, files in os.walk(qdrant_path):
             for d in dirs:
-                dirpath = os.path.join(root, d)
-                os.chmod(dirpath, 0o777)
+                os.chmod(os.path.join(root, d), 0o777)
             for f in files:
-                filepath = os.path.join(root, f)
-                os.chmod(filepath, 0o666)
+                os.chmod(os.path.join(root, f), 0o666)
 
-        # Initialize client
         client = QdrantClient(path=qdrant_path)
-
-        # Create collection if it doesn't exist
+        # Using MiniLM embedding size (384)
         client.recreate_collection(
             collection_name="transcripts",
             vectors_config=models.VectorParams(
-                size=768,  # Using GPT2 embedding size
+                size=384,
                 distance=models.Distance.COSINE
             )
         )
-
-        # Set permissions for any newly created files
-        for root, dirs, files in os.walk(qdrant_path):
-            for d in dirs:
-                dirpath = os.path.join(root, d)
-                os.chmod(dirpath, 0o777)
-            for f in files:
-                filepath = os.path.join(root, f)
-                os.chmod(filepath, 0o666)
-
         return client
     except Exception as e:
         logger.error(f"Error setting up Qdrant: {str(e)}")
@@ -66,87 +85,97 @@ def setup_qdrant(config):
         return None
 
 
-def load_model(config):
-    """Load or initialize nanoGPT model"""
+def get_embeddings(text: str) -> List[float]:
+    """Get embeddings using MiniLM model"""
     try:
-        model_config = GPTConfig(
-            block_size=1024,
-            vocab_size=50257,  # GPT-2 vocab size
-            n_layer=12,
-            n_head=12,
-            n_embd=768,
-            dropout=0.1,
-            bias=True
-        )
-        model = GPT(model_config)
+        model = get_minilm_model()
+        logger.info("Model loaded successfully")
 
-        # Load weights if they exist
-        model_path = os.path.join(config['model_path'], 'nanogpt_model.pt')
-        if os.path.exists(model_path):
-            model.load_state_dict(torch.load(model_path))
-            logger.info("Loaded existing model weights")
-        else:
-            logger.info("No existing model weights found. Using initialized model.")
+        # Generate embeddings
+        with torch.no_grad():
+            embeddings = model.encode(
+                text,
+                convert_to_tensor=True,
+                show_progress_bar=False
+            )
+            logger.info(f"Generated embeddings type: {type(embeddings)}")
 
-        model.eval()
-        return model
+            # Convert tensor to list directly without numpy
+            if isinstance(embeddings, torch.Tensor):
+                embeddings = embeddings.tolist()
+                logger.info("Converted tensor to list successfully")
+                return embeddings
+
+            # If already a list or numpy array
+            if hasattr(embeddings, 'tolist'):
+                return embeddings.tolist()
+
+            return list(embeddings)
+
     except Exception as e:
-        logger.error(f"Error loading model: {str(e)}")
+        logger.error(f"Error getting embeddings: {str(e)}")
         logger.error(traceback.format_exc())
         return None
 
 
-def setup_tokenizer():
-    """Initialize and configure the tokenizer"""
+def generate_with_phi(prompt: str, max_tokens: int = 150, temperature: float = 0.7) -> str:
+    """Generate response using Phi model"""
     try:
-        tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
-        # Ensure tokenizer has padding token
-        if tokenizer.pad_token is None:
-            tokenizer.pad_token = tokenizer.eos_token
-        return tokenizer
+        url = "http://localhost:11434/api/generate"
+        payload = {
+            "model": "phi3:3.8b",
+            "prompt": prompt,
+            "stream": False,
+            "options": {
+                "temperature": temperature,
+                "num_predict": max_tokens,
+                "num_ctx": 512,
+                "num_thread": 4
+            }
+        }
+
+        try:
+            response = requests.post(url, json=payload, timeout=90)  # Increased timeout
+
+            if response.status_code == 200:
+                result = response.json()
+                if 'response' in result:
+                    return result['response']
+                else:
+                    logger.error(f"Unexpected response format: {result}")
+                    return "Error: Unexpected response format from model."
+
+            # Handle specific error codes
+            error_messages = {
+                408: "Request timed out. Try a shorter prompt.",
+                500: "Server error. The model might be overloaded.",
+                503: "Service unavailable. Please try again in a moment."
+            }
+            error_msg = error_messages.get(response.status_code, f"Error {response.status_code} from API")
+            logger.error(f"{error_msg}: {response.text}")
+            return error_msg
+
+        except requests.exceptions.Timeout:
+            logger.error("Request timed out")
+            return "The request took too long to process. Please try again."
+        except requests.exceptions.ConnectionError:
+            logger.error("Connection failed")
+            return "Could not connect to the model service. Is it running?"
+
     except Exception as e:
-        logger.error(f"Error setting up tokenizer: {str(e)}")
+        logger.error(f"Error generating with Phi: {str(e)}")
         logger.error(traceback.format_exc())
-        return None
+        return f"Error: {str(e)}"
 
-
-def get_embeddings(tokenizer, text, model):
-    """Get embeddings using the GPT2 model"""
-    with torch.no_grad():
-        inputs = tokenizer(
-            text,
-            return_tensors='pt',
-            padding=True,
-            truncation=True,
-            max_length=512
-        )
-        outputs = model.transformer.wte(inputs.input_ids)
-        # Use mean pooling of the last hidden states
-        embeddings = torch.mean(outputs, dim=1)
-        # Normalize embeddings
-        embeddings = embeddings / embeddings.norm(dim=1, keepdim=True)
-    return embeddings[0]
-
-
-def ingest_transcripts(client: QdrantClient, config: Dict, model=None):
+def ingest_transcripts(client: QdrantClient, config: Dict) -> bool:
     """Ingest transcripts into Qdrant"""
     try:
         if client is None:
             logger.error("Qdrant client is not initialized")
             return False
 
-        if model is None:
-            model = load_model(config)
-            if model is None:
-                logger.error("Failed to load model for embeddings")
-                return False
-
         transcript_files = glob.glob(os.path.join(config['download_folder'], '**/*.txt'), recursive=True)
         logger.info(f"Found {len(transcript_files)} transcript files to process")
-
-        tokenizer = setup_tokenizer()
-        if tokenizer is None:
-            return False
 
         for file_path in transcript_files:
             try:
@@ -154,15 +183,23 @@ def ingest_transcripts(client: QdrantClient, config: Dict, model=None):
                 with open(file_path, 'r', encoding='utf-8') as f:
                     text = f.read()
 
-                tokens = tokenizer.encode(text)
-                chunk_size = 512
-                chunks = [tokens[i:i + chunk_size] for i in range(0, len(tokens), chunk_size)]
+                # Split text into chunks (300 words with 50 word overlap)
+                words = text.split()
+                chunk_size = 300
+                overlap = 50
+                chunks = []
+
+                for i in range(0, len(words), chunk_size - overlap):
+                    chunk = ' '.join(words[i:i + chunk_size])
+                    chunks.append(chunk)
+
                 logger.info(f"Split into {len(chunks)} chunks")
 
-                for i, chunk in enumerate(chunks):
+                for i, chunk_text in enumerate(chunks):
                     try:
-                        chunk_text = tokenizer.decode(chunk)
-                        embeddings = get_embeddings(tokenizer, chunk_text, model)
+                        embeddings = get_embeddings(chunk_text)
+                        if embeddings is None:
+                            continue
 
                         point_id = hash(f"{file_path}_{i}")
                         client.upsert(
@@ -171,7 +208,7 @@ def ingest_transcripts(client: QdrantClient, config: Dict, model=None):
                                 models.PointStruct(
                                     id=point_id,
                                     payload={"text": chunk_text, "source": file_path},
-                                    vector=embeddings.tolist()
+                                    vector=embeddings
                                 )
                             ]
                         )
@@ -197,48 +234,51 @@ def ingest_transcripts(client: QdrantClient, config: Dict, model=None):
         return False
 
 
-def generate_response(model, tokenizer, prompt: str, client: QdrantClient) -> str:
-    """Generate response using nanoGPT and context from Qdrant"""
+def generate_response(prompt: str, client: QdrantClient) -> str:
+    """Generate response using context from Qdrant and Phi model"""
     try:
-        if None in (model, tokenizer, client):
-            logger.error("One or more required components (model, tokenizer, client) not initialized")
-            return "I apologize, but the system is not properly initialized."
-
         # Get relevant context from Qdrant
-        prompt_embedding = get_embeddings(tokenizer, prompt, model)
+        prompt_embedding = get_embeddings(prompt)
+        if prompt_embedding is None:
+            return "Error: Could not generate embeddings"
 
         search_result = client.search(
             collection_name="transcripts",
-            query_vector=prompt_embedding.tolist(),
-            limit=5
+            query_vector=prompt_embedding,
+            limit=3  # Reduced for more focused context
         )
 
-        # Combine context with prompt in a more structured way
+        # Extract and format context
         context_texts = [hit.payload['text'] for hit in search_result]
-        formatted_context = "\n\n".join(context_texts)
+        sources = [os.path.basename(hit.payload['source']) for hit in search_result]
+        formatted_context = " ".join(context_texts)
 
-        # Create a more structured prompt
-        full_prompt = f"""Based on the following information:
-
-{formatted_context}
+        # Create prompt with source attribution
+        full_prompt = f"""Context: {formatted_context[:500]}...
 
 Question: {prompt}
-Answer: Let me provide a clear and helpful response based on the available information."""
 
-        # Generate response with better parameters
-        input_ids = tokenizer(full_prompt, return_tensors='pt', truncation=True, max_length=1024).input_ids
-        with torch.no_grad():
-            output_ids = model.generate(
-                input_ids,
-                max_new_tokens=30,
-                temperature=0.1,
-                top_k=50
-            )
+Please provide a brief answer based on the context. Sources: {', '.join(sources)}
 
-        response = tokenizer.decode(output_ids[0], skip_special_tokens=True)
-        # Extract just the answer part
+Answer: """
+
+        # Generate response with Phi
+        response = generate_with_phi(
+            full_prompt,
+            max_tokens=50,  # Shorter responses
+            temperature=0.1  # More focused
+        )
+
+        # Clean up response
+        if "Context:" in response:
+            response = response.split("Context:")[-1]
         if "Answer:" in response:
-            response = response.split("Answer:")[-1].strip()
+            response = response.split("Answer:")[-1]
+        if "Sources:" in response:
+            response = response.split("Sources:")[0]
+
+        # Add source attribution
+        response = response.strip() + f"\n\nSources: {', '.join(sources)}"
 
         return response
 
@@ -252,18 +292,29 @@ def render(config):
     """Render the chat interface"""
     st.header("Chat with Your Transcripts")
 
-    # Initialize components
+    # Test embeddings on startup
+    if 'embeddings_tested' not in st.session_state:
+        with st.spinner("Testing embeddings..."):
+            if test_embeddings():
+                st.session_state.embeddings_tested = True
+            else:
+                st.error("Error: Embeddings system not working properly")
+                return
+
+    # Settings sidebar
+    with st.sidebar:
+        st.subheader("Settings")
+        st.session_state.max_tokens = st.slider("Max Response Length", 20, 200, 50)
+        st.session_state.temperature = st.slider("Temperature", 0.1, 1.0, 0.1)
+
+    # Initialize Qdrant client
     if 'qdrant_client' not in st.session_state:
         st.session_state.qdrant_client = setup_qdrant(config)
-    if 'model' not in st.session_state:
-        st.session_state.model = load_model(config)
-    if 'tokenizer' not in st.session_state:
-        st.session_state.tokenizer = setup_tokenizer()
 
     # Ingest button
     if st.button("Ingest/Update Transcripts"):
         with st.spinner("Ingesting transcripts..."):
-            success = ingest_transcripts(st.session_state.qdrant_client, config, model=st.session_state.model)
+            success = ingest_transcripts(st.session_state.qdrant_client, config)
             if success:
                 st.success("Successfully ingested transcripts!")
             else:
@@ -287,11 +338,6 @@ def render(config):
 
         # Generate and display assistant response
         with st.chat_message("assistant"):
-            response = generate_response(
-                st.session_state.model,
-                st.session_state.tokenizer,
-                prompt,
-                st.session_state.qdrant_client
-            )
+            response = generate_response(prompt, st.session_state.qdrant_client)
             st.markdown(response)
             st.session_state.messages.append({"role": "assistant", "content": response})
