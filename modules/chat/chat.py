@@ -248,17 +248,25 @@ def generate_response(prompt: str, client: QdrantClient) -> str:
             limit=3  # Reduced for more focused context
         )
 
-        # Extract and format context
-        context_texts = [hit.payload['text'] for hit in search_result]
-        sources = [os.path.basename(hit.payload['source']) for hit in search_result]
+        # Extract and format context with better source handling
+        context_texts = []
+        sources = set()  # Use set to avoid duplicate sources
+        for hit in search_result:
+            context_texts.append(hit.payload['text'])
+            # Extract just the filename from the full path
+            source_file = os.path.basename(hit.payload['source'])
+            if source_file:
+                sources.add(source_file)
+
         formatted_context = " ".join(context_texts)
+        source_list = list(sources)  # Convert set back to list
 
         # Create prompt with source attribution
         full_prompt = f"""Context: {formatted_context[:500]}...
 
 Question: {prompt}
 
-Please provide a brief answer based on the context. Sources: {', '.join(sources)}
+Please provide a brief answer based on the context.
 
 Answer: """
 
@@ -277,8 +285,12 @@ Answer: """
         if "Sources:" in response:
             response = response.split("Sources:")[0]
 
-        # Add source attribution
-        response = response.strip() + f"\n\nSources: {', '.join(sources)}"
+        # Add source attribution with better formatting
+        response = response.strip()
+        if source_list:
+            response += f"\n\nSources: {', '.join(source_list)}"
+        else:
+            response += "\n\nNo source documents found."
 
         return response
 
@@ -286,7 +298,6 @@ Answer: """
         logger.error(f"Error generating response: {str(e)}")
         logger.error(traceback.format_exc())
         return "I apologize, but I encountered an error while generating the response."
-
 
 def render(config):
     """Render the chat interface"""
