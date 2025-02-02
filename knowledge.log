@@ -71,3 +71,1281 @@
 2025-01-15 22:50:07,247 - INFO - Converted tensor to list successfully
 2025-01-15 22:50:17,268 - INFO - Configuration saved successfully
 2025-01-15 22:50:17,270 - INFO - Configuration saved.
+2025-01-16 09:49:04,019 - INFO - Loading configuration from settings.json
+2025-01-16 09:49:04,401 - INFO - Starting embeddings test...
+2025-01-16 09:49:04,401 - INFO - Model loaded successfully
+2025-01-16 09:49:04,401 - INFO - Testing encoding of: This is a test sentence.
+2025-01-16 09:49:04,402 - INFO - Model loaded successfully
+2025-01-16 09:49:04,417 - INFO - Generated embeddings type: <class 'torch.Tensor'>
+2025-01-16 09:49:04,417 - INFO - Converted tensor to list successfully
+2025-01-16 09:49:04,418 - INFO - Test embeddings length: 384
+2025-01-16 09:49:04,421 - INFO - Removed existing Qdrant lock file
+2025-01-16 09:49:04,494 - INFO - Configuration saved successfully
+2025-01-16 09:49:04,495 - INFO - Configuration saved.
+2025-01-16 09:49:11,561 - INFO - Loading configuration from settings.json
+2025-01-16 09:49:11,929 - INFO - Model loaded successfully
+2025-01-16 09:49:11,950 - INFO - Generated embeddings type: <class 'torch.Tensor'>
+2025-01-16 09:49:11,950 - INFO - Converted tensor to list successfully
+2025-01-16 09:49:25,977 - INFO - Configuration saved successfully
+2025-01-16 09:49:25,980 - INFO - Configuration saved.
+2025-01-16 09:50:05,688 - INFO - Loading configuration from settings.json
+2025-01-16 09:50:06,079 - INFO - Starting embeddings test...
+2025-01-16 09:50:06,079 - INFO - Model loaded successfully
+2025-01-16 09:50:06,080 - INFO - Testing encoding of: This is a test sentence.
+2025-01-16 09:50:06,080 - INFO - Model loaded successfully
+2025-01-16 09:50:06,098 - INFO - Generated embeddings type: <class 'torch.Tensor'>
+2025-01-16 09:50:06,098 - INFO - Converted tensor to list successfully
+2025-01-16 09:50:06,098 - INFO - Test embeddings length: 384
+2025-01-16 09:50:06,101 - INFO - Removed existing Qdrant lock file
+2025-01-16 09:50:06,126 - INFO - Configuration saved successfully
+2025-01-16 09:50:06,128 - INFO - Configuration saved.
+2025-01-16 13:41:32,301 - INFO - Loading configuration from settings.json
+2025-01-16 13:41:32,904 - INFO - Starting embeddings test...
+2025-01-16 13:41:32,904 - INFO - Model loaded successfully
+2025-01-16 13:41:32,904 - INFO - Testing encoding of: This is a test sentence.
+2025-01-16 13:41:32,905 - INFO - Model loaded successfully
+2025-01-16 13:41:32,922 - INFO - Generated embeddings type: <class 'torch.Tensor'>
+2025-01-16 13:41:32,923 - INFO - Converted tensor to list successfully
+2025-01-16 13:41:32,923 - INFO - Test embeddings length: 384
+2025-01-16 13:41:32,927 - INFO - Removed existing Qdrant lock file
+2025-01-16 13:41:32,956 - INFO - Configuration saved successfully
+2025-01-16 13:41:32,957 - INFO - Configuration saved.
+2025-01-16 13:41:46,177 - INFO - Loading configuration from settings.json
+2025-01-16 13:41:46,508 - INFO - Configuration saved successfully
+2025-01-16 13:41:46,509 - INFO - Configuration saved.
+2025-01-16 13:41:47,958 - INFO - Loading configuration from settings.json
+2025-01-16 13:41:48,304 - INFO - Fetching videos from channel URL: https://www.youtube.com/@TiagoForte/videos
+2025-01-16 13:41:48,305 - INFO - Extracted channel name from URL: TiagoForte
+2025-01-16 13:41:48,310 - INFO - Creating folder: /srv/knowledge/transcriptions/TiagoForte
+2025-01-16 13:41:48,312 - INFO - Setting up Chrome WebDriver...
+2025-01-16 13:42:13,154 - INFO - Loading channel URL: https://www.youtube.com/@TiagoForte/videos
+2025-01-16 13:42:34,260 - INFO - Reached end of channel page
+2025-01-16 13:42:34,261 - INFO - Trying to find videos with selector: a#video-title-link
+2025-01-16 13:42:34,309 - INFO - Found 92 videos with selector a#video-title-link
+2025-01-16 13:42:34,347 - INFO - Added video: 7 Painful Lessons from 2024 (Tiago Forte’s Annual Review)
+2025-01-16 13:42:34,370 - INFO - Added video: How to Get into FLOW Every Time You Work
+2025-01-16 13:42:34,392 - INFO - Added video: Forget the Perfect Morning Routine How I Actually Get Things Done
+2025-01-16 13:42:34,413 - INFO - Added video: 7 Hacks to Crush Your To-Do List Every Day
+2025-01-16 13:42:34,435 - INFO - Added video: Is Your Digital Life a Mess Here’s How to Reset It in 4 Steps
+2025-01-16 13:42:34,459 - INFO - Added video: Why Community Is the Key to Your Success (in the Age of AI)
+2025-01-16 13:42:34,482 - INFO - Added video: Stop Switching Why New Apps Won’t Fix Your Productivity Problems
+2025-01-16 13:42:34,506 - INFO - Added video: How I Beat Email Overload – 6 Tips ft. Superhuman
+2025-01-16 13:42:34,530 - INFO - Added video: More Success Won’t Fulfill You (Here's What Will) – ft. Khe Hy
+2025-01-16 13:42:34,555 - INFO - Added video: 10 Tips for Boosting Team Productivity (GTD)
+2025-01-16 13:42:34,581 - INFO - Added video: 3-Step Public Speaking Formula for Anyone (ft. Michael Gendler of Ultraspeaking)
+2025-01-16 13:42:34,606 - INFO - Added video: My Wife Is Embarrassed by Me on YouTube!
+2025-01-16 13:42:34,632 - INFO - Added video: OneNote as a Second Brain (What You're Missing)
+2025-01-16 13:42:34,658 - INFO - Added video: 7 Beliefs That Keep You Stuck (And How to Change Them)
+2025-01-16 13:42:34,683 - INFO - Added video: Apple Vision Pro How Tech's Affecting Kids’ Development
+2025-01-16 13:42:34,709 - INFO - Added video: Life Update Moving to Mexico, Writing My Next Book & Hosting Our First Conference
+2025-01-16 13:42:34,734 - INFO - Added video: Simple Marketing for Smart People ft. Billy Broas
+2025-01-16 13:42:34,760 - INFO - Added video: Let Go of Control Empowering Employees and Kids (ft. Joe Hudson)
+2025-01-16 13:42:34,786 - INFO - Added video: How to Create More & Consume Less in 2025
+2025-01-16 13:42:34,811 - INFO - Added video: How to Balance Work and Family (ft. Matt Ragland)
+2025-01-16 13:42:34,837 - INFO - Added video: How I Created a Children’s Book With ChatGPT
+2025-01-16 13:42:34,862 - INFO - Added video: Your Second Brain on AI in Mem (with Srini Rao) - Part 2
+2025-01-16 13:42:34,888 - INFO - Added video: Intro to Notetaking in Mem (with Srini Rao) – Part 1
+2025-01-16 13:42:34,913 - INFO - Added video: ChatGPT Vision The Best Way to Transform Your Paper Notes Into Digital Text
+2025-01-16 13:42:34,939 - INFO - Added video: How to Use NotebookLM (Google's New AI Tool)
+2025-01-16 13:42:34,964 - INFO - Added video: 3 Principles for Business Growth 8-Figure CEO Coaches Tiago
+2025-01-16 13:42:34,990 - INFO - Added video: Is Obsidian the True Second Brain ft. Nick Milo
+2025-01-16 13:42:35,015 - INFO - Added video: What if Your Second Brain Could Talk (Testing Notion Q&A)
+2025-01-16 13:42:35,041 - INFO - Added video: Ali Abdaal Is Hard Work Overrated
+2025-01-16 13:42:35,066 - INFO - Added video: How to Apply What You Read in Books (Second Brain Case Study)
+2025-01-16 13:42:35,091 - INFO - Added video: Today's most valuable resource (it's not time or attention)
+2025-01-16 13:42:35,116 - INFO - Added video: Your Workday in 2025 (better with AI)
+2025-01-16 13:42:35,140 - INFO - Added video: Your Secret Weapon against Information Overload
+2025-01-16 13:42:35,165 - INFO - Added video: The BEST Way to Summarize Books with ChatGPT
+2025-01-16 13:42:35,188 - INFO - Added video: How I remember everything I read with Readwise
+2025-01-16 13:42:35,212 - INFO - Added video: Notion Hacks Marie Poulin Coaches Tiago Forte
+2025-01-16 13:42:35,236 - INFO - Added video: The Minimalists Creating More with Less
+2025-01-16 13:42:35,262 - INFO - Added video: My Second Brain in Apple Notes (PARA Method)  Part 4
+2025-01-16 13:42:35,287 - INFO - Added video: How I Plan My Weekly Tasks (PARA Method)  Part 3
+2025-01-16 13:42:35,311 - INFO - Added video: The Email App I Use Every Day (now with AI)
+2025-01-16 13:42:35,336 - INFO - Added video: The 10-to-15 rule (PARA Method)  Part 2
+2025-01-16 13:42:35,361 - INFO - Added video: How to Organize Your Digital Life in Seconds (PARA Method)  Part 1
+2025-01-16 13:42:35,386 - INFO - Added video: Progressive Summarization Explained  Building a Second Brain Course Preview
+2025-01-16 13:42:35,410 - INFO - Added video: I Never Thought I'd Take Notes This Way  Milanote Beginner System
+2025-01-16 13:42:35,437 - INFO - Added video: Using Notion AI to Save 12+ Hours of Work
+2025-01-16 13:42:35,462 - INFO - Added video: Logseq Rating Notes Apps (out of 100)
+2025-01-16 13:42:35,486 - INFO - Added video: Folders are dead Inside Anne-Laure’s Second Brain
+2025-01-16 13:42:35,512 - INFO - Added video: Inside Ryder Carroll’s Second Brain  Roam & Bujo
+2025-01-16 13:42:35,538 - INFO - Added video: Taking Book Notes (How to Start)
+2025-01-16 13:42:35,563 - INFO - Added video: The Rise of Obsidian as a Second Brain  ft. Nick Milo
+2025-01-16 13:42:35,589 - INFO - Added video: Your Brain's Not Broken Use This Notes System
+2025-01-16 13:42:35,615 - INFO - Added video: Keep Productive My Favorite Apps (2022)
+2025-01-16 13:42:35,640 - INFO - Added video: Inside Ali Abdaal's Second Brain System
+2025-01-16 13:42:35,665 - INFO - Added video: The First 30 Days Using a Notes App
+2025-01-16 13:42:35,689 - INFO - Added video: Top 68 Apps to Take Digital Notes (2022)
+2025-01-16 13:42:35,715 - INFO - Added video: 75% of Notetakers Use These 4 Apps
+2025-01-16 13:42:35,740 - INFO - Added video: Pick a Notes App Your Notetaking Style (Part 1)
+2025-01-16 13:42:35,765 - INFO - Added video: How I Answer Email in 17 Minutes a Day - My System
+2025-01-16 13:42:35,790 - INFO - Added video: The ADHD Notetaker  Second Brain Summit 2022  Marie Poulin, Jesse J. Anderson, Bryan Jenks
+2025-01-16 13:42:35,814 - INFO - Added video: The Future of Notetaking  Second Brain Summit 2022
+2025-01-16 13:42:35,839 - INFO - Added video: The Productivity Secrets of Michelin-Star Chefs
+2025-01-16 13:42:35,864 - INFO - Added video: How to Self Sabotage in 8 easy steps
+2025-01-16 13:42:35,888 - INFO - Added video: Goals vs. Projects The Important Difference
+2025-01-16 13:42:35,914 - INFO - Added video: How We Organize Our Life in Notion  Second Brain
+2025-01-16 13:42:35,939 - INFO - Added video: Should Notion Be Your Second Brain  ft. Thomas Frank
+2025-01-16 13:42:35,963 - INFO - Added video: Behind the Scenes of a $100K YouTube Home Studio Remodel
+2025-01-16 13:42:35,988 - INFO - Added video: Building a Second Brain - course ideas visualized in Miro (feat. Michael Dean)
+2025-01-16 13:42:36,012 - INFO - Added video: Building a Second Brain Teaser Trailer
+2025-01-16 13:42:36,036 - INFO - Added video: How I Use Roam to Write a Weekly Newsletter feat. Nat Eliason  Second Brain
+2025-01-16 13:42:36,060 - INFO - Added video: Roam's co-founder teaches me Roam Research  Conor White-Sullivan (The Peace Summit)
+2025-01-16 13:42:36,084 - INFO - Added video: How to Choose a Digital Notes App as Your Second Brain
+2025-01-16 13:42:36,108 - INFO - Added video: How to Write a Book Summary
+2025-01-16 13:42:36,131 - INFO - Added video: How to Create an Outline with Digital Notes
+2025-01-16 13:42:36,185 - INFO - Added video: How to Progressively Summarize a Digital Note
+2025-01-16 13:42:36,214 - INFO - Added video: How to Export Ebook Highlights to Your Digital Notes
+2025-01-16 13:42:36,239 - INFO - Added video: How to Decide What to Highlight in Ebooks
+2025-01-16 13:42:36,265 - INFO - Added video: Wayne Lacson Forte On My Way To Me [Documentary]
+2025-01-16 13:42:36,291 - INFO - Added video: How I Decide My Priorities for the Week
+2025-01-16 13:42:36,317 - INFO - Added video: How I Process My Digital Notes
+2025-01-16 13:42:36,342 - INFO - Added video: How I Tidy Up My Digital Workspace
+2025-01-16 13:42:36,368 - INFO - Added video: How I Review My Calendar for the Week
+2025-01-16 13:42:36,394 - INFO - Added video: How I Clear My Emails and Get to Inbox Zero
+2025-01-16 13:42:36,420 - INFO - Added video: How to Take a Digital Note, by Tiago Forte
+2025-01-16 13:42:36,446 - INFO - Added video: Interview and Q&A with Sönke Ahrens on How to Take Smart Notes
+2025-01-16 13:42:36,469 - INFO - Added video: Joe Hudson Interview Frameworks for Self-Development
+2025-01-16 13:42:36,483 - INFO - Added video: Notion As A Second Brain Full Recording
+2025-01-16 13:42:36,499 - INFO - Added video: Interview with Conor White-Sullivan, Founder of Roam
+2025-01-16 13:42:36,517 - INFO - Added video: 5-Minute Case Study Using a Digital Second Brain to Take Online Courses
+2025-01-16 13:42:36,533 - INFO - Added video: Building a Second Brain Capturing, Organizing, and Sharing Knowledge Using Digital Notes
+2025-01-16 13:42:36,547 - INFO - Added video: How a GTD Master Trainer Uses PARA
+2025-01-16 13:42:36,567 - INFO - Added video: In Conversation with David Allen Interview with Tiago Forte
+2025-01-16 13:42:36,588 - INFO - Added video: Get Stuff Done Design Your Workflow and Double Your Productivity class, at Parisoma
+2025-01-16 13:42:36,700 - INFO - Found total of 92 videos
+2025-01-16 13:42:36,701 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=tP0G-np9zPs
+2025-01-16 13:42:36,702 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=MaMmL5e8_Vs
+2025-01-16 13:42:36,702 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=tj1hmr1oNjw
+2025-01-16 13:42:36,703 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=lsI1_ElwEY0
+2025-01-16 13:42:36,704 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=8liy5_Z4zEs
+2025-01-16 13:42:36,704 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=2P2_jz035iI
+2025-01-16 13:42:36,705 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=JFjq7-CD6C8
+2025-01-16 13:42:36,706 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=N2wAyG8rkzE
+2025-01-16 13:42:36,706 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=6NIdbWNJA64
+2025-01-16 13:42:36,706 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=5f_uwEiVYoo
+2025-01-16 13:42:36,707 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=ObT4tPKVEiA
+2025-01-16 13:42:36,707 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=tb_xj-yAwmk
+2025-01-16 13:42:36,708 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=9m8EGJGYMAY
+2025-01-16 13:42:36,708 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=oqPCFWwBIPY
+2025-01-16 13:42:36,709 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=sI3ZBlEOHnI
+2025-01-16 13:42:36,710 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=QGugXcveQJg
+2025-01-16 13:42:36,710 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=utPyTgAQq-E
+2025-01-16 13:42:36,710 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=L8ozMKdGFUc
+2025-01-16 13:42:36,711 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=YqwvgjFyz7U
+2025-01-16 13:42:36,711 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=ThLTYF9NZXM
+2025-01-16 13:42:36,711 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=WC9ODwWjF6k
+2025-01-16 13:42:36,712 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=DpRU8GVknD0
+2025-01-16 13:42:36,712 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=Lmv40Nvasts
+2025-01-16 13:42:36,712 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=tHF8bwVJ--4
+2025-01-16 13:42:36,713 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=iWPjBwXy_Io
+2025-01-16 13:42:36,713 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=bnZWHCqU1-Q
+2025-01-16 13:42:36,714 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=uoD6oURbRsc
+2025-01-16 13:42:36,714 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=wO1nvMiQmg0
+2025-01-16 13:42:36,715 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=urgnixLJNjU
+2025-01-16 13:42:36,715 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=97M95nYLdKg
+2025-01-16 13:42:36,715 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=_UvFA659Y2I
+2025-01-16 13:42:36,716 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=YAQ1BMNzOFo
+2025-01-16 13:42:36,717 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=S_M4ocbt3RE
+2025-01-16 13:42:36,717 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=l8VBJ98b5kg
+2025-01-16 13:42:36,718 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=OlWomVta4DU
+2025-01-16 13:42:36,718 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=s2wiQuH410Y
+2025-01-16 13:42:36,718 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=eJLnMHNE8oM
+2025-01-16 13:42:36,719 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=fioLhb1U4J0
+2025-01-16 13:42:36,719 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=MyWmGDnWhjE
+2025-01-16 13:42:36,719 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=oDqgfojLwYM
+2025-01-16 13:42:36,720 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=anexySaCsgU
+2025-01-16 13:42:36,720 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=T6Mfl1OywM8
+2025-01-16 13:42:36,720 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=73s6Dgg3NZ0
+2025-01-16 13:42:36,721 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=RUKGZdJUiRU
+2025-01-16 13:42:36,721 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=NDatjjTnm4A
+2025-01-16 13:42:36,722 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=VJ2reQcpbYA
+2025-01-16 13:42:36,722 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=gXYj8UNmy48
+2025-01-16 13:42:36,722 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=FeZ4rXHEzrU
+2025-01-16 13:42:36,723 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=fES9ZrLXY9s
+2025-01-16 13:42:36,723 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=nz99I7apNLI
+2025-01-16 13:42:36,723 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=LflU3FqZ6h4
+2025-01-16 13:42:36,724 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=iRRVNilDm_U
+2025-01-16 13:42:36,724 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=-Y_6U0FoqDk
+2025-01-16 13:42:36,724 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=tOS53fSDqVw
+2025-01-16 13:42:36,725 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=OywdK-GIDnw
+2025-01-16 13:42:36,725 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=WTg3fCr1WaY
+2025-01-16 13:42:36,725 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=f3dDVtJ2sec
+2025-01-16 13:42:36,726 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=uXdEVeoGRRc
+2025-01-16 13:42:36,726 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=7BfxRsW_Ezw
+2025-01-16 13:42:36,726 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=nhAVXkm-kww
+2025-01-16 13:42:36,727 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=Wbznh-bPoEg
+2025-01-16 13:42:36,727 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=lKM2jE2PygY
+2025-01-16 13:42:36,727 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=xrc_x--re04
+2025-01-16 13:42:36,728 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=vZr18_aOY6I
+2025-01-16 13:42:36,728 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=50hWDN21ZC0
+2025-01-16 13:42:36,729 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=gFc7Tzst3Tg
+2025-01-16 13:42:36,729 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=EIS5L09qupQ
+2025-01-16 13:42:36,729 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=hYk0XPWdHMI
+2025-01-16 13:42:36,730 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=jWIdQfcQKTc
+2025-01-16 13:42:36,730 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=-Aqg9Z5gWNg
+2025-01-16 13:42:36,730 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=hvLLVCcPsIE
+2025-01-16 13:42:36,731 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=AdWyWK2QFRE
+2025-01-16 13:42:36,731 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=u9xWVuzqt3g
+2025-01-16 13:42:36,732 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=fWFKoVbSwGo
+2025-01-16 13:42:36,732 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=nU9Po_hrf5k
+2025-01-16 13:42:36,732 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=3YO4_O_mqyo
+2025-01-16 13:42:36,733 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=HEjbE688EVw
+2025-01-16 13:42:36,733 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=cg-29pZUFcs
+2025-01-16 13:42:36,733 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=WJtfnQ91_NY
+2025-01-16 13:42:36,734 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=BJI6XUISQJI
+2025-01-16 13:42:36,734 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=3b25hLQiMZ8
+2025-01-16 13:42:36,735 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=VVZNFAJAFkM
+2025-01-16 13:42:36,735 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=T4u4nUsdJbs
+2025-01-16 13:42:36,735 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=kXnR7qX3BDc
+2025-01-16 13:42:36,736 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=VyEoQy4rcBw
+2025-01-16 13:42:36,736 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=uK8KvSRetpU
+2025-01-16 13:42:36,736 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=Hw2kJF_kxjE
+2025-01-16 13:42:36,737 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=58BX1-7WjP4
+2025-01-16 13:42:36,737 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=SjZSy8s2VEE
+2025-01-16 13:42:36,737 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=95hTa0JkE9Y
+2025-01-16 13:42:36,738 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=DJl_w2AlGEI
+2025-01-16 13:42:36,738 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=xRiYyAN83tY
+2025-01-16 13:42:36,983 - INFO - Configuration saved successfully
+2025-01-16 13:42:36,984 - INFO - Configuration saved.
+2025-01-16 13:47:35,521 - INFO - Loading configuration from settings.json
+2025-01-16 13:47:35,937 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=tP0G-np9zPs
+2025-01-16 13:47:37,525 - INFO - Fetched English transcript for video tP0G-np9zPs
+2025-01-16 13:47:38,989 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=tP0G-np9zPs. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:47:42,167 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:47:42,168 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=tP0G-np9zPs
+2025-01-16 13:47:42,169 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_tP0G-np9zPs.txt
+2025-01-16 13:47:42,175 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=MaMmL5e8_Vs
+2025-01-16 13:47:43,172 - INFO - Fetched English transcript for video MaMmL5e8_Vs
+2025-01-16 13:47:45,263 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=MaMmL5e8_Vs. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:47:45,922 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:47:45,923 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=MaMmL5e8_Vs
+2025-01-16 13:47:45,924 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_MaMmL5e8_Vs.txt
+2025-01-16 13:47:45,930 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=tj1hmr1oNjw
+2025-01-16 13:47:46,778 - INFO - Fetched English transcript for video tj1hmr1oNjw
+2025-01-16 13:47:48,256 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=tj1hmr1oNjw. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:47:48,953 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:47:48,953 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=tj1hmr1oNjw
+2025-01-16 13:47:48,955 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_tj1hmr1oNjw.txt
+2025-01-16 13:47:48,961 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=lsI1_ElwEY0
+2025-01-16 13:47:50,550 - INFO - Fetched English transcript for video lsI1_ElwEY0
+2025-01-16 13:47:52,141 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=lsI1_ElwEY0. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:47:52,798 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:47:52,799 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=lsI1_ElwEY0
+2025-01-16 13:47:52,801 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_lsI1_ElwEY0.txt
+2025-01-16 13:47:52,808 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=8liy5_Z4zEs
+2025-01-16 13:47:53,746 - INFO - Fetched English transcript for video 8liy5_Z4zEs
+2025-01-16 13:47:55,223 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=8liy5_Z4zEs. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:47:55,908 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:47:55,908 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=8liy5_Z4zEs
+2025-01-16 13:47:55,910 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_8liy5_Z4zEs.txt
+2025-01-16 13:47:55,916 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=2P2_jz035iI
+2025-01-16 13:47:56,832 - INFO - Fetched English transcript for video 2P2_jz035iI
+2025-01-16 13:47:58,850 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=2P2_jz035iI. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:47:59,492 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:47:59,493 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=2P2_jz035iI
+2025-01-16 13:47:59,494 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_2P2_jz035iI.txt
+2025-01-16 13:47:59,500 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=JFjq7-CD6C8
+2025-01-16 13:48:00,360 - INFO - Fetched English transcript for video JFjq7-CD6C8
+2025-01-16 13:48:01,835 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=JFjq7-CD6C8. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:02,441 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:02,442 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=JFjq7-CD6C8
+2025-01-16 13:48:02,443 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_JFjq7-CD6C8.txt
+2025-01-16 13:48:02,446 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=N2wAyG8rkzE
+2025-01-16 13:48:03,323 - INFO - Fetched English transcript for video N2wAyG8rkzE
+2025-01-16 13:48:05,095 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=N2wAyG8rkzE. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:05,762 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:05,763 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=N2wAyG8rkzE
+2025-01-16 13:48:05,764 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_N2wAyG8rkzE.txt
+2025-01-16 13:48:05,769 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=6NIdbWNJA64
+2025-01-16 13:48:07,369 - INFO - Fetched English transcript for video 6NIdbWNJA64
+2025-01-16 13:48:08,689 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=6NIdbWNJA64. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:09,350 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:09,351 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=6NIdbWNJA64
+2025-01-16 13:48:09,354 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_6NIdbWNJA64.txt
+2025-01-16 13:48:09,360 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=5f_uwEiVYoo
+2025-01-16 13:48:11,389 - INFO - Fetched English transcript for video 5f_uwEiVYoo
+2025-01-16 13:48:12,749 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=5f_uwEiVYoo. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:13,460 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:13,460 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=5f_uwEiVYoo
+2025-01-16 13:48:13,462 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_5f_uwEiVYoo.txt
+2025-01-16 13:48:13,468 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=ObT4tPKVEiA
+2025-01-16 13:48:14,818 - INFO - Fetched English transcript for video ObT4tPKVEiA
+2025-01-16 13:48:16,368 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=ObT4tPKVEiA. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:17,005 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:17,006 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=ObT4tPKVEiA
+2025-01-16 13:48:17,007 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_ObT4tPKVEiA.txt
+2025-01-16 13:48:17,013 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=tb_xj-yAwmk
+2025-01-16 13:48:18,690 - INFO - Fetched English transcript for video tb_xj-yAwmk
+2025-01-16 13:48:20,268 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=tb_xj-yAwmk. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:20,940 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:20,941 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=tb_xj-yAwmk
+2025-01-16 13:48:20,942 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_tb_xj-yAwmk.txt
+2025-01-16 13:48:20,948 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=9m8EGJGYMAY
+2025-01-16 13:48:21,879 - INFO - Fetched English transcript for video 9m8EGJGYMAY
+2025-01-16 13:48:23,250 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=9m8EGJGYMAY. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:23,926 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:23,926 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=9m8EGJGYMAY
+2025-01-16 13:48:23,928 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_9m8EGJGYMAY.txt
+2025-01-16 13:48:23,934 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=oqPCFWwBIPY
+2025-01-16 13:48:24,836 - INFO - Fetched English transcript for video oqPCFWwBIPY
+2025-01-16 13:48:26,183 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=oqPCFWwBIPY. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:26,833 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:26,834 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=oqPCFWwBIPY
+2025-01-16 13:48:26,835 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_oqPCFWwBIPY.txt
+2025-01-16 13:48:26,841 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=sI3ZBlEOHnI
+2025-01-16 13:48:28,515 - INFO - Fetched English transcript for video sI3ZBlEOHnI
+2025-01-16 13:48:30,566 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=sI3ZBlEOHnI. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:31,199 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:31,200 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=sI3ZBlEOHnI
+2025-01-16 13:48:31,202 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_sI3ZBlEOHnI.txt
+2025-01-16 13:48:31,208 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=QGugXcveQJg
+2025-01-16 13:48:32,266 - INFO - Fetched English transcript for video QGugXcveQJg
+2025-01-16 13:48:33,614 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=QGugXcveQJg. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:34,320 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:34,320 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=QGugXcveQJg
+2025-01-16 13:48:34,322 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_QGugXcveQJg.txt
+2025-01-16 13:48:34,328 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=utPyTgAQq-E
+2025-01-16 13:48:35,313 - INFO - Fetched English transcript for video utPyTgAQq-E
+2025-01-16 13:48:36,718 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=utPyTgAQq-E. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:37,373 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:37,374 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=utPyTgAQq-E
+2025-01-16 13:48:37,375 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_utPyTgAQq-E.txt
+2025-01-16 13:48:37,381 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=L8ozMKdGFUc
+2025-01-16 13:48:38,453 - INFO - Fetched English transcript for video L8ozMKdGFUc
+2025-01-16 13:48:39,743 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=L8ozMKdGFUc. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:40,410 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:40,410 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=L8ozMKdGFUc
+2025-01-16 13:48:40,411 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_L8ozMKdGFUc.txt
+2025-01-16 13:48:40,416 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=YqwvgjFyz7U
+2025-01-16 13:48:41,264 - INFO - Fetched English transcript for video YqwvgjFyz7U
+2025-01-16 13:48:42,538 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=YqwvgjFyz7U. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:43,184 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:43,184 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=YqwvgjFyz7U
+2025-01-16 13:48:43,185 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_YqwvgjFyz7U.txt
+2025-01-16 13:48:43,192 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=ThLTYF9NZXM
+2025-01-16 13:48:44,174 - INFO - Fetched English transcript for video ThLTYF9NZXM
+2025-01-16 13:48:45,584 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=ThLTYF9NZXM. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:46,267 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:46,267 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=ThLTYF9NZXM
+2025-01-16 13:48:46,269 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_ThLTYF9NZXM.txt
+2025-01-16 13:48:46,274 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=WC9ODwWjF6k
+2025-01-16 13:48:47,271 - INFO - Fetched English transcript for video WC9ODwWjF6k
+2025-01-16 13:48:48,485 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=WC9ODwWjF6k. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:49,197 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:49,197 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=WC9ODwWjF6k
+2025-01-16 13:48:49,199 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_WC9ODwWjF6k.txt
+2025-01-16 13:48:49,205 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=DpRU8GVknD0
+2025-01-16 13:48:50,223 - INFO - Fetched English transcript for video DpRU8GVknD0
+2025-01-16 13:48:52,360 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=DpRU8GVknD0. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:53,027 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:53,028 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=DpRU8GVknD0
+2025-01-16 13:48:53,030 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_DpRU8GVknD0.txt
+2025-01-16 13:48:53,036 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=Lmv40Nvasts
+2025-01-16 13:48:54,067 - INFO - Fetched English transcript for video Lmv40Nvasts
+2025-01-16 13:48:55,675 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=Lmv40Nvasts. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:56,345 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:56,346 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=Lmv40Nvasts
+2025-01-16 13:48:56,347 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_Lmv40Nvasts.txt
+2025-01-16 13:48:56,351 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=tHF8bwVJ--4
+2025-01-16 13:48:57,172 - INFO - Fetched English transcript for video tHF8bwVJ--4
+2025-01-16 13:48:58,746 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=tHF8bwVJ--4. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:48:59,404 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:48:59,405 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=tHF8bwVJ--4
+2025-01-16 13:48:59,406 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_tHF8bwVJ--4.txt
+2025-01-16 13:48:59,409 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=iWPjBwXy_Io
+2025-01-16 13:49:00,456 - INFO - Fetched English transcript for video iWPjBwXy_Io
+2025-01-16 13:49:01,781 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=iWPjBwXy_Io. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:49:02,381 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:49:02,381 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=iWPjBwXy_Io
+2025-01-16 13:49:02,383 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_iWPjBwXy_Io.txt
+2025-01-16 13:49:02,389 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=bnZWHCqU1-Q
+2025-01-16 13:49:04,163 - INFO - Fetched English transcript for video bnZWHCqU1-Q
+2025-01-16 13:49:05,646 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=bnZWHCqU1-Q. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:49:06,321 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:49:06,321 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=bnZWHCqU1-Q
+2025-01-16 13:49:06,323 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_bnZWHCqU1-Q.txt
+2025-01-16 13:49:06,329 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=uoD6oURbRsc
+2025-01-16 13:49:07,315 - INFO - Fetched English transcript for video uoD6oURbRsc
+2025-01-16 13:49:09,472 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=uoD6oURbRsc. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:49:10,179 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:49:10,180 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=uoD6oURbRsc
+2025-01-16 13:49:10,181 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_uoD6oURbRsc.txt
+2025-01-16 13:49:10,187 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=wO1nvMiQmg0
+2025-01-16 13:49:11,287 - INFO - Fetched English transcript for video wO1nvMiQmg0
+2025-01-16 13:49:12,864 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=wO1nvMiQmg0. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:49:13,537 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:49:13,537 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=wO1nvMiQmg0
+2025-01-16 13:49:13,539 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_wO1nvMiQmg0.txt
+2025-01-16 13:49:13,545 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=urgnixLJNjU
+2025-01-16 13:49:14,519 - INFO - Fetched English transcript for video urgnixLJNjU
+2025-01-16 13:49:16,083 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=urgnixLJNjU. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:49:16,769 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:49:16,770 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=urgnixLJNjU
+2025-01-16 13:49:16,771 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_urgnixLJNjU.txt
+2025-01-16 13:49:16,777 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=97M95nYLdKg
+2025-01-16 13:49:17,790 - INFO - Fetched English transcript for video 97M95nYLdKg
+2025-01-16 13:49:18,992 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=97M95nYLdKg. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:49:19,678 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:49:19,678 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=97M95nYLdKg
+2025-01-16 13:49:19,680 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_97M95nYLdKg.txt
+2025-01-16 13:49:19,685 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=_UvFA659Y2I
+2025-01-16 13:49:21,678 - INFO - Fetched English transcript for video _UvFA659Y2I
+2025-01-16 13:49:23,252 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=_UvFA659Y2I. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:49:23,918 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:49:23,919 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=_UvFA659Y2I
+2025-01-16 13:49:23,920 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video__UvFA659Y2I.txt
+2025-01-16 13:49:23,925 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=YAQ1BMNzOFo
+2025-01-16 13:49:25,544 - INFO - Fetched English transcript for video YAQ1BMNzOFo
+2025-01-16 13:49:27,161 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=YAQ1BMNzOFo. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:49:27,802 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:49:27,803 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=YAQ1BMNzOFo
+2025-01-16 13:49:27,804 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_YAQ1BMNzOFo.txt
+2025-01-16 13:49:27,810 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=S_M4ocbt3RE
+2025-01-16 13:49:29,845 - INFO - Fetched English transcript for video S_M4ocbt3RE
+2025-01-16 13:49:31,184 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=S_M4ocbt3RE. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:49:31,845 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:49:31,845 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=S_M4ocbt3RE
+2025-01-16 13:49:31,847 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_S_M4ocbt3RE.txt
+2025-01-16 13:49:31,853 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=l8VBJ98b5kg
+2025-01-16 13:49:33,360 - INFO - Fetched English transcript for video l8VBJ98b5kg
+2025-01-16 13:49:34,625 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=l8VBJ98b5kg. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:49:35,290 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:49:35,291 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=l8VBJ98b5kg
+2025-01-16 13:49:35,292 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_l8VBJ98b5kg.txt
+2025-01-16 13:49:35,299 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=OlWomVta4DU
+2025-01-16 13:49:37,116 - INFO - Fetched English transcript for video OlWomVta4DU
+2025-01-16 13:49:39,546 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=OlWomVta4DU. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:49:40,240 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:49:40,241 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=OlWomVta4DU
+2025-01-16 13:49:40,242 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_OlWomVta4DU.txt
+2025-01-16 13:49:40,248 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=s2wiQuH410Y
+2025-01-16 13:49:42,124 - INFO - Fetched English transcript for video s2wiQuH410Y
+2025-01-16 13:49:44,496 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=s2wiQuH410Y. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:49:45,122 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:49:45,122 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=s2wiQuH410Y
+2025-01-16 13:49:45,124 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_s2wiQuH410Y.txt
+2025-01-16 13:49:45,130 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=eJLnMHNE8oM
+2025-01-16 13:49:47,328 - INFO - Fetched English transcript for video eJLnMHNE8oM
+2025-01-16 13:49:48,511 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=eJLnMHNE8oM. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:49:49,189 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:49:49,190 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=eJLnMHNE8oM
+2025-01-16 13:49:49,191 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_eJLnMHNE8oM.txt
+2025-01-16 13:49:49,197 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=fioLhb1U4J0
+2025-01-16 13:49:50,149 - INFO - Fetched English transcript for video fioLhb1U4J0
+2025-01-16 13:49:52,078 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=fioLhb1U4J0. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:49:52,768 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:49:52,769 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=fioLhb1U4J0
+2025-01-16 13:49:52,775 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_fioLhb1U4J0.txt
+2025-01-16 13:49:52,779 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=MyWmGDnWhjE
+2025-01-16 13:49:54,465 - INFO - Fetched English transcript for video MyWmGDnWhjE
+2025-01-16 13:49:56,074 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=MyWmGDnWhjE. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:49:56,729 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:49:56,730 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=MyWmGDnWhjE
+2025-01-16 13:49:56,731 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_MyWmGDnWhjE.txt
+2025-01-16 13:49:56,737 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=oDqgfojLwYM
+2025-01-16 13:49:57,563 - INFO - Fetched English transcript for video oDqgfojLwYM
+2025-01-16 13:50:00,092 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=oDqgfojLwYM. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:00,749 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:00,749 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=oDqgfojLwYM
+2025-01-16 13:50:00,750 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_oDqgfojLwYM.txt
+2025-01-16 13:50:00,756 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=anexySaCsgU
+2025-01-16 13:50:02,544 - INFO - Fetched English transcript for video anexySaCsgU
+2025-01-16 13:50:03,806 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=anexySaCsgU. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:04,476 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:04,477 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=anexySaCsgU
+2025-01-16 13:50:04,478 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_anexySaCsgU.txt
+2025-01-16 13:50:04,485 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=T6Mfl1OywM8
+2025-01-16 13:50:05,410 - INFO - Fetched English transcript for video T6Mfl1OywM8
+2025-01-16 13:50:06,908 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=T6Mfl1OywM8. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:07,615 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:07,616 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=T6Mfl1OywM8
+2025-01-16 13:50:07,617 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_T6Mfl1OywM8.txt
+2025-01-16 13:50:07,623 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=73s6Dgg3NZ0
+2025-01-16 13:50:09,354 - INFO - Fetched English transcript for video 73s6Dgg3NZ0
+2025-01-16 13:50:11,224 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=73s6Dgg3NZ0. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:11,910 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:11,910 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=73s6Dgg3NZ0
+2025-01-16 13:50:11,912 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_73s6Dgg3NZ0.txt
+2025-01-16 13:50:11,918 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=RUKGZdJUiRU
+2025-01-16 13:50:13,016 - INFO - Fetched English transcript for video RUKGZdJUiRU
+2025-01-16 13:50:14,489 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=RUKGZdJUiRU. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:15,172 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:15,172 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=RUKGZdJUiRU
+2025-01-16 13:50:15,173 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_RUKGZdJUiRU.txt
+2025-01-16 13:50:15,179 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=NDatjjTnm4A
+2025-01-16 13:50:15,973 - INFO - Fetched English transcript for video NDatjjTnm4A
+2025-01-16 13:50:18,114 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=NDatjjTnm4A. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:18,772 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:18,773 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=NDatjjTnm4A
+2025-01-16 13:50:18,774 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_NDatjjTnm4A.txt
+2025-01-16 13:50:18,780 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=VJ2reQcpbYA
+2025-01-16 13:50:19,851 - INFO - Fetched English transcript for video VJ2reQcpbYA
+2025-01-16 13:50:21,107 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=VJ2reQcpbYA. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:21,807 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:21,807 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=VJ2reQcpbYA
+2025-01-16 13:50:21,809 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_VJ2reQcpbYA.txt
+2025-01-16 13:50:21,815 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=gXYj8UNmy48
+2025-01-16 13:50:22,753 - INFO - Fetched English transcript for video gXYj8UNmy48
+2025-01-16 13:50:24,831 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=gXYj8UNmy48. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:25,485 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:25,486 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=gXYj8UNmy48
+2025-01-16 13:50:25,487 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_gXYj8UNmy48.txt
+2025-01-16 13:50:25,493 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=FeZ4rXHEzrU
+2025-01-16 13:50:27,226 - INFO - Fetched English transcript for video FeZ4rXHEzrU
+2025-01-16 13:50:29,509 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=FeZ4rXHEzrU. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:30,154 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:30,154 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=FeZ4rXHEzrU
+2025-01-16 13:50:30,156 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_FeZ4rXHEzrU.txt
+2025-01-16 13:50:30,160 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=fES9ZrLXY9s
+2025-01-16 13:50:31,725 - INFO - Fetched English transcript for video fES9ZrLXY9s
+2025-01-16 13:50:33,892 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=fES9ZrLXY9s. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:34,552 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:34,552 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=fES9ZrLXY9s
+2025-01-16 13:50:34,554 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_fES9ZrLXY9s.txt
+2025-01-16 13:50:34,560 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=nz99I7apNLI
+2025-01-16 13:50:35,549 - INFO - Fetched English transcript for video nz99I7apNLI
+2025-01-16 13:50:36,904 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=nz99I7apNLI. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:37,597 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:37,598 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=nz99I7apNLI
+2025-01-16 13:50:37,599 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_nz99I7apNLI.txt
+2025-01-16 13:50:37,606 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=LflU3FqZ6h4
+2025-01-16 13:50:38,571 - INFO - Fetched English transcript for video LflU3FqZ6h4
+2025-01-16 13:50:40,217 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=LflU3FqZ6h4. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:40,895 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:40,895 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=LflU3FqZ6h4
+2025-01-16 13:50:40,897 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_LflU3FqZ6h4.txt
+2025-01-16 13:50:40,903 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=iRRVNilDm_U
+2025-01-16 13:50:42,604 - INFO - Fetched English transcript for video iRRVNilDm_U
+2025-01-16 13:50:44,195 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=iRRVNilDm_U. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:44,875 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:44,876 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=iRRVNilDm_U
+2025-01-16 13:50:44,877 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_iRRVNilDm_U.txt
+2025-01-16 13:50:44,883 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=-Y_6U0FoqDk
+2025-01-16 13:50:46,648 - INFO - Fetched English transcript for video -Y_6U0FoqDk
+2025-01-16 13:50:48,091 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=-Y_6U0FoqDk. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:48,762 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:48,763 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=-Y_6U0FoqDk
+2025-01-16 13:50:48,764 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_-Y_6U0FoqDk.txt
+2025-01-16 13:50:48,770 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=tOS53fSDqVw
+2025-01-16 13:50:50,738 - INFO - Fetched English transcript for video tOS53fSDqVw
+2025-01-16 13:50:52,254 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=tOS53fSDqVw. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:52,929 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:52,930 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=tOS53fSDqVw
+2025-01-16 13:50:52,931 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_tOS53fSDqVw.txt
+2025-01-16 13:50:52,938 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=OywdK-GIDnw
+2025-01-16 13:50:54,096 - INFO - Fetched English transcript for video OywdK-GIDnw
+2025-01-16 13:50:56,305 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=OywdK-GIDnw. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:50:56,964 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:50:56,964 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=OywdK-GIDnw
+2025-01-16 13:50:56,966 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_OywdK-GIDnw.txt
+2025-01-16 13:50:56,972 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=WTg3fCr1WaY
+2025-01-16 13:50:58,868 - INFO - Fetched English transcript for video WTg3fCr1WaY
+2025-01-16 13:51:01,334 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=WTg3fCr1WaY. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:01,948 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:01,949 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=WTg3fCr1WaY
+2025-01-16 13:51:01,950 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_WTg3fCr1WaY.txt
+2025-01-16 13:51:01,956 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=f3dDVtJ2sec
+2025-01-16 13:51:03,859 - INFO - Fetched English transcript for video f3dDVtJ2sec
+2025-01-16 13:51:05,433 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=f3dDVtJ2sec. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:06,113 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:06,113 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=f3dDVtJ2sec
+2025-01-16 13:51:06,115 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_f3dDVtJ2sec.txt
+2025-01-16 13:51:06,121 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=uXdEVeoGRRc
+2025-01-16 13:51:07,973 - INFO - Fetched English transcript for video uXdEVeoGRRc
+2025-01-16 13:51:09,329 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=uXdEVeoGRRc. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:09,969 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:09,969 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=uXdEVeoGRRc
+2025-01-16 13:51:09,971 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_uXdEVeoGRRc.txt
+2025-01-16 13:51:09,977 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=7BfxRsW_Ezw
+2025-01-16 13:51:11,330 - INFO - Fetched English transcript for video 7BfxRsW_Ezw
+2025-01-16 13:51:12,741 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=7BfxRsW_Ezw. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:13,455 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:13,455 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=7BfxRsW_Ezw
+2025-01-16 13:51:13,457 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_7BfxRsW_Ezw.txt
+2025-01-16 13:51:13,462 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=nhAVXkm-kww
+2025-01-16 13:51:15,156 - INFO - Fetched English transcript for video nhAVXkm-kww
+2025-01-16 13:51:16,429 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=nhAVXkm-kww. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:17,111 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:17,112 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=nhAVXkm-kww
+2025-01-16 13:51:17,113 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_nhAVXkm-kww.txt
+2025-01-16 13:51:17,119 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=Wbznh-bPoEg
+2025-01-16 13:51:18,790 - INFO - Fetched English transcript for video Wbznh-bPoEg
+2025-01-16 13:51:20,932 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=Wbznh-bPoEg. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:21,604 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:21,604 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=Wbznh-bPoEg
+2025-01-16 13:51:21,606 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_Wbznh-bPoEg.txt
+2025-01-16 13:51:21,611 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=lKM2jE2PygY
+2025-01-16 13:51:22,544 - INFO - Fetched English transcript for video lKM2jE2PygY
+2025-01-16 13:51:24,619 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=lKM2jE2PygY. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:25,293 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:25,293 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=lKM2jE2PygY
+2025-01-16 13:51:25,295 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_lKM2jE2PygY.txt
+2025-01-16 13:51:25,301 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=xrc_x--re04
+2025-01-16 13:51:26,128 - INFO - Fetched English transcript for video xrc_x--re04
+2025-01-16 13:51:28,325 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=xrc_x--re04. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:29,029 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:29,030 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=xrc_x--re04
+2025-01-16 13:51:29,031 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_xrc_x--re04.txt
+2025-01-16 13:51:29,038 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=vZr18_aOY6I
+2025-01-16 13:51:29,950 - INFO - Fetched English transcript for video vZr18_aOY6I
+2025-01-16 13:51:31,392 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=vZr18_aOY6I. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:32,052 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:32,052 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=vZr18_aOY6I
+2025-01-16 13:51:32,054 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_vZr18_aOY6I.txt
+2025-01-16 13:51:32,060 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=50hWDN21ZC0
+2025-01-16 13:51:33,095 - INFO - Fetched English transcript for video 50hWDN21ZC0
+2025-01-16 13:51:34,333 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=50hWDN21ZC0. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:34,979 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:34,980 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=50hWDN21ZC0
+2025-01-16 13:51:34,981 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_50hWDN21ZC0.txt
+2025-01-16 13:51:34,985 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=gFc7Tzst3Tg
+2025-01-16 13:51:35,751 - INFO - Fetched English transcript for video gFc7Tzst3Tg
+2025-01-16 13:51:37,869 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=gFc7Tzst3Tg. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:38,581 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:38,582 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=gFc7Tzst3Tg
+2025-01-16 13:51:38,583 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_gFc7Tzst3Tg.txt
+2025-01-16 13:51:38,589 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=EIS5L09qupQ
+2025-01-16 13:51:39,478 - INFO - Fetched English transcript for video EIS5L09qupQ
+2025-01-16 13:51:40,658 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=EIS5L09qupQ. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:41,305 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:41,305 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=EIS5L09qupQ
+2025-01-16 13:51:41,307 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_EIS5L09qupQ.txt
+2025-01-16 13:51:41,313 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=hYk0XPWdHMI
+2025-01-16 13:51:42,627 - INFO - Fetched English transcript for video hYk0XPWdHMI
+2025-01-16 13:51:44,088 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=hYk0XPWdHMI. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:44,756 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:44,757 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=hYk0XPWdHMI
+2025-01-16 13:51:44,759 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_hYk0XPWdHMI.txt
+2025-01-16 13:51:44,764 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=jWIdQfcQKTc
+2025-01-16 13:51:46,096 - INFO - Fetched English transcript for video jWIdQfcQKTc
+2025-01-16 13:51:47,377 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=jWIdQfcQKTc. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:48,006 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:48,007 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=jWIdQfcQKTc
+2025-01-16 13:51:48,008 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_jWIdQfcQKTc.txt
+2025-01-16 13:51:48,015 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=-Aqg9Z5gWNg
+2025-01-16 13:51:49,808 - INFO - Fetched English transcript for video -Aqg9Z5gWNg
+2025-01-16 13:51:51,092 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=-Aqg9Z5gWNg. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:51,793 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:51,794 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=-Aqg9Z5gWNg
+2025-01-16 13:51:51,795 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_-Aqg9Z5gWNg.txt
+2025-01-16 13:51:51,801 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=hvLLVCcPsIE
+2025-01-16 13:51:52,763 - INFO - Fetched English transcript for video hvLLVCcPsIE
+2025-01-16 13:51:53,950 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=hvLLVCcPsIE. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:54,618 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:54,619 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=hvLLVCcPsIE
+2025-01-16 13:51:54,620 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_hvLLVCcPsIE.txt
+2025-01-16 13:51:54,626 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=AdWyWK2QFRE
+2025-01-16 13:51:56,254 - INFO - Fetched English transcript for video AdWyWK2QFRE
+2025-01-16 13:51:58,424 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=AdWyWK2QFRE. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:51:59,118 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:51:59,118 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=AdWyWK2QFRE
+2025-01-16 13:51:59,120 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_AdWyWK2QFRE.txt
+2025-01-16 13:51:59,126 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=u9xWVuzqt3g
+2025-01-16 13:52:00,793 - INFO - Fetched English transcript for video u9xWVuzqt3g
+2025-01-16 13:52:02,075 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=u9xWVuzqt3g. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:02,707 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:02,708 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=u9xWVuzqt3g
+2025-01-16 13:52:02,709 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_u9xWVuzqt3g.txt
+2025-01-16 13:52:02,713 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=fWFKoVbSwGo
+2025-01-16 13:52:03,689 - INFO - Fetched English transcript for video fWFKoVbSwGo
+2025-01-16 13:52:04,905 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=fWFKoVbSwGo. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:05,543 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:05,544 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=fWFKoVbSwGo
+2025-01-16 13:52:05,545 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_fWFKoVbSwGo.txt
+2025-01-16 13:52:05,551 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=nU9Po_hrf5k
+2025-01-16 13:52:06,940 - INFO - Fetched English transcript for video nU9Po_hrf5k
+2025-01-16 13:52:09,300 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=nU9Po_hrf5k. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:09,974 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:09,974 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=nU9Po_hrf5k
+2025-01-16 13:52:09,975 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_nU9Po_hrf5k.txt
+2025-01-16 13:52:09,980 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=3YO4_O_mqyo
+2025-01-16 13:52:11,821 - INFO - Fetched English transcript for video 3YO4_O_mqyo
+2025-01-16 13:52:13,350 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=3YO4_O_mqyo. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:14,047 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:14,048 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=3YO4_O_mqyo
+2025-01-16 13:52:14,049 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_3YO4_O_mqyo.txt
+2025-01-16 13:52:14,055 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=HEjbE688EVw
+2025-01-16 13:52:14,973 - INFO - Fetched English transcript for video HEjbE688EVw
+2025-01-16 13:52:16,314 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=HEjbE688EVw. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:17,031 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:17,032 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=HEjbE688EVw
+2025-01-16 13:52:17,033 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_HEjbE688EVw.txt
+2025-01-16 13:52:17,040 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=cg-29pZUFcs
+2025-01-16 13:52:18,249 - INFO - Fetched English transcript for video cg-29pZUFcs
+2025-01-16 13:52:20,333 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=cg-29pZUFcs. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:21,008 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:21,008 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=cg-29pZUFcs
+2025-01-16 13:52:21,010 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_cg-29pZUFcs.txt
+2025-01-16 13:52:21,016 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=WJtfnQ91_NY
+2025-01-16 13:52:21,945 - INFO - Fetched English transcript for video WJtfnQ91_NY
+2025-01-16 13:52:23,198 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=WJtfnQ91_NY. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:23,854 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:23,855 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=WJtfnQ91_NY
+2025-01-16 13:52:23,856 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_WJtfnQ91_NY.txt
+2025-01-16 13:52:23,863 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=BJI6XUISQJI
+2025-01-16 13:52:24,834 - INFO - Fetched English transcript for video BJI6XUISQJI
+2025-01-16 13:52:26,623 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=BJI6XUISQJI. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:27,301 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:27,302 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=BJI6XUISQJI
+2025-01-16 13:52:27,303 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_BJI6XUISQJI.txt
+2025-01-16 13:52:27,307 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=3b25hLQiMZ8
+2025-01-16 13:52:29,111 - INFO - Fetched English transcript for video 3b25hLQiMZ8
+2025-01-16 13:52:30,811 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=3b25hLQiMZ8. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:31,445 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:31,445 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=3b25hLQiMZ8
+2025-01-16 13:52:31,446 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_3b25hLQiMZ8.txt
+2025-01-16 13:52:31,453 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=VVZNFAJAFkM
+2025-01-16 13:52:32,612 - INFO - Fetched English transcript for video VVZNFAJAFkM
+2025-01-16 13:52:33,925 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=VVZNFAJAFkM. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:34,599 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:34,599 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=VVZNFAJAFkM
+2025-01-16 13:52:34,600 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_VVZNFAJAFkM.txt
+2025-01-16 13:52:34,605 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=T4u4nUsdJbs
+2025-01-16 13:52:36,609 - INFO - Fetched English transcript for video T4u4nUsdJbs
+2025-01-16 13:52:39,024 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=T4u4nUsdJbs. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:39,673 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:39,673 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=T4u4nUsdJbs
+2025-01-16 13:52:39,674 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_T4u4nUsdJbs.txt
+2025-01-16 13:52:39,679 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=kXnR7qX3BDc
+2025-01-16 13:52:40,755 - INFO - Fetched English transcript for video kXnR7qX3BDc
+2025-01-16 13:52:42,174 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=kXnR7qX3BDc. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:42,855 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:42,856 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=kXnR7qX3BDc
+2025-01-16 13:52:42,857 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_kXnR7qX3BDc.txt
+2025-01-16 13:52:42,864 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=VyEoQy4rcBw
+2025-01-16 13:52:44,066 - INFO - Fetched English transcript for video VyEoQy4rcBw
+2025-01-16 13:52:46,061 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=VyEoQy4rcBw. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:46,731 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:46,731 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=VyEoQy4rcBw
+2025-01-16 13:52:46,733 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_VyEoQy4rcBw.txt
+2025-01-16 13:52:46,739 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=uK8KvSRetpU
+2025-01-16 13:52:47,671 - INFO - Fetched English transcript for video uK8KvSRetpU
+2025-01-16 13:52:50,008 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=uK8KvSRetpU. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:50,654 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:50,654 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=uK8KvSRetpU
+2025-01-16 13:52:50,655 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_uK8KvSRetpU.txt
+2025-01-16 13:52:50,662 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=Hw2kJF_kxjE
+2025-01-16 13:52:51,638 - INFO - Fetched English transcript for video Hw2kJF_kxjE
+2025-01-16 13:52:52,807 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=Hw2kJF_kxjE. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:53,476 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:53,476 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=Hw2kJF_kxjE
+2025-01-16 13:52:53,478 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_Hw2kJF_kxjE.txt
+2025-01-16 13:52:53,484 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=58BX1-7WjP4
+2025-01-16 13:52:54,455 - INFO - Fetched English transcript for video 58BX1-7WjP4
+2025-01-16 13:52:55,673 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=58BX1-7WjP4. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:52:56,338 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:52:56,339 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=58BX1-7WjP4
+2025-01-16 13:52:56,340 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_58BX1-7WjP4.txt
+2025-01-16 13:52:56,346 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=SjZSy8s2VEE
+2025-01-16 13:52:58,406 - INFO - Fetched English transcript for video SjZSy8s2VEE
+2025-01-16 13:52:59,850 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=SjZSy8s2VEE. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:53:00,500 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:53:00,501 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=SjZSy8s2VEE
+2025-01-16 13:53:00,502 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_SjZSy8s2VEE.txt
+2025-01-16 13:53:00,508 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=95hTa0JkE9Y
+2025-01-16 13:53:01,574 - INFO - Fetched English transcript for video 95hTa0JkE9Y
+2025-01-16 13:53:03,751 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=95hTa0JkE9Y. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:53:04,383 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:53:04,384 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=95hTa0JkE9Y
+2025-01-16 13:53:04,385 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_95hTa0JkE9Y.txt
+2025-01-16 13:53:04,390 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=DJl_w2AlGEI
+2025-01-16 13:53:05,381 - INFO - Fetched English transcript for video DJl_w2AlGEI
+2025-01-16 13:53:07,333 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=DJl_w2AlGEI. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:53:07,999 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:53:08,000 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=DJl_w2AlGEI
+2025-01-16 13:53:08,001 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_DJl_w2AlGEI.txt
+2025-01-16 13:53:08,007 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=xRiYyAN83tY
+2025-01-16 13:53:09,741 - INFO - Fetched English transcript for video xRiYyAN83tY
+2025-01-16 13:53:11,776 - WARNING - Pytube failed to fetch title, trying Selenium: Exception while accessing title of https://youtube.com/watch?v=xRiYyAN83tY. Please file a bug report at https://github.com/pytube/pytube
+2025-01-16 13:53:12,528 - ERROR - Error fetching video title with Selenium: Message: binary is not a Firefox executable
+
+2025-01-16 13:53:12,529 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=xRiYyAN83tY
+2025-01-16 13:53:12,536 - INFO - Saving transcript to /srv/knowledge/transcriptions/TiagoForte/video_xRiYyAN83tY.txt
+2025-01-16 13:53:12,542 - INFO - All available video transcripts downloaded to /srv/knowledge/transcriptions/TiagoForte
+2025-01-16 13:53:12,550 - INFO - Configuration saved successfully
+2025-01-16 13:53:12,551 - INFO - Configuration saved.
+2025-01-16 14:01:41,388 - INFO - Loading configuration from settings.json
+2025-01-16 14:01:41,839 - INFO - Configuration saved successfully
+2025-01-16 14:01:41,840 - INFO - Configuration saved.
+2025-01-16 15:30:23,343 - INFO - Loading configuration from settings.json
+2025-01-16 15:30:23,482 - INFO - Loading configuration from settings.json
+2025-01-16 15:30:24,267 - INFO - Starting playlist download process for URL: https://www.youtube.com/watch?v=Pmx2cbLGzzo&list=PLWnRT89qdLObOWK_f7CA6pS39U172L4xN
+2025-01-16 15:30:25,684 - INFO - Loading playlist URL: https://www.youtube.com/watch?v=Pmx2cbLGzzo&list=PLWnRT89qdLObOWK_f7CA6pS39U172L4xN
+2025-01-16 15:31:37,168 - INFO - Found playlist title: Playlist_20250116_153137
+2025-01-16 15:31:39,310 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:31:39,701 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:31:40,175 - INFO - Found 0 videos so far...
+2025-01-16 15:31:42,237 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:31:42,653 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:31:43,179 - INFO - Found 0 videos so far...
+2025-01-16 15:31:45,243 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:31:45,582 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:31:46,071 - INFO - Found 0 videos so far...
+2025-01-16 15:31:48,134 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:31:48,509 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:31:49,012 - INFO - Found 0 videos so far...
+2025-01-16 15:31:51,075 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:31:51,475 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:31:51,982 - INFO - Found 0 videos so far...
+2025-01-16 15:31:54,046 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:31:54,460 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:31:54,920 - INFO - Found 0 videos so far...
+2025-01-16 15:31:57,033 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:31:57,532 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:31:58,027 - INFO - Found 0 videos so far...
+2025-01-16 15:32:00,099 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:00,389 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:00,783 - INFO - Found 0 videos so far...
+2025-01-16 15:32:02,852 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:03,234 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:03,728 - INFO - Found 0 videos so far...
+2025-01-16 15:32:05,799 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:06,277 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:06,757 - INFO - Found 0 videos so far...
+2025-01-16 15:32:08,826 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:09,270 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:09,779 - INFO - Found 0 videos so far...
+2025-01-16 15:32:11,860 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:12,246 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:12,772 - INFO - Found 0 videos so far...
+2025-01-16 15:32:14,858 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:15,194 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:15,583 - INFO - Found 0 videos so far...
+2025-01-16 15:32:17,670 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:18,072 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:18,616 - INFO - Found 0 videos so far...
+2025-01-16 15:32:20,691 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:21,080 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:21,637 - INFO - Found 0 videos so far...
+2025-01-16 15:32:23,753 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:24,159 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:24,640 - INFO - Found 0 videos so far...
+2025-01-16 15:32:26,732 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:27,132 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:27,640 - INFO - Found 0 videos so far...
+2025-01-16 15:32:29,737 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:30,137 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:30,524 - INFO - Found 0 videos so far...
+2025-01-16 15:32:32,614 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:33,026 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:33,522 - INFO - Found 0 videos so far...
+2025-01-16 15:32:35,683 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:36,096 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:36,601 - INFO - Found 0 videos so far...
+2025-01-16 15:32:38,763 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:39,165 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:39,691 - INFO - Found 0 videos so far...
+2025-01-16 15:32:41,779 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:42,191 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:42,710 - INFO - Found 0 videos so far...
+2025-01-16 15:32:44,823 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:45,292 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:45,665 - INFO - Found 0 videos so far...
+2025-01-16 15:32:47,840 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:48,246 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:48,750 - INFO - Found 0 videos so far...
+2025-01-16 15:32:50,858 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:51,266 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:51,765 - INFO - Found 0 videos so far...
+2025-01-16 15:32:53,917 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:54,311 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:54,849 - INFO - Found 0 videos so far...
+2025-01-16 15:32:56,928 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:32:57,422 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:32:57,930 - INFO - Found 0 videos so far...
+2025-01-16 15:33:00,084 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:33:00,554 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:33:00,897 - INFO - Found 0 videos so far...
+2025-01-16 15:33:02,988 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:33:03,397 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:33:03,856 - INFO - Found 0 videos so far...
+2025-01-16 15:33:05,963 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:33:06,440 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:33:06,948 - INFO - Found 0 videos so far...
+2025-01-16 15:33:09,103 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:33:09,573 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:33:10,083 - INFO - Found 0 videos so far...
+2025-01-16 15:33:12,222 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:33:12,618 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:33:13,138 - INFO - Found 0 videos so far...
+2025-01-16 15:33:15,285 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:33:15,602 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:33:16,043 - INFO - Found 0 videos so far...
+2025-01-16 15:33:18,135 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:33:18,690 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:33:19,209 - INFO - Found 0 videos so far...
+2025-01-16 15:33:21,581 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:33:21,998 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:33:22,527 - INFO - Found 0 videos so far...
+2025-01-16 15:33:24,661 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:33:25,107 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:33:25,613 - INFO - Found 0 videos so far...
+2025-01-16 15:33:27,727 - INFO - Found 16 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:33:28,165 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:33:28,698 - INFO - Reached end of playlist
+2025-01-16 15:33:28,844 - ERROR - No videos found in playlist
+2025-01-16 15:33:28,845 - ERROR - Failed to fetch playlist information. Please check the URL and try again.
+2025-01-16 15:33:28,849 - INFO - Configuration saved successfully
+2025-01-16 15:33:28,850 - INFO - Configuration saved.
+2025-01-16 15:43:59,470 - INFO - Loading configuration from settings.json
+2025-01-16 15:43:59,610 - INFO - Loading configuration from settings.json
+2025-01-16 15:44:00,225 - INFO - Starting playlist download process for URL: https://www.youtube.com/watch?v=-gYpCIbZjUQ&list=PLi3n6z1voQ1arCpQ89izFMwk7lsFrFnq0
+2025-01-16 15:44:01,330 - INFO - Loading playlist URL: https://www.youtube.com/watch?v=-gYpCIbZjUQ&list=PLi3n6z1voQ1arCpQ89izFMwk7lsFrFnq0
+2025-01-16 15:44:08,830 - INFO - Loading configuration from settings.json
+2025-01-16 15:44:09,148 - INFO - Configuration saved successfully
+2025-01-16 15:44:09,149 - INFO - Configuration saved.
+2025-01-16 15:45:12,257 - INFO - Found playlist title: Playlist_20250116_154512
+2025-01-16 15:45:14,443 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:45:15,651 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:45:16,010 - INFO - Found 0 videos so far...
+2025-01-16 15:45:18,074 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:45:19,302 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:45:19,800 - INFO - Found 0 videos so far...
+2025-01-16 15:45:21,921 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:45:23,198 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:45:23,725 - INFO - Found 0 videos so far...
+2025-01-16 15:45:25,870 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:45:26,898 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:45:27,378 - INFO - Found 0 videos so far...
+2025-01-16 15:45:29,472 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:45:30,597 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:45:30,971 - INFO - Found 0 videos so far...
+2025-01-16 15:45:33,045 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:45:34,320 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:45:34,851 - INFO - Found 0 videos so far...
+2025-01-16 15:45:37,187 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:45:38,432 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:45:38,920 - INFO - Found 0 videos so far...
+2025-01-16 15:45:41,265 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:45:42,366 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:45:42,852 - INFO - Found 0 videos so far...
+2025-01-16 15:45:45,088 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:45:46,196 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:45:46,658 - INFO - Found 0 videos so far...
+2025-01-16 15:45:48,736 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:45:49,989 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:45:50,504 - INFO - Found 0 videos so far...
+2025-01-16 15:45:52,658 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:45:53,921 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:45:54,453 - INFO - Found 0 videos so far...
+2025-01-16 15:45:56,544 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:45:57,690 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:45:58,228 - INFO - Found 0 videos so far...
+2025-01-16 15:46:00,344 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:01,338 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:01,729 - INFO - Found 0 videos so far...
+2025-01-16 15:46:03,866 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:05,049 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:05,568 - INFO - Found 0 videos so far...
+2025-01-16 15:46:07,713 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:08,949 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:09,424 - INFO - Found 0 videos so far...
+2025-01-16 15:46:11,523 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:12,735 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:13,252 - INFO - Found 0 videos so far...
+2025-01-16 15:46:15,357 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:16,279 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:16,778 - INFO - Found 0 videos so far...
+2025-01-16 15:46:18,880 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:20,163 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:20,669 - INFO - Found 0 videos so far...
+2025-01-16 15:46:22,776 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:24,039 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:24,552 - INFO - Found 0 videos so far...
+2025-01-16 15:46:26,788 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:27,919 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:28,376 - INFO - Found 0 videos so far...
+2025-01-16 15:46:28,732 - INFO - Loading configuration from settings.json
+2025-01-16 15:46:29,050 - INFO - Starting playlist download process for URL: https://www.youtube.com/watch?v=-gYpCIbZjUQ
+2025-01-16 15:46:30,177 - INFO - Loading playlist URL: https://www.youtube.com/watch?v=-gYpCIbZjUQ
+2025-01-16 15:46:30,522 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:31,681 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:32,187 - INFO - Found 0 videos so far...
+2025-01-16 15:46:34,292 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:35,369 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:35,756 - INFO - Found 0 videos so far...
+2025-01-16 15:46:37,846 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:38,983 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:39,456 - INFO - Found 0 videos so far...
+2025-01-16 15:46:41,603 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:42,756 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:43,177 - INFO - Found 0 videos so far...
+2025-01-16 15:46:45,339 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:46,471 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:46,955 - INFO - Found 0 videos so far...
+2025-01-16 15:46:49,175 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:50,400 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:50,906 - INFO - Found 0 videos so far...
+2025-01-16 15:46:53,019 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:54,332 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:54,820 - INFO - Found 0 videos so far...
+2025-01-16 15:46:56,999 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:46:58,222 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:46:58,742 - INFO - Found 0 videos so far...
+2025-01-16 15:47:00,855 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:47:01,944 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:47:02,234 - INFO - Found 0 videos so far...
+2025-01-16 15:47:04,804 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:47:06,046 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:47:06,541 - INFO - Found 0 videos so far...
+2025-01-16 15:47:09,006 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:47:10,222 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:47:10,772 - INFO - Found 0 videos so far...
+2025-01-16 15:47:12,857 - INFO - Found 50 videos with selector 'ytd-playlist-panel-video-renderer'
+2025-01-16 15:47:14,013 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:47:14,525 - WARNING - Scroll timeout reached
+2025-01-16 15:47:14,653 - ERROR - No videos found in playlist
+2025-01-16 15:47:14,654 - ERROR - Failed to fetch playlist information. Please check the URL and try again.
+2025-01-16 15:47:41,465 - INFO - Found playlist title: Playlist_20250116_154741
+2025-01-16 15:47:43,635 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:47:44,128 - INFO - Found 0 videos so far...
+2025-01-16 15:47:46,201 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:47:46,678 - INFO - Found 0 videos so far...
+2025-01-16 15:47:48,761 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:47:49,220 - INFO - Found 0 videos so far...
+2025-01-16 15:47:51,294 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:47:51,798 - INFO - Found 0 videos so far...
+2025-01-16 15:47:53,876 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:47:54,331 - INFO - Found 0 videos so far...
+2025-01-16 15:47:56,414 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:47:56,921 - INFO - Found 0 videos so far...
+2025-01-16 15:47:59,008 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:47:59,470 - INFO - Found 0 videos so far...
+2025-01-16 15:48:01,564 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:02,013 - INFO - Found 0 videos so far...
+2025-01-16 15:48:04,100 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:04,464 - INFO - Found 0 videos so far...
+2025-01-16 15:48:06,563 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:07,096 - INFO - Found 0 videos so far...
+2025-01-16 15:48:09,199 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:09,680 - INFO - Found 0 videos so far...
+2025-01-16 15:48:11,785 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:12,282 - INFO - Found 0 videos so far...
+2025-01-16 15:48:14,387 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:14,846 - INFO - Found 0 videos so far...
+2025-01-16 15:48:16,948 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:17,446 - INFO - Found 0 videos so far...
+2025-01-16 15:48:19,540 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:20,039 - INFO - Found 0 videos so far...
+2025-01-16 15:48:22,150 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:22,659 - INFO - Found 0 videos so far...
+2025-01-16 15:48:24,767 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:25,245 - INFO - Found 0 videos so far...
+2025-01-16 15:48:27,358 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:27,867 - INFO - Found 0 videos so far...
+2025-01-16 15:48:29,987 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:30,495 - INFO - Found 0 videos so far...
+2025-01-16 15:48:32,614 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:33,122 - INFO - Found 0 videos so far...
+2025-01-16 15:48:35,244 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:35,775 - INFO - Found 0 videos so far...
+2025-01-16 15:48:37,897 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:38,406 - INFO - Found 0 videos so far...
+2025-01-16 15:48:40,540 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:41,076 - INFO - Found 0 videos so far...
+2025-01-16 15:48:43,205 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:43,738 - INFO - Found 0 videos so far...
+2025-01-16 15:48:45,865 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:46,292 - INFO - Found 0 videos so far...
+2025-01-16 15:48:48,421 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:48,947 - INFO - Found 0 videos so far...
+2025-01-16 15:48:51,081 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:51,602 - INFO - Found 0 videos so far...
+2025-01-16 15:48:53,740 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:54,250 - INFO - Found 0 videos so far...
+2025-01-16 15:48:56,369 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:56,891 - INFO - Found 0 videos so far...
+2025-01-16 15:48:59,122 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:48:59,519 - INFO - Found 0 videos so far...
+2025-01-16 15:49:01,967 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:49:02,343 - INFO - Found 0 videos so far...
+2025-01-16 15:49:04,457 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:49:04,948 - INFO - Found 0 videos so far...
+2025-01-16 15:49:07,058 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:49:07,539 - INFO - Found 0 videos so far...
+2025-01-16 15:49:09,710 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:49:10,524 - INFO - Found 0 videos so far...
+2025-01-16 15:49:12,662 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:49:13,173 - INFO - Found 0 videos so far...
+2025-01-16 15:49:15,497 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:49:15,924 - INFO - Found 0 videos so far...
+2025-01-16 15:49:18,190 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:49:18,724 - INFO - Found 0 videos so far...
+2025-01-16 15:49:20,915 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:49:21,408 - INFO - Found 0 videos so far...
+2025-01-16 15:49:23,590 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:49:24,092 - INFO - Found 0 videos so far...
+2025-01-16 15:49:26,477 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:49:26,972 - INFO - Found 0 videos so far...
+2025-01-16 15:49:29,138 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:49:31,005 - INFO - Found 0 videos so far...
+2025-01-16 15:49:33,124 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:49:33,723 - INFO - Found 0 videos so far...
+2025-01-16 15:49:35,999 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:49:36,567 - INFO - Found 0 videos so far...
+2025-01-16 15:49:38,812 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:49:39,444 - INFO - Found 0 videos so far...
+2025-01-16 15:49:42,209 - INFO - Found 20 videos with selector 'ytd-compact-video-renderer'
+2025-01-16 15:49:42,722 - WARNING - Scroll timeout reached
+2025-01-16 15:49:42,845 - ERROR - No videos found in playlist
+2025-01-16 15:49:42,846 - ERROR - Failed to fetch playlist information. Please check the URL and try again.
+2025-01-16 15:49:42,852 - INFO - Configuration saved successfully
+2025-01-16 15:49:42,855 - INFO - Configuration saved.
+2025-01-16 16:55:33,948 - INFO - Loading configuration from settings.json
+2025-01-16 16:55:34,354 - INFO - Starting embeddings test...
+2025-01-16 16:55:34,355 - INFO - Model loaded successfully
+2025-01-16 16:55:34,355 - INFO - Testing encoding of: This is a test sentence.
+2025-01-16 16:55:34,355 - INFO - Model loaded successfully
+2025-01-16 16:55:34,372 - INFO - Generated embeddings type: <class 'torch.Tensor'>
+2025-01-16 16:55:34,372 - INFO - Converted tensor to list successfully
+2025-01-16 16:55:34,373 - INFO - Test embeddings length: 384
+2025-01-16 16:55:34,376 - INFO - Removed existing Qdrant lock file
+2025-01-16 16:55:34,405 - INFO - Configuration saved successfully
+2025-01-16 16:55:34,405 - INFO - Configuration saved.
+2025-01-16 23:07:39,579 - INFO - Loading configuration from settings.json
+2025-01-16 23:07:39,943 - INFO - Starting embeddings test...
+2025-01-16 23:07:39,944 - INFO - Model loaded successfully
+2025-01-16 23:07:39,944 - INFO - Testing encoding of: This is a test sentence.
+2025-01-16 23:07:39,944 - INFO - Model loaded successfully
+2025-01-16 23:07:39,964 - INFO - Generated embeddings type: <class 'torch.Tensor'>
+2025-01-16 23:07:39,965 - INFO - Converted tensor to list successfully
+2025-01-16 23:07:39,965 - INFO - Test embeddings length: 384
+2025-01-16 23:07:39,968 - INFO - Removed existing Qdrant lock file
+2025-01-16 23:07:40,031 - INFO - Configuration saved successfully
+2025-01-16 23:07:40,032 - INFO - Configuration saved.
+2025-01-17 09:53:09,267 - INFO - Loading configuration from settings.json
+2025-01-17 09:53:09,815 - INFO - Starting embeddings test...
+2025-01-17 09:53:09,815 - INFO - Model loaded successfully
+2025-01-17 09:53:09,815 - INFO - Testing encoding of: This is a test sentence.
+2025-01-17 09:53:09,816 - INFO - Model loaded successfully
+2025-01-17 09:53:09,833 - INFO - Generated embeddings type: <class 'torch.Tensor'>
+2025-01-17 09:53:09,834 - INFO - Converted tensor to list successfully
+2025-01-17 09:53:09,834 - INFO - Test embeddings length: 384
+2025-01-17 09:53:09,838 - INFO - Removed existing Qdrant lock file
+2025-01-17 09:53:09,866 - INFO - Configuration saved successfully
+2025-01-17 09:53:09,868 - INFO - Configuration saved.
+2025-01-17 11:18:31,319 - INFO - Loading configuration from settings.json
+2025-01-17 11:18:31,852 - INFO - Starting embeddings test...
+2025-01-17 11:18:31,852 - INFO - Model loaded successfully
+2025-01-17 11:18:31,853 - INFO - Testing encoding of: This is a test sentence.
+2025-01-17 11:18:31,853 - INFO - Model loaded successfully
+2025-01-17 11:18:31,870 - INFO - Generated embeddings type: <class 'torch.Tensor'>
+2025-01-17 11:18:31,871 - INFO - Converted tensor to list successfully
+2025-01-17 11:18:31,871 - INFO - Test embeddings length: 384
+2025-01-17 11:18:31,874 - INFO - Removed existing Qdrant lock file
+2025-01-17 11:18:31,955 - INFO - Configuration saved successfully
+2025-01-17 11:18:31,956 - INFO - Configuration saved.
+2025-01-18 21:45:36,263 - INFO - Loading configuration from settings.json
+2025-01-18 21:45:36,798 - INFO - Starting embeddings test...
+2025-01-18 21:45:36,798 - INFO - Model loaded successfully
+2025-01-18 21:45:36,799 - INFO - Testing encoding of: This is a test sentence.
+2025-01-18 21:45:36,799 - INFO - Model loaded successfully
+2025-01-18 21:45:36,817 - INFO - Generated embeddings type: <class 'torch.Tensor'>
+2025-01-18 21:45:36,818 - INFO - Converted tensor to list successfully
+2025-01-18 21:45:36,818 - INFO - Test embeddings length: 384
+2025-01-18 21:45:36,822 - INFO - Removed existing Qdrant lock file
+2025-01-18 21:45:36,850 - INFO - Configuration saved successfully
+2025-01-18 21:45:36,851 - INFO - Configuration saved.
+2025-02-02 09:29:56,894 - INFO - Loading configuration from settings.json
+2025-02-02 09:34:05,043 - INFO - Loading configuration from settings.json
+2025-02-02 09:34:05,445 - INFO - Starting embeddings test...
+2025-02-02 09:34:05,446 - INFO - Use pytorch device_name: cpu
+2025-02-02 09:34:05,446 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-02-02 09:34:08,041 - INFO - Model loaded successfully
+2025-02-02 09:34:09,136 - INFO - Generated embeddings of length: 384
+2025-02-02 09:34:09,136 - INFO - Test embeddings length: 384
+2025-02-02 09:34:09,158 - INFO - Configuration saved successfully
+2025-02-02 09:34:09,163 - INFO - Configuration saved.

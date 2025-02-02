@@ -17,30 +17,54 @@ class ChatUI:
         self.config = config
         self.db = QdrantDB(config['qdrant_path'])
 
-    def ingest_documents(self) -> bool:
-        """Ingest documents into the database"""
-        try:
-            files = get_transcript_files(self.config['download_folder'])
-            logger.info(f"Found {len(files)} files to process")
+    def render(self):
+        """Render the chat interface"""
+        st.header("Chat with Your Transcripts")
 
-            for file_path in files:
-                text = read_file_content(file_path)
-                chunks = chunk_text(text)
+        # Test embeddings on startup
+        if 'embeddings_tested' not in st.session_state:
+            with st.spinner("Testing embeddings..."):
+                if test_embeddings():
+                    st.session_state.embeddings_tested = True
+                else:
+                    st.error("Error: Embeddings system not working properly")
+                    return
 
-                for i, chunk in enumerate(chunks):
-                    embedding = get_embeddings(chunk)
-                    if embedding:
-                        self.db.store_embedding(
-                            text=chunk,
-                            embedding=embedding,
-                            source=file_path,
-                            point_id=hash(f"{file_path}_{i}")
-                        )
+        # Settings sidebar
+        with st.sidebar:
+            st.subheader("Chat Settings")
+            st.session_state.max_tokens = st.slider("Max Response Length", 20, 200, 50)
+            st.session_state.temperature = st.slider("Temperature", 0.1, 1.0, 0.1)
 
-            return True
-        except Exception as e:
-            logger.error(f"Error ingesting documents: {e}")
-            return False
+        # Ingest button
+        if st.button("Ingest/Update Transcripts"):
+            with st.spinner("Ingesting transcripts..."):
+                if self.ingest_documents():
+                    st.success("Successfully ingested transcripts!")
+                else:
+                    st.error("Failed to ingest transcripts. Check logs for details.")
+
+        # Initialize chat history
+        if "messages" not in st.session_state:
+            st.session_state.messages = []
+
+        # Display chat history
+        for message in st.session_state.messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+
+        # Chat input
+        if prompt := st.chat_input("Ask about your transcripts"):
+            # Display user message
+            st.session_state.messages.append({"role": "user", "content": prompt})
+            with st.chat_message("user"):
+                st.markdown(prompt)
+
+            # Generate and display assistant response
+            with st.chat_message("assistant"):
+                response = self.generate_response(prompt)
+                st.markdown(response)
+                st.session_state.messages.append({"role": "assistant", "content": response})
 
     def generate_response(self, prompt: str) -> str:
         try:
