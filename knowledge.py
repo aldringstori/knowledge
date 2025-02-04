@@ -109,13 +109,19 @@ def main():
     with tab2:
         st.header("Download YouTube Content")
         url = st.text_input("Enter YouTube URL")
+        process_button = st.button("Process and Download")
 
-        if url:
+        if url and process_button:
             url_type = detect_url_type(url)
 
             if url_type:
                 try:
+                    status_container = st.empty()
+                    progress_container = st.empty()
+
                     with st.spinner(f"Processing {url_type.replace('_', ' ').title()}..."):
+                        status_container.info("Starting download process...")
+
                         if url_type == 'video':
                             single_video.render_url(url, config)
                         elif url_type == 'short':
@@ -126,6 +132,9 @@ def main():
                             channel_shorts.render_url(url, config)
                         elif url_type == 'playlist':
                             playlist.render_url(url, config)
+
+                        status_container.success("Processing completed! Check your downloads folder.")
+
                 except Exception as e:
                     st.error(f"Error processing URL: {str(e)}")
                     logger.error(f"Error processing URL: {str(e)}")
