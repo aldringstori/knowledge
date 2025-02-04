@@ -10,7 +10,7 @@ from utils.logging_setup import (
     clear_session_logs
 )
 from modules import (
-    chat,  # New chat module
+    chat,
     single_video,
     single_short,
     channel_videos,
@@ -19,6 +19,7 @@ from modules import (
     file_converter
 )
 from transformers import GPT2Tokenizer
+
 
 def load_config():
     config_file = "settings.json"
@@ -30,12 +31,13 @@ def load_config():
         logger.warning("Configuration file not found. Creating a new one with default settings.")
         config = {
             "download_folder": os.path.join(os.getcwd(), "Transcriptions"),
-            "model_path": os.path.join(os.getcwd(), "models"),  # Path for saving model weights
-            "qdrant_path": os.path.join(os.getcwd(), "qdrant_data")  # Path for Qdrant storage
+            "model_path": os.path.join(os.getcwd(), "models"),
+            "qdrant_path": os.path.join(os.getcwd(), "qdrant_data")
         }
         with open(config_file, 'w') as f:
             json.dump(config, f)
         return config
+
 
 def save_config(config):
     config_file = "settings.json"
@@ -46,26 +48,39 @@ def save_config(config):
     except Exception as e:
         logger.error(f"Error saving configuration: {str(e)}")
 
+
+def detect_url_type(url: str) -> str:
+    """Detect the type of YouTube URL"""
+    if not url:
+        return None
+
+    url = url.lower()
+    if '/shorts/' in url:
+        return 'short'
+    elif '/playlist?' in url or '&list=' in url:
+        return 'playlist'
+    elif '@' in url and '/videos' in url:
+        return 'channel_videos'
+    elif '@' in url and '/shorts' in url:
+        return 'channel_shorts'
+    elif 'youtube.com/watch?v=' in url:
+        return 'video'
+    return None
+
+
 def main():
     st.title("YouTube Transcript Assistant")
 
     # Sidebar for logs
     with st.sidebar:
         st.header("Logs & Monitoring")
-        log_type = st.radio(
-            "Select Log Type",
-            ["Current Session", "Full Log History"]
-        )
+        log_type = st.radio("Select Log Type", ["Current Session", "Full Log History"])
         if st.button("Refresh Logs"):
-            if log_type == "Current Session":
-                logs = get_session_logs()
-            else:
-                logs = read_log_file()
+            logs = get_session_logs() if log_type == "Current Session" else read_log_file()
             if logs.strip():
                 st.text_area("Log Output", logs, height=400)
             else:
                 st.info("No logs available")
-
         if st.button("Clear Logs"):
             if log_type == "Current Session":
                 clear_session_logs()
@@ -82,43 +97,49 @@ def main():
 
     # Initialize tokenizer
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
-
-    # Ensure tokenizer has a padding token and eos token
     if tokenizer.pad_token is None:
-        if tokenizer.eos_token is None:
-            tokenizer.add_special_tokens({'pad_token': '[PAD]', 'eos_token': '[EOS]'})
-        else:
-            tokenizer.pad_token = tokenizer.eos_token
+        tokenizer.pad_token = tokenizer.eos_token or '[PAD]'
 
-    # Main content area
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
-        "Chat",  # New chat tab
-        "Single Video",
-        "Single Short",
-        "Channel Videos",
-        "Channel Shorts",
-        "Playlist",
-        "File Converter"
-    ])
+    # Main content area with tabs
+    tab1, tab2, tab3 = st.tabs(["Chat", "Download", "File Converter"])
 
     with tab1:
         chat.render(config)
+
     with tab2:
-        single_video.render(config)
+        st.header("Download YouTube Content")
+        url = st.text_input("Enter YouTube URL")
+
+        if url:
+            url_type = detect_url_type(url)
+
+            if url_type:
+                try:
+                    with st.spinner(f"Processing {url_type.replace('_', ' ').title()}..."):
+                        if url_type == 'video':
+                            single_video.render_url(url, config)
+                        elif url_type == 'short':
+                            single_short.render_url(url, config)
+                        elif url_type == 'channel_videos':
+                            channel_videos.render_url(url, config)
+                        elif url_type == 'channel_shorts':
+                            channel_shorts.render_url(url, config)
+                        elif url_type == 'playlist':
+                            playlist.render_url(url, config)
+                except Exception as e:
+                    st.error(f"Error processing URL: {str(e)}")
+                    logger.error(f"Error processing URL: {str(e)}")
+            else:
+                st.error("Invalid or unsupported YouTube URL")
+
     with tab3:
-        single_short.render(config)
-    with tab4:
-        channel_videos.render(config)
-    with tab5:
-        channel_shorts.render(config)
-    with tab6:
-        playlist.render(config)
-    with tab7:
+        st.header("File Converter")
         file_converter.render(config)
 
     # Save config at the end
     save_config(config)
     logger.info("Configuration saved.")
+
 
 if __name__ == "__main__":
     main()

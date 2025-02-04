@@ -16,7 +16,6 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, WebDriverException
 import time
 import os
 
@@ -30,44 +29,28 @@ def setup_chrome_driver():
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-gpu')
         options.add_argument('--disable-extensions')
-        options.add_argument('--disable-infobars')
         options.add_argument('--disable-notifications')
-        options.add_argument('--disable-web-security')
-        options.add_argument('--allow-running-insecure-content')
 
-        # Create service with no log output
-        service = ChromeService(
-            log_output=os.path.devnull
-        )
-
-        driver = webdriver.Chrome(
-            options=options,
-            service=service
-        )
-        return driver
-    except WebDriverException as e:
-        logger.error(f"WebDriver setup failed: {str(e)}")
-        raise Exception(
-            "Failed to initialize Chrome WebDriver. Please make sure Chrome is properly installed."
-        )
+        service = ChromeService(log_output=os.path.devnull)
+        return webdriver.Chrome(options=options, service=service)
     except Exception as e:
-        logger.error(f"Unexpected error in WebDriver setup: {str(e)}")
+        logger.error(f"Chrome WebDriver setup failed: {str(e)}")
         raise
 
 
-def get_playlist_info_selenium(playlist_url):
-    """Get playlist information using Selenium with improved selectors."""
+def get_playlist_info(playlist_url):
+    """Get playlist information using Selenium."""
     driver = None
     try:
         driver = setup_chrome_driver()
-        driver.set_page_load_timeout(30)
         wait = WebDriverWait(driver, 20)
-
         logger.info(f"Loading playlist URL: {playlist_url}")
-        driver.get(playlist_url)
-        time.sleep(5)  # Initial wait for JavaScript to load
 
-        # Get playlist title with multiple selectors
+        driver.get(playlist_url)
+        time.sleep(5)
+
+        # Get playlist title
+        playlist_title = None
         title_selectors = [
             "h1.style-scope.ytd-playlist-header-renderer",
             "yt-formatted-string.style-scope.ytd-playlist-sidebar-primary-info-renderer",
@@ -75,7 +58,6 @@ def get_playlist_info_selenium(playlist_url):
             "h1"
         ]
 
-        playlist_title = None
         for selector in title_selectors:
             try:
                 title_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
@@ -88,141 +70,67 @@ def get_playlist_info_selenium(playlist_url):
         if not playlist_title:
             playlist_title = f"Playlist_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
-        logger.info(f"Found playlist title: {playlist_title}")
-
         # Scroll to load all videos
         scroll_pause_time = 2
-        scroll_timeout = 120  # 2 minutes timeout
-        scroll_start_time = datetime.now()
-
-        # Try to get total video count
-        try:
-            count_selectors = [
-                "span.style-scope.ytd-playlist-sidebar-primary-info-renderer",
-                "#stats.ytd-playlist-sidebar-primary-info-renderer yt-formatted-string"
-            ]
-            total_videos = None
-            for selector in count_selectors:
-                try:
-                    count_element = driver.find_element(By.CSS_SELECTOR, selector)
-                    count_text = count_element.text
-                    if count_text:
-                        total_videos = int(''.join(filter(str.isdigit, count_text)))
-                        break
-                except:
-                    continue
-
-            if total_videos:
-                logger.info(f"Expected number of videos: {total_videos}")
-        except:
-            total_videos = None
-            logger.warning("Could not determine total number of videos")
-
-        # Scroll until we find all videos or timeout
-        last_height = driver.execute_script("return document.documentElement.scrollHeight")
+        scroll_timeout = 120
+        scroll_start_time = time.time()
         found_videos = []
+        last_height = driver.execute_script("return document.documentElement.scrollHeight")
 
         while True:
-            # Scroll down
             driver.execute_script("window.scrollTo(0, document.documentElement.scrollHeight);")
             time.sleep(scroll_pause_time)
 
-            # Update found videos
-            try:
-                selectors = [
-                    "ytd-playlist-video-renderer",  # New playlist interface
-                    "ytd-playlist-panel-video-renderer",  # Embedded playlist
-                    "ytd-compact-video-renderer",  # Alternative view
-                    "a#video-title"  # Direct video links
-                ]
+            # Find videos
+            selectors = [
+                "ytd-playlist-video-renderer",
+                "ytd-playlist-panel-video-renderer",
+                "a#video-title"
+            ]
 
-                for selector in selectors:
-                    elements = driver.find_elements(By.CSS_SELECTOR, selector)
-                    if elements:
-                        logger.info(f"Found {len(elements)} videos with selector '{selector}'")
-                        for element in elements:
-                            try:
-                                # Try different methods to get video URL and title
-                                link = None
-                                title = None
+            for selector in selectors:
+                elements = driver.find_elements(By.CSS_SELECTOR, selector)
+                if elements:
+                    for element in elements:
+                        try:
+                            # Get URL and title
+                            url = element.get_attribute("href")
+                            if not url:
+                                url = element.find_element(By.CSS_SELECTOR, "a").get_attribute("href")
 
-                                # Get URL
-                                try:
-                                    link = element.get_attribute("href")
-                                except:
-                                    try:
-                                        link = element.find_element(By.CSS_SELECTOR, "a").get_attribute("href")
-                                    except:
-                                        try:
-                                            link = element.find_element(By.CSS_SELECTOR, "a#video-title").get_attribute(
-                                                "href")
-                                        except:
-                                            continue
+                            title = element.get_attribute("title")
+                            if not title:
+                                title = element.text or f"Video_{len(found_videos) + 1}"
 
-                                # Get title
-                                try:
-                                    title = element.get_attribute("title")
-                                except:
-                                    try:
-                                        title = element.text
-                                    except:
-                                        try:
-                                            title = element.find_element(By.CSS_SELECTOR, "[title]").get_attribute(
-                                                "title")
-                                        except:
-                                            title = f"Video_{len(found_videos) + 1}"
+                            if url and title and 'watch?v=' in url:
+                                video_data = {
+                                    'url': url,
+                                    'title': sanitize_filename(title)
+                                }
+                                if video_data not in found_videos:
+                                    found_videos.append(video_data)
+                        except Exception as e:
+                            logger.error(f"Error processing video element: {str(e)}")
+                            continue
 
-                                if link and title and 'watch?v=' in link:
-                                    video_data = {
-                                        'url': link,
-                                        'title': sanitize_filename(title)
-                                    }
-                                    if video_data not in found_videos:
-                                        found_videos.append(video_data)
-                                        logger.info(f"Added video: {title}")
-                            except Exception as e:
-                                logger.error(f"Error processing video element: {str(e)}")
-                                continue
-
-                        if found_videos:
-                            break  # Found videos with this selector, stop trying others
-
-            except Exception as e:
-                logger.error(f"Error finding videos: {str(e)}")
-
-            # Check completion conditions
+            # Check if scrolling should stop
             new_height = driver.execute_script("return document.documentElement.scrollHeight")
-            if new_height == last_height:
-                logger.info("Reached end of playlist")
+            if new_height == last_height or time.time() - scroll_start_time > scroll_timeout:
                 break
-
-            if total_videos and len(found_videos) >= total_videos:
-                logger.info("Found all expected videos")
-                break
-
-            if (datetime.now() - scroll_start_time).total_seconds() > scroll_timeout:
-                logger.warning("Scroll timeout reached")
-                break
-
             last_height = new_height
-            logger.info(f"Found {len(found_videos)} videos so far...")
 
         if driver:
             driver.quit()
 
         if not found_videos:
-            logger.error("No videos found in playlist")
             return None, None
 
-        # Remove duplicates based on URL
+        # Remove duplicates
         unique_videos = list({v['url']: v for v in found_videos}.values())
-        logger.info(f"Final count: {len(unique_videos)} unique videos")
-
         return sanitize_filename(playlist_title), unique_videos
 
     except Exception as e:
-        error_msg = f"Error fetching playlist info: {str(e)}\n{traceback.format_exc()}"
-        logger.error(error_msg)
+        logger.error(f"Error fetching playlist info: {str(e)}")
         if driver:
             driver.quit()
         return None, None
@@ -232,8 +140,8 @@ def process_playlist_video(video_data, folder_name):
     """Process a single video from the playlist."""
     try:
         logger.info(f"Processing video: {video_data['title']}")
-
         transcript = fetch_transcript(video_data['url'])
+
         if transcript:
             save_path = save_transcript_to_text(
                 transcript,
@@ -241,93 +149,72 @@ def process_playlist_video(video_data, folder_name):
                 folder_name
             )
             if save_path:
-                logger.info(f"Successfully saved transcript for: {video_data['title']}")
                 return True, f"Success: {video_data['title']}"
-            else:
-                logger.error(f"Failed to save transcript file for: {video_data['title']}")
-                return False, f"Failed to save transcript: {video_data['title']}"
-        else:
-            logger.warning(f"No transcript available for: {video_data['title']}")
-            return False, f"No transcript available: {video_data['title']}"
+            return False, f"Failed to save transcript: {video_data['title']}"
+        return False, f"No transcript available: {video_data['title']}"
+
     except Exception as e:
         error_msg = f"Error processing {video_data['title']}: {str(e)}"
-        logger.error(f"{error_msg}\n{traceback.format_exc()}")
+        logger.error(error_msg)
         return False, error_msg
 
 
+def render_url(playlist_url: str, config: dict):
+    """Process a playlist URL"""
+    try:
+        logger.info(f"Processing playlist URL: {playlist_url}")
+        status_placeholder = st.empty()
+        status_placeholder.info("Loading playlist data... This may take a few moments.")
+
+        playlist_title, videos_data = get_playlist_info(playlist_url)
+        if not playlist_title or not videos_data:
+            st.error("Failed to fetch playlist information")
+            return False
+
+        status_placeholder.success(f"Found {len(videos_data)} videos in playlist")
+        folder_name = os.path.join(config['download_folder'], playlist_title)
+        create_folder(folder_name)
+
+        status_data = []
+        progress_bar = st.progress(0)
+        status_table = st.empty()
+
+        for i, video_data in enumerate(videos_data):
+            success, message = process_playlist_video(video_data, folder_name)
+            status_data.append({
+                'Title': video_data['title'],
+                'Status': '✅' if success else '❌',
+                'Message': message
+            })
+
+            progress_bar.progress((i + 1) / len(videos_data))
+            status_table.dataframe(pd.DataFrame(status_data))
+
+        successful = sum(1 for s in status_data if s['Status'] == '✅')
+        st.success(f"Downloaded {successful} out of {len(videos_data)} transcripts to {folder_name}")
+
+        # Export report option
+        if st.button("Download Summary Report"):
+            df = pd.DataFrame(status_data)
+            report_path = os.path.join(folder_name, f"{playlist_title}_report.csv")
+            df.to_csv(report_path, index=False)
+            st.success(f"Summary report saved to {report_path}")
+
+        return True
+
+    except Exception as e:
+        logger.error(f"Error processing playlist: {str(e)}")
+        st.error(f"Error processing playlist: {str(e)}")
+        return False
+
+
 def render(config):
-    """Render the playlist tab."""
+    """Legacy render method for backward compatibility"""
     st.header("Playlist Transcripts")
     playlist_url = st.text_input("Enter YouTube Playlist URL:")
-
     if st.button("Download Playlist Transcripts"):
-        if not playlist_url:
+        if playlist_url:
+            with st.spinner("Downloading playlist transcripts..."):
+                render_url(playlist_url, config)
+        else:
             st.warning("Please enter a valid YouTube Playlist URL.")
-            return
-
-        try:
-            with st.spinner("Fetching playlist information..."):
-                logger.info(f"Starting playlist download process for URL: {playlist_url}")
-                status_placeholder = st.empty()
-                status_placeholder.info("Loading playlist data... This may take a few moments.")
-
-                playlist_title, videos_data = get_playlist_info_selenium(playlist_url)
-
-                if not playlist_title or not videos_data:
-                    error_msg = "Failed to fetch playlist information. Please check the URL and try again."
-                    logger.error(error_msg)
-                    st.error(error_msg)
-                    return
-
-                status_placeholder.success(f"Found {len(videos_data)} videos in playlist")
-
-                folder_name = os.path.join(config['download_folder'], playlist_title)
-                create_folder(folder_name)
-
-                status_data = []
-                progress_bar = st.progress(0)
-                status_table = st.empty()
-
-                for i, video_data in enumerate(videos_data):
-                    try:
-                        success, message = process_playlist_video(video_data, folder_name)
-
-                        status_data.append({
-                            'Title': video_data['title'],
-                            'Status': '✅' if success else '❌',
-                            'Message': message
-                        })
-
-                        progress_bar.progress((i + 1) / len(videos_data))
-                        df = pd.DataFrame(status_data)
-                        status_table.dataframe(df)
-
-                    except Exception as e:
-                        logger.error(f"Error processing video {video_data['title']}: {str(e)}")
-                        status_data.append({
-                            'Title': video_data['title'],
-                            'Status': '❌',
-                            'Message': f"Error: {str(e)}"
-                        })
-                        continue
-
-                successful = sum(1 for s in status_data if s['Status'] == '✅')
-                st.success(
-                    f"Processed {len(videos_data)} videos. Successfully downloaded {successful} transcripts to {folder_name}")
-
-                col1, col2 = st.columns(2)
-                with col1:
-                    if st.button("Download Summary Report"):
-                        df = pd.DataFrame(status_data)
-                        report_path = os.path.join(folder_name, f"{playlist_title}_report.csv")
-                        df.to_csv(report_path, index=False)
-                        st.success(f"Summary report saved to {report_path}")
-
-                with col2:
-                    if st.button("View Current Logs"):
-                        st.text_area("Recent Logs", get_session_logs(), height=200)
-
-        except Exception as e:
-            error_msg = f"Error processing playlist: {str(e)}\n{traceback.format_exc()}"
-            logger.error(error_msg)
-            st.error(f"Error processing playlist: {str(e)}")
