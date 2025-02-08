@@ -13,7 +13,7 @@ def generate_with_phi(
     try:
         url = "http://localhost:11434/api/generate"
         payload = {
-            "model": "phi3:3.8b",
+            "model": "deepseek-r1:8b",
             "prompt": prompt,
             "stream": False,
             "options": {

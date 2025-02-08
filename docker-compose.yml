@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./transcriptions:/srv/knowledge/transcriptions
+      - ./models:/app/models
+    environment:
+      - QDRANT_HOST=qdrant
+      - MODEL_PORT=11440
+    depends_on:
+      - qdrant
+      - model
+
+  qdrant:
+    image: qdrant/qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    command: ["./qdrant", "--mem-kb", "8192000"]  # Limit to 8GB memory
+
+  model:
+    image: ollama/ollama
+    ports:
+      - "11440:11434"  # Custom port
+    volumes:
+      - ollama_data:/root/.ollama
+    command: ["ollama", "serve"]
+    deploy:
+      resources:
+        limits:
+          memory: 13G  # Limit memory usage
+        reservations:
+          cpus: '20'  # Reserve half of CPU cores
+
+volumes:
+  qdrant_data:
+  ollama_data:

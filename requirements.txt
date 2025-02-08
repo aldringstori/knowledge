@@ -1,11 +1,19 @@
-streamlit
+# File: ./requirements.txt
+streamlit>=1.29.0
 selenium
 youtube_transcript_api
 pytube
 PyPDF2
 pandas
 googletrans==3.1.0a0
-qdrant-client
-transformers
-torch
+qdrant-client>=1.7.0
 numpy
+transformers>=4.36.0
+torch>=2.0.0
+accelerate>=0.25.0
+bitsandbytes>=0.41.0
+einops>=0.7.0
+sentence-transformers>=2.2.2
+langchain>=0.1.0
+cross-encoder>=0.3.0
+python-dotenv>=1.0.0

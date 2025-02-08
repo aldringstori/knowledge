@@ -1,56 +1,81 @@
-import torch
+# File: ./modules/chat/embeddings.py
 from sentence_transformers import SentenceTransformer
 from typing import List, Optional
+import torch
 from utils.logging_setup import logger
 
-MINILM_MODEL = None
-
-def get_minilm_model():
-    global MINILM_MODEL
-    if MINILM_MODEL is None:
-        MINILM_MODEL = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
-    return MINILM_MODEL
+# Global manager instance
+_manager = None
 
 
+def get_manager():
+    """Get or create global embeddings manager"""
+    global _manager
+    if _manager is None:
+        _manager = EmbeddingsManager()
+    return _manager
+
+
+class EmbeddingsManager:
+    def __init__(self):
+        self.model = None
+        self.model_name = "sentence-transformers/all-mpnet-base-v2"
+
+    def initialize_model(self) -> bool:
+        """Initialize the embeddings model"""
+        try:
+            if self.model is None:
+                self.model = SentenceTransformer(
+                    self.model_name,
+                    device='cpu'
+                )
+            return True
+        except Exception as e:
+            logger.error(f"Error initializing embeddings model: {str(e)}")
+            return False
+
+    def get_embeddings(self, text: str) -> Optional[List[float]]:
+        """Generate embeddings for text"""
+        try:
+            if not self.model and not self.initialize_model():
+                return None
+
+            with torch.no_grad():
+                embeddings = self.model.encode(
+                    text,
+                    convert_to_tensor=True,
+                    show_progress_bar=False,
+                    normalize_embeddings=True
+                )
+
+                if isinstance(embeddings, torch.Tensor):
+                    return embeddings.cpu().numpy().tolist()
+                return list(embeddings)
+
+        except Exception as e:
+            logger.error(f"Error generating embeddings: {str(e)}")
+            return None
+
+    def test_embeddings(self) -> bool:
+        """Test if embeddings system is working"""
+        try:
+            if not self.initialize_model():
+                return False
+
+            test_text = "This is a test sentence."
+            embeddings = self.get_embeddings(test_text)
+
+            return embeddings is not None and len(embeddings) > 0
+
+        except Exception as e:
+            logger.error(f"Error testing embeddings: {str(e)}")
+            return False
+
+
+# Export functions that match the original interface
 def get_embeddings(text: str) -> Optional[List[float]]:
-    try:
-        model = get_minilm_model()
+    return get_manager().get_embeddings(text)
 
-        # Normalize input text
-        text = text.lower().strip()
-
-        with torch.no_grad():
-            # Get embeddings with mean pooling
-            embeddings = model.encode(
-                text,
-                convert_to_tensor=True,
-                show_progress_bar=False,
-                normalize_embeddings=True  # Important for cosine similarity
-            )
-
-            # Convert to list format
-            if isinstance(embeddings, torch.Tensor):
-                embeddings = embeddings.cpu().numpy().tolist()
-
-            logger.info(f"Generated embeddings of length: {len(embeddings)}")
-            return embeddings
-
-    except Exception as e:
-        logger.error(f"Error getting embeddings: {str(e)}")
-        logger.error(traceback.format_exc())
-        return None
 
 def test_embeddings() -> bool:
-    try:
-        logger.info("Starting embeddings test...")
-        model = get_minilm_model()
-        logger.info("Model loaded successfully")
-        test_text = "This is a test sentence."
-        embeddings = get_embeddings(test_text)
-        if embeddings is not None:
-            logger.info(f"Test embeddings length: {len(embeddings)}")
-            return True
-        return False
-    except Exception as e:
-        logger.error(f"Test embeddings failed: {str(e)}")
-        return False
+    return get_manager().test_embeddings()
