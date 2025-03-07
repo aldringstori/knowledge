@@ -5,7 +5,7 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 import time
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
 from pytube import YouTube
-from googletrans import Translator
+from deep_translator import GoogleTranslator
 import streamlit as st
 from .logging_setup import logger
 
@@ -68,7 +68,7 @@ def fetch_transcript(video_url):
     if video_id is None:
         return None
 
-    translator = Translator()
+    translator = GoogleTranslator(source='pt', target='en')
     try:
         transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
         try:
@@ -80,7 +80,7 @@ def fetch_transcript(video_url):
             try:
                 pt_transcript = transcript_list.find_transcript(['pt']).fetch()
                 translated_text = ' '.join(
-                    [translator.translate(entry['text'], src='pt', dest='en').text for entry in pt_transcript])
+                    [translator.translate(entry['text']) for entry in pt_transcript])
                 logger.info(f"Translated Portuguese transcript for video {video_id}")
                 return translated_text
             except Exception as e:

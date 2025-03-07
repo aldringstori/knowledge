@@ -1,25 +1,46 @@
-FROM python:3.10-slim
+# Dockerfile
+FROM ubuntu:24.04 
 
-WORKDIR /app
+WORKDIR /bkp/knowledge
 
-# Install system dependencies
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PATH="/bkp/knowledge/venv_knowledge/bin:$PATH"
+
 RUN apt-get update && apt-get install -y \
+    python3-full \
+    python3-pip \
+    python3-venv \
+    python3-setuptools \
     build-essential \
     curl \
+    git \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements
+RUN ln -sf /usr/bin/python3 /usr/bin/python
+
 COPY requirements.txt .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN python3 -m venv --copies venv_knowledge && \
+    . /bkp/knowledge/venv_knowledge/bin/activate && \
+    pip install --upgrade pip && \
+    pip install --no-cache-dir streamlit>=1.29.0 && \
+    pip install --no-cache-dir torch>=2.0.0 && \
+    pip install --no-cache-dir transformers>=4.36.0 && \
+    pip install --no-cache-dir sentence-transformers>=2.2.2 && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
 COPY . .
+RUN mkdir -p transcriptions
 
-# Create necessary directories
-RUN mkdir -p /srv/knowledge/transcriptions
+COPY start_knowledge.sh /usr/local/bin/start_knowledge.sh
+RUN chmod +x /usr/local/bin/start_knowledge.sh
+
+RUN chmod -R 755 /bkp/knowledge/venv_knowledge/bin
 
 EXPOSE 8501
 
-CMD ["streamlit", "run", "knowledge.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["/usr/local/bin/start_knowledge.sh"]

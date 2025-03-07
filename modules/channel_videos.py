@@ -2,12 +2,11 @@ import streamlit as st
 import pandas as pd
 from utils.logging_setup import logger
 from utils.common import (
-    get_video_id_from_url,
-    get_video_title,
-    fetch_transcript,
-    save_transcript_to_text,
-    create_folder
+    create_folder,
+    sanitize_filename,
+    get_video_id_from_url
 )
+from utils.table_utils import render_with_progress
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options as ChromeOptions
@@ -67,7 +66,7 @@ def fetch_channel_videos(channel_url):
                 if url and title and 'watch?v=' in url:
                     video_data.append({
                         'url': url,
-                        'title': title
+                        'title': sanitize_filename(title)
                     })
             except Exception as e:
                 logger.error(f"Error processing video element: {str(e)}")
@@ -84,54 +83,21 @@ def fetch_channel_videos(channel_url):
 
 
 def render_url(channel_url: str, config: dict):
-    """Process a channel URL"""
-    try:
-        channel_name = get_channel_name(channel_url)
-        folder_name = os.path.join(config['download_folder'], channel_name)
-        create_folder(folder_name)
-
-        videos = fetch_channel_videos(channel_url)
-        if not videos:
-            st.error("No videos found in channel")
-            return False
-
-        st.info(f"Found {len(videos)} videos in channel")
-        progress_bar = st.progress(0)
-
-        successful = 0
-        for i, video in enumerate(videos):
-            try:
-                transcript = fetch_transcript(video['url'])
-                if transcript:
-                    save_path = save_transcript_to_text(
-                        transcript,
-                        video['title'],
-                        folder_name
-                    )
-                    if save_path:
-                        successful += 1
-                progress_bar.progress((i + 1) / len(videos))
-            except Exception as e:
-                logger.error(f"Error processing video {video['title']}: {str(e)}")
-                continue
-
-        if successful > 0:
-            st.success(f"Successfully downloaded {successful} out of {len(videos)} transcripts to {folder_name}")
-            return True
-        else:
-            st.error("Failed to download any transcripts")
-            return False
-
-    except Exception as e:
-        logger.error(f"Error processing channel: {str(e)}")
-        st.error(f"Error processing channel: {str(e)}")
-        return False
+    """Process a channel URL - maintained for backward compatibility"""
+    config['name_extractor'] = get_channel_name
+    return render_with_progress(
+        fetch_channel_videos,
+        channel_url,
+        config,
+        item_type='video'
+    )
 
 
 def render(config):
-    """Legacy render method for backward compatibility"""
+    """Render method for channel videos"""
     st.header("Channel Videos Transcripts")
     channel_url = st.text_input("Enter YouTube Channel URL:")
+
     if st.button("Download Channel Transcripts"):
         if channel_url:
             with st.spinner("Downloading channel transcripts..."):

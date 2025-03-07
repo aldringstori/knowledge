@@ -6,10 +6,9 @@ from utils.logging_setup import logger
 from utils.common import (
     create_folder,
     sanitize_filename,
-    fetch_transcript,
-    save_transcript_to_text,
     get_video_id_from_url
 )
+from utils.table_utils import render_with_progress
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options as ChromeOptions
@@ -36,6 +35,12 @@ def setup_chrome_driver():
     except Exception as e:
         logger.error(f"Chrome WebDriver setup failed: {str(e)}")
         raise
+
+
+def get_playlist_title(url):
+    """Extract playlist title from info"""
+    playlist_info = get_playlist_info(url)
+    return playlist_info[0] if playlist_info[0] else f"Playlist_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
 
 def get_playlist_info(playlist_url):
@@ -70,7 +75,7 @@ def get_playlist_info(playlist_url):
         if not playlist_title:
             playlist_title = f"Playlist_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
 
-        # Scroll to load all videos
+        # Find videos and scroll to load all
         scroll_pause_time = 2
         scroll_timeout = 120
         scroll_start_time = time.time()
@@ -93,7 +98,6 @@ def get_playlist_info(playlist_url):
                 if elements:
                     for element in elements:
                         try:
-                            # Get URL and title
                             url = element.get_attribute("href")
                             if not url:
                                 url = element.find_element(By.CSS_SELECTOR, "a").get_attribute("href")
@@ -113,7 +117,6 @@ def get_playlist_info(playlist_url):
                             logger.error(f"Error processing video element: {str(e)}")
                             continue
 
-            # Check if scrolling should stop
             new_height = driver.execute_script("return document.documentElement.scrollHeight")
             if new_height == last_height or time.time() - scroll_start_time > scroll_timeout:
                 break
@@ -136,82 +139,28 @@ def get_playlist_info(playlist_url):
         return None, None
 
 
-def process_playlist_video(video_data, folder_name):
-    """Process a single video from the playlist."""
-    try:
-        logger.info(f"Processing video: {video_data['title']}")
-        transcript = fetch_transcript(video_data['url'])
-
-        if transcript:
-            save_path = save_transcript_to_text(
-                transcript,
-                video_data['title'],
-                folder_name
-            )
-            if save_path:
-                return True, f"Success: {video_data['title']}"
-            return False, f"Failed to save transcript: {video_data['title']}"
-        return False, f"No transcript available: {video_data['title']}"
-
-    except Exception as e:
-        error_msg = f"Error processing {video_data['title']}: {str(e)}"
-        logger.error(error_msg)
-        return False, error_msg
+def fetch_playlist_videos(playlist_url):
+    """Fetch videos from playlist - wrapper for get_playlist_info"""
+    _, videos = get_playlist_info(playlist_url)
+    return videos
 
 
 def render_url(playlist_url: str, config: dict):
-    """Process a playlist URL"""
-    try:
-        logger.info(f"Processing playlist URL: {playlist_url}")
-        status_placeholder = st.empty()
-        status_placeholder.info("Loading playlist data... This may take a few moments.")
-
-        playlist_title, videos_data = get_playlist_info(playlist_url)
-        if not playlist_title or not videos_data:
-            st.error("Failed to fetch playlist information")
-            return False
-
-        status_placeholder.success(f"Found {len(videos_data)} videos in playlist")
-        folder_name = os.path.join(config['download_folder'], playlist_title)
-        create_folder(folder_name)
-
-        status_data = []
-        progress_bar = st.progress(0)
-        status_table = st.empty()
-
-        for i, video_data in enumerate(videos_data):
-            success, message = process_playlist_video(video_data, folder_name)
-            status_data.append({
-                'Title': video_data['title'],
-                'Status': '✅' if success else '❌',
-                'Message': message
-            })
-
-            progress_bar.progress((i + 1) / len(videos_data))
-            status_table.dataframe(pd.DataFrame(status_data))
-
-        successful = sum(1 for s in status_data if s['Status'] == '✅')
-        st.success(f"Downloaded {successful} out of {len(videos_data)} transcripts to {folder_name}")
-
-        # Export report option
-        if st.button("Download Summary Report"):
-            df = pd.DataFrame(status_data)
-            report_path = os.path.join(folder_name, f"{playlist_title}_report.csv")
-            df.to_csv(report_path, index=False)
-            st.success(f"Summary report saved to {report_path}")
-
-        return True
-
-    except Exception as e:
-        logger.error(f"Error processing playlist: {str(e)}")
-        st.error(f"Error processing playlist: {str(e)}")
-        return False
+    """Process a playlist URL - maintained for backward compatibility"""
+    config['name_extractor'] = get_playlist_title
+    return render_with_progress(
+        fetch_playlist_videos,
+        playlist_url,
+        config,
+        item_type='video'
+    )
 
 
 def render(config):
-    """Legacy render method for backward compatibility"""
+    """Render method for playlist"""
     st.header("Playlist Transcripts")
     playlist_url = st.text_input("Enter YouTube Playlist URL:")
+
     if st.button("Download Playlist Transcripts"):
         if playlist_url:
             with st.spinner("Downloading playlist transcripts..."):

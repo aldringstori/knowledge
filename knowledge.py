@@ -1,11 +1,7 @@
-# File: knowledge.py
 import streamlit as st
-import json
 from datetime import datetime
-import os
 import time
-import pandas as pd
-import glob
+import os
 
 from utils.logging_setup import (
     logger,
@@ -14,6 +10,13 @@ from utils.logging_setup import (
     clear_log_file,
     clear_session_logs
 )
+from utils.config import (
+    get_config,
+    save_config,
+    update_config,
+    delete_files,
+    get_transcript_files
+)
 from modules import (
     chat,
     single_video,
@@ -21,37 +24,9 @@ from modules import (
     channel_videos,
     channel_shorts,
     playlist,
-    file_converter
+    file_converter,
+    summarize  # Import the new summarize module
 )
-
-
-def load_config():
-    config_file = "settings.json"
-    try:
-        with open(config_file, 'r') as f:
-            logger.info("Loading configuration from settings.json")
-            return json.load(f)
-    except FileNotFoundError:
-        logger.warning("Configuration file not found. Creating a new one with default settings.")
-        config = {
-            "download_folder": os.path.join(os.getcwd(), "Transcriptions"),
-            "model_path": os.path.join(os.getcwd(), "models"),
-            "qdrant_path": os.path.join(os.getcwd(), "qdrant_data")
-        }
-        with open(config_file, 'w') as f:
-            json.dump(config, f)
-        return config
-
-
-def save_config(config):
-    config_file = "settings.json"
-    try:
-        with open(config_file, 'w') as f:
-            json.dump(config, f, indent=4)
-            logger.info("Configuration saved successfully")
-    except Exception as e:
-        logger.error(f"Error saving configuration: {str(e)}")
-
 
 def detect_url_type(url: str) -> str:
     """Detect the type of YouTube URL"""
@@ -71,98 +46,43 @@ def detect_url_type(url: str) -> str:
         return 'video'
     return None
 
-
 def render_ingested_files_tab():
     """Render the ingested files tab"""
     st.header("Ingested Files")
 
-    transcript_path = "/srv/knowledge/transcriptions"
-    qdrant_path = "/srv/knowledge/qdrant_data"
+    # Load configuration
+    config = get_config()
+    transcript_path = config.get("download_folder")
+    qdrant_path = config.get("qdrant_path")
 
-    # Add refresh button
+    # Verify paths exist
+    if not all([transcript_path, qdrant_path]):
+        st.error("Configuration error: Missing required paths. Please check settings.json")
+        return
+
+    # Add refresh and delete buttons
     col1, col2 = st.columns([1, 4])
     with col1:
         if st.button("🔄 Refresh Files"):
             st.rerun()
+
     with col2:
         if st.button("🗑️ Delete All Files"):
-            try:
-                # Clear transcripts directory
-                files = glob.glob(os.path.join(transcript_path, "**/*.txt"), recursive=True)
-                for f in files:
-                    os.remove(f)
-                # Clear Qdrant database
-                if os.path.exists(qdrant_path):
-                    for item in os.listdir(qdrant_path):
-                        item_path = os.path.join(qdrant_path, item)
-                        if os.path.isfile(item_path):
-                            os.remove(item_path)
-                st.success("All files deleted successfully!")
+            success, message = delete_files()
+            if success:
+                st.success(message)
                 st.rerun()
-            except Exception as e:
-                st.error(f"Error deleting files: {str(e)}")
+            else:
+                st.error(message)
 
-    try:
-        # Get all text files
-        files = glob.glob(os.path.join(transcript_path, "**/*.txt"), recursive=True)
-
-        if not files:
-            st.info("No transcription files found.")
-            return
-
-        # Create a DataFrame to display files
-        file_data = []
-        total_size = 0
-
-        for file_path in files:
-            try:
-                stat = os.stat(file_path)
-                size_kb = round(stat.st_size / 1024, 2)
-                total_size += size_kb
-
-                # Read first line for title/content preview
-                with open(file_path, 'r', encoding='utf-8') as f:
-                    first_line = f.readline().strip()[:50] + "..." if len(
-                        f.readline().strip()) > 50 else f.readline().strip()
-
-                file_data.append({
-                    'Filename': os.path.basename(file_path),
-                    'Preview': first_line,
-                    'Size (KB)': size_kb,
-                    'Modified': datetime.fromtimestamp(stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S'),
-                    'Path': os.path.relpath(file_path, transcript_path)
-                })
-            except Exception as e:
-                logger.error(f"Error processing file {file_path}: {str(e)}")
-                continue
-
-        if file_data:
-            # Show summary
-            st.info(f"Found {len(file_data)} files (Total size: {round(total_size / 1024, 2)} MB)")
-
-            # Create DataFrame
-            df = pd.DataFrame(file_data)
-
-            # Display files in a table
-            st.dataframe(
-                df,
-                column_config={
-                    "Filename": st.column_config.TextColumn("Filename", width="medium"),
-                    "Preview": st.column_config.TextColumn("Content Preview", width="large"),
-                    "Size (KB)": st.column_config.NumberColumn("Size (KB)", format="%.2f"),
-                    "Modified": st.column_config.TextColumn("Last Modified", width="medium"),
-                    "Path": st.column_config.TextColumn("Path", width="medium")
-                },
-                hide_index=True,
-                use_container_width=True
-            )
-        else:
-            st.warning("No files could be processed.")
-
-    except Exception as e:
-        st.error(f"Error reading ingested files: {str(e)}")
-        logger.error(f"Error in ingested files tab: {str(e)}")
-
+    # Display current files
+    files = get_transcript_files()
+    if files:
+        st.subheader("Current Transcription Files:")
+        for f in files:
+            st.text(os.path.relpath(f, transcript_path))
+    else:
+        st.info("No transcription files found.")
 
 def render_logs_tab():
     """Render the logs tab with most recent logs first"""
@@ -217,7 +137,6 @@ def render_logs_tab():
         time.sleep(2)  # Wait 2 seconds
         st.rerun()
 
-
 def main():
     st.title("YouTube Transcript Assistant")
 
@@ -242,13 +161,13 @@ def main():
                     st.error("Failed to clear log file")
 
     # Load configuration
-    global config
-    config = load_config()
+    config = get_config()
 
-    # Main content area with tabs
-    tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    # Main content area with tabs - added the new Summarize tab
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
         "Chat",
         "Download",
+        "Summarize",  # New tab
         "File Converter",
         "Ingested Files",
         "Logs"
@@ -259,7 +178,7 @@ def main():
 
     with tab2:
         st.header("Download YouTube Content")
-        url = st.text_input("Enter YouTube URL")
+        url = st.text_input("Enter YouTube URL", key="download_url")
         process_button = st.button("Process and Download")
 
         if url and process_button:
@@ -293,19 +212,22 @@ def main():
                 st.error("Invalid or unsupported YouTube URL")
 
     with tab3:
+        # Render the summarize tab using the module
+        summarize.render(config)
+
+    with tab4:
         st.header("File Converter")
         file_converter.render(config)
 
-    with tab4:
+    with tab5:
         render_ingested_files_tab()
 
-    with tab5:
+    with tab6:
         render_logs_tab()
 
-    # Save config at the end
+    # Save any changes to config
     save_config(config)
     logger.info("Configuration saved.")
-
 
 if __name__ == "__main__":
     main()
