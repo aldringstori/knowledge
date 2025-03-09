@@ -735,3 +735,284 @@
 2025-03-07 13:09:00,462 - INFO - Received 2303 characters of response...
 2025-03-07 13:09:03,073 - INFO - Response generation complete, received 2332 characters
 2025-03-07 13:09:03,221 - INFO - Configuration saved.
+2025-03-07 14:02:31,705 - INFO - Removed existing Qdrant lock file
+2025-03-07 14:02:31,726 - INFO - Existing collections: ['transcripts']
+2025-03-07 14:02:31,948 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-07 14:02:31,988 - INFO - Found 6 models: phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-07 14:02:32,135 - INFO - Configuration saved.
+2025-03-07 14:02:32,984 - INFO - Removed existing Qdrant lock file
+2025-03-07 14:02:33,007 - INFO - Existing collections: ['transcripts']
+2025-03-07 14:02:33,222 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-07 14:02:33,264 - INFO - Found 6 models: phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-07 14:02:34,048 - INFO - Model set to deepseek-r1:8b
+2025-03-07 14:02:34,049 - INFO - Testing connection to deepseek-r1:8b...
+2025-03-07 14:02:34,054 - INFO - Ollama server is accessible, attempting to load model...
+2025-03-07 14:02:34,055 - INFO - Using 60s timeout for deepseek-r1:8b (category: small)
+2025-03-07 14:02:34,055 - INFO - Sending test request to deepseek-r1:8b...
+2025-03-07 14:03:07,900 - INFO - Model responded in 33.85 seconds
+2025-03-07 14:03:07,901 - INFO - Successfully connected to deepseek-r1:8b
+2025-03-07 14:03:07,901 - WARNING - Model deepseek-r1:8b took 33.85s to respond. This may indicate slow performance.
+2025-03-07 14:03:07,902 - INFO - Transcript length: 6 words
+2025-03-07 14:03:07,907 - INFO - Generating with model deepseek-r1:8b, timeout=180s
+2025-03-07 14:03:43,879 - INFO - Received 93 characters of response...
+2025-03-07 14:03:48,897 - INFO - Received 155 characters of response...
+2025-03-07 14:03:54,167 - INFO - Received 253 characters of response...
+2025-03-07 14:03:59,511 - INFO - Received 351 characters of response...
+2025-03-07 14:04:04,546 - INFO - Received 435 characters of response...
+2025-03-07 14:04:09,668 - INFO - Received 526 characters of response...
+2025-03-07 14:04:14,764 - INFO - Received 623 characters of response...
+2025-03-07 14:04:20,059 - INFO - Received 685 characters of response...
+2025-03-07 14:04:25,374 - INFO - Received 791 characters of response...
+2025-03-07 14:04:30,479 - INFO - Received 892 characters of response...
+2025-03-07 14:04:35,593 - INFO - Received 954 characters of response...
+2025-03-07 14:04:40,785 - INFO - Received 1049 characters of response...
+2025-03-07 14:04:46,138 - INFO - Received 1166 characters of response...
+2025-03-07 14:04:51,183 - INFO - Received 1217 characters of response...
+2025-03-07 14:04:56,191 - INFO - Received 1319 characters of response...
+2025-03-07 14:05:01,310 - INFO - Received 1421 characters of response...
+2025-03-07 14:05:06,385 - INFO - Received 1488 characters of response...
+2025-03-07 14:05:11,569 - INFO - Received 1601 characters of response...
+2025-03-07 14:05:16,664 - INFO - Received 1703 characters of response...
+2025-03-07 14:05:21,765 - INFO - Received 1765 characters of response...
+2025-03-07 14:05:26,898 - INFO - Received 1871 characters of response...
+2025-03-07 14:05:31,984 - INFO - Received 1956 characters of response...
+2025-03-07 14:05:37,720 - INFO - Received 1987 characters of response...
+2025-03-07 14:05:42,931 - INFO - Received 2059 characters of response...
+2025-03-07 14:05:49,887 - INFO - Received 2102 characters of response...
+2025-03-07 14:05:55,109 - INFO - Received 2142 characters of response...
+2025-03-07 14:06:00,271 - INFO - Received 2198 characters of response...
+2025-03-07 14:06:05,516 - INFO - Received 2226 characters of response...
+2025-03-07 14:06:10,867 - INFO - Received 2281 characters of response...
+2025-03-07 14:06:15,868 - INFO - Received 2378 characters of response...
+2025-03-07 14:06:20,881 - INFO - Received 2426 characters of response...
+2025-03-07 14:06:26,199 - INFO - Received 2501 characters of response...
+2025-03-07 14:06:31,274 - INFO - Received 2595 characters of response...
+2025-03-07 14:06:37,073 - INFO - Received 2655 characters of response...
+2025-03-07 14:06:42,278 - INFO - Received 2717 characters of response...
+2025-03-07 14:06:47,362 - INFO - Received 2805 characters of response...
+2025-03-07 14:06:52,404 - INFO - Received 2852 characters of response...
+2025-03-07 14:06:57,736 - INFO - Received 2917 characters of response...
+2025-03-07 14:07:04,743 - INFO - Received 2993 characters of response...
+2025-03-07 14:07:09,988 - INFO - Received 3070 characters of response...
+2025-03-07 14:07:15,028 - INFO - Received 3168 characters of response...
+2025-03-07 14:07:20,324 - INFO - Received 3230 characters of response...
+2025-03-07 14:07:25,528 - INFO - Received 3308 characters of response...
+2025-03-07 14:07:30,973 - INFO - Received 3368 characters of response...
+2025-03-07 14:07:36,138 - INFO - Received 3400 characters of response...
+2025-03-07 14:07:41,574 - INFO - Received 3481 characters of response...
+2025-03-07 14:07:43,559 - INFO - Response generation complete, received 3482 characters
+2025-03-07 14:07:43,720 - INFO - Configuration saved.
+2025-03-08 00:38:10,303 - INFO - Removed existing Qdrant lock file
+2025-03-08 00:38:10,578 - INFO - Existing collections: ['transcripts']
+2025-03-08 00:38:10,952 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-08 00:38:10,971 - INFO - Loading embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-03-08 00:38:11,036 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-03-08 00:38:16,122 - INFO - Embedding model dimensions: 384
+2025-03-08 00:38:16,261 - INFO - Test embedding dimension: 384
+2025-03-08 00:38:16,572 - INFO - Found 6 models: phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-08 00:38:16,742 - INFO - Configuration saved.
+2025-03-08 11:11:32,927 - INFO - Removed existing Qdrant lock file
+2025-03-08 11:11:33,006 - INFO - Existing collections: ['transcripts']
+2025-03-08 11:11:33,211 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-08 11:11:33,228 - INFO - Loading embedding model: sentence-transformers/all-MiniLM-L6-v2
+2025-03-08 11:11:33,235 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-03-08 11:11:47,249 - INFO - Embedding model dimensions: 384
+2025-03-08 11:11:47,294 - INFO - Test embedding dimension: 384
+2025-03-08 11:11:47,465 - INFO - Found 6 models: phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-08 11:11:47,710 - INFO - Configuration saved.
+2025-03-08 11:28:56,492 - INFO - Removed existing Qdrant lock file
+2025-03-08 11:28:56,510 - INFO - Existing collections: ['transcripts']
+2025-03-08 11:28:56,683 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-08 11:28:56,725 - INFO - Found 6 models: phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-08 11:28:56,984 - INFO - Removed existing Qdrant lock file
+2025-03-08 11:28:57,003 - INFO - Existing collections: ['transcripts']
+2025-03-08 11:28:57,206 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-08 11:28:57,233 - INFO - Creating folder: /server/knowledge/transcriptions/alialqaraghuli
+2025-03-08 11:29:19,664 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=KSXKEDykysU
+2025-03-08 11:29:20,705 - INFO - Fetched English transcript for video KSXKEDykysU
+2025-03-08 11:29:20,706 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/The 7 Levels of Productivity (Which One Are You).txt
+2025-03-08 11:29:20,987 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=iZ6wYdOyKwQ
+2025-03-08 11:29:22,123 - INFO - Fetched English transcript for video iZ6wYdOyKwQ
+2025-03-08 11:29:22,124 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/You're not late. How to Make 2025 a Year You're Proud Of.txt
+2025-03-08 11:29:22,130 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=DA0try_SxdM
+2025-03-08 11:29:22,967 - INFO - Fetched English transcript for video DA0try_SxdM
+2025-03-08 11:29:22,968 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/4 ADHD Habits to Make 2025 Hyper Productive.txt
+2025-03-08 11:29:22,978 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=gNr9ASQJf1c
+2025-03-08 11:29:23,795 - INFO - Fetched English transcript for video gNr9ASQJf1c
+2025-03-08 11:29:23,796 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/Can’t eat the frog You might have ADHD.txt
+2025-03-08 11:29:23,806 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=BFwwR6R9GXw
+2025-03-08 11:29:24,727 - INFO - Fetched English transcript for video BFwwR6R9GXw
+2025-03-08 11:29:24,728 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/Stop Playing ADHD on Hard Mode.txt
+2025-03-08 11:29:24,737 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=QK3tn-0EM3c
+2025-03-08 11:29:25,718 - INFO - Fetched English transcript for video QK3tn-0EM3c
+2025-03-08 11:29:25,719 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/Master Google Calendar = Master your Productivity.txt
+2025-03-08 11:29:25,725 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=FQYPXUkvNRo
+2025-03-08 11:29:26,608 - INFO - Fetched English transcript for video FQYPXUkvNRo
+2025-03-08 11:29:26,609 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/Watch this if you procrastinate.txt
+2025-03-08 11:29:26,618 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=sKzkoU3BdL4
+2025-03-08 11:29:27,542 - INFO - Fetched English transcript for video sKzkoU3BdL4
+2025-03-08 11:29:27,543 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/I built a system for quickly getting out of a rut.txt
+2025-03-08 11:29:27,552 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=ji7e0vXJFnc
+2025-03-08 11:29:28,406 - INFO - Fetched English transcript for video ji7e0vXJFnc
+2025-03-08 11:29:28,407 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/How to actually set SYSTEMS instead of goals.txt
+2025-03-08 11:29:28,417 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=iBcW--qtkxU
+2025-03-08 11:29:29,327 - INFO - Fetched English transcript for video iBcW--qtkxU
+2025-03-08 11:29:29,328 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/Why you stay up late and how to fix it.txt
+2025-03-08 11:29:29,338 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=z3kCvamTDlA
+2025-03-08 11:29:30,426 - INFO - Fetched English transcript for video z3kCvamTDlA
+2025-03-08 11:29:30,427 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/Why you can't finish what you start and how to fix it.txt
+2025-03-08 11:29:30,438 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=YEnBW4hzlGc
+2025-03-08 11:29:31,499 - INFO - Fetched English transcript for video YEnBW4hzlGc
+2025-03-08 11:29:31,501 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/How to build lasting routines with ADHD.txt
+2025-03-08 11:29:31,511 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=3xcJGEeX9gM
+2025-03-08 11:29:32,506 - INFO - Fetched English transcript for video 3xcJGEeX9gM
+2025-03-08 11:29:32,507 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/How to actually stop procrastinating.txt
+2025-03-08 11:29:32,518 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=QYPBrbpT4hY
+2025-03-08 11:29:33,437 - INFO - Fetched English transcript for video QYPBrbpT4hY
+2025-03-08 11:29:33,439 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/After 27 years, I finally beat productivity! (Simplest ADHD System).txt
+2025-03-08 11:29:33,450 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=PWvHP6Pss5Q
+2025-03-08 11:29:34,364 - INFO - Fetched English transcript for video PWvHP6Pss5Q
+2025-03-08 11:29:34,365 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/Why You Can't Focus and How to Fix It.txt
+2025-03-08 11:29:34,376 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=zhicsTc5Gso
+2025-03-08 11:29:35,341 - INFO - Fetched English transcript for video zhicsTc5Gso
+2025-03-08 11:29:35,342 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/How to Make Big Decisions.txt
+2025-03-08 11:29:35,353 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=KYqUEEWPSIo
+2025-03-08 11:29:36,267 - INFO - Fetched English transcript for video KYqUEEWPSIo
+2025-03-08 11:29:36,269 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/I Built a System for Remembering Everything.txt
+2025-03-08 11:29:36,278 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=nfRatea1Zxc
+2025-03-08 11:29:37,187 - INFO - Fetched English transcript for video nfRatea1Zxc
+2025-03-08 11:29:37,187 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/Use Anti-Fragile Thinking to Create the Life You Want.txt
+2025-03-08 11:29:37,194 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=8vzZD2hj1Gk
+2025-03-08 11:29:38,162 - INFO - Fetched English transcript for video 8vzZD2hj1Gk
+2025-03-08 11:29:38,163 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/4 ADHD Techniques to Overcome Laziness.txt
+2025-03-08 11:29:38,172 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=ssi39F7bTLg
+2025-03-08 11:29:39,164 - INFO - Fetched English transcript for video ssi39F7bTLg
+2025-03-08 11:29:39,165 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/Double Your Productivity using this ADHD System (Invented by a Space Systems Engineer).txt
+2025-03-08 11:29:39,172 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=kDJEyhjJqdw
+2025-03-08 11:29:39,997 - INFO - Fetched English transcript for video kDJEyhjJqdw
+2025-03-08 11:29:39,998 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/10 Lessons from Elon Musk's Biography.txt
+2025-03-08 11:29:40,009 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=2xAMs-ZwCwI
+2025-03-08 11:29:40,948 - INFO - Fetched English transcript for video 2xAMs-ZwCwI
+2025-03-08 11:29:40,949 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/How to Think in First Principles.txt
+2025-03-08 11:29:40,960 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=UcEamZ-8fNY
+2025-03-08 11:29:42,002 - INFO - Fetched English transcript for video UcEamZ-8fNY
+2025-03-08 11:29:42,003 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/How to Transform Your Life in 3-6 Months.txt
+2025-03-08 11:29:42,014 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=h5BKiJjVjYM
+2025-03-08 11:29:42,826 - INFO - Fetched English transcript for video h5BKiJjVjYM
+2025-03-08 11:29:42,827 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/This Book is Worth a $5,000 Productivity Course.txt
+2025-03-08 11:29:42,837 - INFO - Extracting video ID from URL: https://www.youtube.com/watch?v=kzAuPDHRSP8
+2025-03-08 11:29:43,839 - INFO - Fetched English transcript for video kzAuPDHRSP8
+2025-03-08 11:29:43,840 - INFO - Saving transcript to /server/knowledge/transcriptions/alialqaraghuli/How to Be Effortlessly Disciplined.txt
+2025-03-08 11:29:43,895 - INFO - Found 6 models: phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-08 11:29:44,062 - ERROR - Error saving configuration: Object of type function is not JSON serializable
+2025-03-08 11:29:44,062 - INFO - Configuration saved.
+2025-03-09 00:12:19,589 - INFO - Removed existing Qdrant lock file
+2025-03-09 00:12:19,606 - INFO - Existing collections: ['transcripts']
+2025-03-09 00:12:19,784 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 00:12:25,164 - INFO - Removed existing Qdrant lock file
+2025-03-09 00:12:25,179 - INFO - Existing collections: ['transcripts']
+2025-03-09 00:12:25,343 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 00:12:25,391 - INFO - Test embedding dimension: 384
+2025-03-09 00:12:25,408 - INFO - Found 6 models: phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-09 00:12:25,553 - INFO - Configuration saved.
+2025-03-09 00:12:26,724 - INFO - Removed existing Qdrant lock file
+2025-03-09 00:12:26,738 - INFO - Existing collections: ['transcripts']
+2025-03-09 00:12:26,916 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 11:11:20,032 - INFO - Removed existing Qdrant lock file
+2025-03-09 11:11:20,172 - INFO - Existing collections: ['transcripts']
+2025-03-09 11:11:20,513 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 11:11:22,909 - INFO - Removed existing Qdrant lock file
+2025-03-09 11:11:22,929 - INFO - Existing collections: ['transcripts']
+2025-03-09 11:11:23,101 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 11:11:23,279 - INFO - Test embedding dimension: 384
+2025-03-09 11:11:23,512 - INFO - Found 9 models: qwen2.5:7b, qwen2.5:14b, qwq:latest, phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-09 11:11:23,764 - INFO - Configuration saved.
+2025-03-09 11:11:25,741 - INFO - Removed existing Qdrant lock file
+2025-03-09 11:11:25,758 - INFO - Existing collections: ['transcripts']
+2025-03-09 11:11:25,947 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 11:11:29,052 - INFO - Removed existing Qdrant lock file
+2025-03-09 11:11:29,069 - INFO - Existing collections: ['transcripts']
+2025-03-09 11:11:29,247 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 11:11:55,439 - INFO - Removed existing Qdrant lock file
+2025-03-09 11:11:55,459 - INFO - Existing collections: ['transcripts']
+2025-03-09 11:11:55,642 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 11:11:55,674 - INFO - Test embedding dimension: 384
+2025-03-09 11:11:55,691 - INFO - Found 9 models: qwen2.5:7b, qwen2.5:14b, qwq:latest, phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-09 11:11:55,827 - INFO - Configuration saved.
+2025-03-09 11:12:03,012 - INFO - Removed existing Qdrant lock file
+2025-03-09 11:12:03,030 - INFO - Existing collections: ['transcripts']
+2025-03-09 11:12:03,206 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 11:12:35,953 - INFO - Removed existing Qdrant lock file
+2025-03-09 11:12:35,968 - INFO - Existing collections: ['transcripts']
+2025-03-09 11:12:36,176 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 11:12:36,223 - INFO - Test embedding dimension: 384
+2025-03-09 11:12:36,248 - INFO - Found 9 models: qwen2.5:7b, qwen2.5:14b, qwq:latest, phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-09 11:12:36,381 - INFO - Configuration saved.
+2025-03-09 11:12:37,797 - INFO - Removed existing Qdrant lock file
+2025-03-09 11:12:37,812 - INFO - Existing collections: ['transcripts']
+2025-03-09 11:12:38,004 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 12:41:58,883 - INFO - Removed existing Qdrant lock file
+2025-03-09 12:41:59,295 - INFO - Existing collections: ['transcripts']
+2025-03-09 12:41:59,593 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 12:42:02,570 - INFO - Test embedding dimension: 384
+2025-03-09 12:42:02,970 - INFO - Found 9 models: qwen2.5:7b, qwen2.5:14b, qwq:latest, phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-09 12:42:03,308 - INFO - Configuration saved.
+2025-03-09 12:42:27,101 - INFO - Removed existing Qdrant lock file
+2025-03-09 12:42:27,121 - INFO - Existing collections: ['transcripts']
+2025-03-09 12:42:27,509 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 14:14:17,405 - INFO - Removed existing Qdrant lock file
+2025-03-09 14:14:17,422 - INFO - Existing collections: ['transcripts']
+2025-03-09 14:14:17,580 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 14:31:30,081 - INFO - Removed existing Qdrant lock file
+2025-03-09 14:31:30,106 - INFO - Existing collections: ['transcripts']
+2025-03-09 14:31:30,343 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 14:31:30,350 - INFO - Fetching available models from Ollama
+2025-03-09 14:31:30,367 - INFO - Found 9 models: qwen2.5:7b, qwen2.5:14b, qwq:latest, phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-09 14:31:30,368 - INFO - Updated available models: qwen2.5:7b, qwen2.5:14b, qwq:latest, phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-09 14:31:30,402 - INFO - Found 9 models: qwen2.5:7b, qwen2.5:14b, qwq:latest, phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-09 14:31:30,561 - INFO - Configuration saved.
+2025-03-09 14:31:33,073 - INFO - Removed existing Qdrant lock file
+2025-03-09 14:31:33,090 - INFO - Existing collections: ['transcripts']
+2025-03-09 14:31:33,266 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 14:31:33,275 - INFO - Fetching available models from Ollama
+2025-03-09 14:31:33,296 - INFO - Found 9 models: qwen2.5:7b, qwen2.5:14b, qwq:latest, phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-09 14:31:33,297 - INFO - Updated available models: qwen2.5:7b, qwen2.5:14b, qwq:latest, phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-09 14:31:33,331 - INFO - Found 9 models: qwen2.5:7b, qwen2.5:14b, qwq:latest, phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-09 14:31:33,499 - INFO - Configuration saved.
+2025-03-09 14:31:40,914 - INFO - Removed existing Qdrant lock file
+2025-03-09 14:31:40,934 - INFO - Existing collections: ['transcripts']
+2025-03-09 14:31:41,105 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 14:31:41,117 - INFO - Model set to qwq:latest
+2025-03-09 14:31:41,141 - INFO - Found 9 models: qwen2.5:7b, qwen2.5:14b, qwq:latest, phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-09 14:31:41,275 - INFO - Configuration saved.
+2025-03-09 14:31:45,402 - INFO - Removed existing Qdrant lock file
+2025-03-09 14:31:45,422 - INFO - Existing collections: ['transcripts']
+2025-03-09 14:31:45,589 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 14:31:45,598 - INFO - Model set to qwq:latest
+2025-03-09 14:31:45,600 - INFO - Testing connection to qwq:latest...
+2025-03-09 14:31:45,603 - INFO - Ollama server is accessible, attempting to load model...
+2025-03-09 14:31:45,603 - INFO - Using 120s timeout for qwq:latest (category: large)
+2025-03-09 14:31:45,604 - INFO - Sending test request to qwq:latest...
+2025-03-09 14:33:45,683 - ERROR - Timeout while connecting to model qwq:latest after 120s.
+2025-03-09 14:33:45,684 - WARNING - This model may be too large or resource-intensive for your hardware.
+2025-03-09 14:33:45,712 - INFO - Found 9 models: qwen2.5:7b, qwen2.5:14b, qwq:latest, phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-09 14:33:45,851 - INFO - Configuration saved.
+2025-03-09 14:37:46,475 - INFO - Removed existing Qdrant lock file
+2025-03-09 14:37:46,495 - INFO - Existing collections: ['transcripts']
+2025-03-09 14:37:46,655 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 14:37:46,662 - INFO - Model set to phi3:latest
+2025-03-09 14:37:46,679 - INFO - Found 9 models: qwen2.5:7b, qwen2.5:14b, qwq:latest, phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-09 14:37:46,830 - INFO - Configuration saved.
+2025-03-09 14:37:51,510 - INFO - Removed existing Qdrant lock file
+2025-03-09 14:37:51,526 - INFO - Existing collections: ['transcripts']
+2025-03-09 14:37:51,882 - ERROR - Error initializing Qdrant client: 'CollectionParams' object has no attribute 'size'
+2025-03-09 14:37:51,893 - INFO - Model set to phi3:latest
+2025-03-09 14:37:51,894 - INFO - Testing connection to phi3:latest...
+2025-03-09 14:37:51,899 - INFO - Ollama server is accessible, attempting to load model...
+2025-03-09 14:37:51,899 - INFO - Using 120s timeout for phi3:latest (category: large)
+2025-03-09 14:37:51,899 - INFO - Sending test request to phi3:latest...
+2025-03-09 14:38:33,668 - INFO - Model responded in 41.77 seconds
+2025-03-09 14:38:33,668 - INFO - Successfully connected to phi3:latest
+2025-03-09 14:38:33,668 - WARNING - Model phi3:latest took 41.77s to respond. This may indicate slow performance.
+2025-03-09 14:38:33,686 - INFO - Found 9 models: qwen2.5:7b, qwen2.5:14b, qwq:latest, phi3:14b, phi3:latest, deepseek-v2:latest, nezahatkorkmaz/deepseek-v3:latest, deepseek-r1:8b, deepseek-coder-v2:16b
+2025-03-09 14:38:33,801 - INFO - Configuration saved.
