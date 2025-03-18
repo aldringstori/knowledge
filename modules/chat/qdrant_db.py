@@ -2,78 +2,105 @@ from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from typing import List, Dict, Optional
 import os
-import json
-from utils.logging_setup import logger
+import random
+import time
+from utils.logging_setup import get_qdrant_logger
+
+# Get the Qdrant-specific logger
+logger = get_qdrant_logger()
+
 
 class QdrantDB:
     def __init__(self, path: str):
         self.path = path
+        logger.info(f"Initializing QdrantDB with path: {path}")
         self.client = self._initialize_client()
-        
+
     def _initialize_client(self) -> Optional[QdrantClient]:
         """Initialize Qdrant client"""
         try:
             os.makedirs(self.path, exist_ok=True)
-            # Remove lock file if exists
             lock_file = os.path.join(self.path, '.lock')
             if os.path.exists(lock_file):
                 os.remove(lock_file)
-                logger.info("Removed existing Qdrant lock file")
-                
+                logger.info(f"Removed existing Qdrant lock file: {lock_file}")
+
+            logger.debug(f"Creating Qdrant client with path: {self.path}")
             client = QdrantClient(path=self.path)
-            
-            # Check if collection exists
-            collections = client.get_collections()
-            logger.info(f"Existing collections: {[c.name for c in collections.collections]}")
-            
-            # Initialize collection
-            client.recreate_collection(
-                collection_name="transcripts",
-                vectors_config=models.VectorParams(
-                    size=384,  # MiniLM embedding size
-                    distance=models.Distance.COSINE
+
+            collections = client.get_collections().collections
+            collection_names = [c.name for c in collections]
+            logger.debug(f"Existing collections: {collection_names}")
+
+            if "transcripts" not in collection_names:
+                logger.info("Creating new 'transcripts' collection with 768 dimensions")
+                client.recreate_collection(
+                    collection_name="transcripts",
+                    vectors_config=models.VectorParams(
+                        size=768,  # Nomic embedding size
+                        distance=models.Distance.COSINE
+                    )
                 )
-            )
-            
-            # Verify collection was created properly
-            collection_info = client.get_collection(collection_name="transcripts")
-            logger.info(f"Collection info: Vector size={collection_info.config.params.size}, " +
-                        f"Distance={collection_info.config.params.distance}")
-            
+                logger.info("Created new 'transcripts' collection successfully")
+            else:
+                logger.info("'transcripts' collection already exists")
+
             logger.info("Qdrant client initialized successfully")
             return client
         except Exception as e:
-            logger.error(f"Error initializing Qdrant client: {str(e)}")
+            logger.error(f"Error initializing Qdrant client: {str(e)}", exc_info=True)
             return None
-            
+
     def store_embedding(
             self,
             text: str,
             embedding: List[float],
             source: str,
-            point_id: int
+            point_id=None
     ) -> bool:
-        """Store embedding in database"""
+        """
+        Store embedding in database
+
+        Args:
+            text: The text content
+            embedding: The embedding vector
+            source: Source file path
+            point_id: Optional ID (if not provided, a unique ID will be generated)
+
+        Returns:
+            bool: True if successful, False otherwise
+        """
         try:
             if not self.client:
                 logger.error("Qdrant client not initialized")
                 return False
-                
-            # Log embedding dimension for debugging
+
+            # Generate a unique ID if not provided
+            if point_id is None:
+                point_id = f"{int(time.time())}{random.randint(1000, 9999)}"
+                logger.debug(f"Generated unique ID: {point_id}")
+
+            # Ensure point_id is a string
+            point_id = str(point_id)
+
             emb_dimension = len(embedding)
-            logger.info(f"Storing embedding: id={point_id}, dimension={emb_dimension}, source={os.path.basename(source)}")
-            
-            # Verify embedding dimension matches collection
+            logger.debug(
+                f"Storing embedding: id={point_id}, dimension={emb_dimension}, source={os.path.basename(source)}")
+
             collection_info = self.client.get_collection(collection_name="transcripts")
-            expected_dimension = collection_info.config.params.size
-            
+            expected_dimension = collection_info.config.params.vectors.size
+
             if emb_dimension != expected_dimension:
                 logger.error(f"Dimension mismatch: embedding={emb_dimension}, collection={expected_dimension}")
                 return False
-                
-            # Store first few values of embedding for debugging
-            logger.info(f"Sample values: {embedding[:5]}...")
-                
+
+            # Check if embedding contains NaN or null values
+            if not all(isinstance(x, (int, float)) for x in embedding) or any(
+                    x != x for x in embedding):  # x != x checks for NaN
+                logger.error(f"Invalid values in embedding for point_id={point_id}")
+                return False
+
+            logger.debug(f"Upserting point_id={point_id} to transcripts collection")
             self.client.upsert(
                 collection_name="transcripts",
                 points=[
@@ -84,16 +111,13 @@ class QdrantDB:
                     )
                 ]
             )
-            
-            # Verify point was stored
-            count = self.client.count(collection_name="transcripts")
-            logger.info(f"Total points in collection after insert: {count.count}")
-            
+
+            logger.info(f"Successfully stored embedding for {os.path.basename(source)} with ID {point_id}")
             return True
         except Exception as e:
-            logger.error(f"Error storing embedding: {str(e)}")
+            logger.error(f"Error storing embedding for {os.path.basename(source)}: {str(e)}", exc_info=True)
             return False
-            
+
     def search(
             self,
             vector: List[float],
@@ -105,113 +129,93 @@ class QdrantDB:
             if not self.client:
                 logger.error("Qdrant client not initialized")
                 return []
-                
-            # Log search vector dimension
-            query_dimension = len(vector)
-            logger.info(f"Searching with vector dimension: {query_dimension}")
-            
-            # Get collection dimension
-            collection_info = self.client.get_collection(collection_name="transcripts")
-            expected_dimension = collection_info.config.params.size
-            
-            # Check dimensions match
-            if query_dimension != expected_dimension:
-                logger.error(f"Search vector dimension mismatch: query={query_dimension}, collection={expected_dimension}")
-                return []
-                
-            # Check if collection is empty
-            count = self.client.count(collection_name="transcripts")
-            if count.count == 0:
-                logger.warning("Search attempted on empty collection")
-                return []
-                
-            # Log search parameters
-            logger.info(f"Searching with limit={limit}, threshold={score_threshold}")
-            logger.info(f"Sample query vector values: {vector[:5]}...")
-                
+
+            logger.debug(f"Searching with threshold={score_threshold}, limit={limit}")
             results = self.client.search(
                 collection_name="transcripts",
                 query_vector=vector,
                 limit=limit,
                 score_threshold=score_threshold
             )
-            
-            # Log results summary
-            logger.info(f"Search returned {len(results)} results")
+
+            logger.info(f"Search completed, found {len(results)} results")
             for i, hit in enumerate(results):
-                logger.info(f"Result {i+1}: score={hit.score:.4f}, " +
-                           f"source={os.path.basename(hit.payload.get('source', 'unknown'))}")
-                           
-            return [
-                {
-                    'score': hit.score,
-                    'payload': hit.payload
-                }
-                for hit in results
-            ]
+                logger.debug(f"Result {i + 1}: score={hit.score}, source={hit.payload.get('source')}")
+            return [{'score': hit.score, 'payload': hit.payload} for hit in results]
         except Exception as e:
-            logger.error(f"Error searching vectors: {str(e)}")
+            logger.error(f"Error searching vectors: {str(e)}", exc_info=True)
             return []
-            
+
     def clear_collection(self):
         """Clear all data from collection"""
         try:
             if self.client:
-                # Log before clearing
-                count_before = self.client.count(collection_name="transcripts")
-                logger.info(f"Clearing collection with {count_before.count} points")
-                
+                logger.info("Clearing 'transcripts' collection")
                 self.client.recreate_collection(
                     collection_name="transcripts",
                     vectors_config=models.VectorParams(
-                        size=384,
+                        size=768,  # Nomic embedding size
                         distance=models.Distance.COSINE
                     )
                 )
-                
-                # Verify collection is empty
-                count_after = self.client.count(collection_name="transcripts")
-                logger.info(f"Collection cleared successfully. Points after clear: {count_after.count}")
+                logger.info("Collection cleared successfully")
         except Exception as e:
-            logger.error(f"Error clearing collection: {str(e)}")
-            
-    def get_collection_stats(self) -> Dict:
-        """Get statistics about the collection"""
+            logger.error(f"Error clearing collection: {str(e)}", exc_info=True)
+
+    def get_ingested_files(self) -> List[str]:
+        """Retrieve list of ingested files from Qdrant"""
         try:
             if not self.client:
                 logger.error("Qdrant client not initialized")
-                return {"error": "Client not initialized"}
-                
-            # Get collection info
-            collection_info = self.client.get_collection(collection_name="transcripts")
-            vector_size = collection_info.config.params.size
-            
-            # Count points
-            count = self.client.count(collection_name="transcripts")
-            
-            # Get a sample point if collection is not empty
-            sample_point = None
-            if count.count > 0:
-                sample_points = self.client.scroll(
+                return []
+
+            logger.debug("Retrieving list of ingested files")
+            ingested_files = set()
+            next_offset = None
+
+            while True:
+                logger.debug(f"Scrolling with offset={next_offset}")
+                scroll_result = self.client.scroll(
                     collection_name="transcripts",
-                    limit=1
+                    scroll_filter=None,
+                    limit=100,
+                    with_payload=True,
+                    with_vectors=False,
+                    offset=next_offset
                 )
-                if sample_points[0]:
-                    sample_point = {
-                        "id": sample_points[0][0].id,
-                        "payload_keys": list(sample_points[0][0].payload.keys()),
-                        "vector_dimension": len(sample_points[0][0].vector)
-                    }
-            
-            stats = {
-                "count": count.count,
-                "vector_size": vector_size,
-                "sample_point": sample_point
-            }
-            
-            logger.info(f"Collection stats: {json.dumps(stats, indent=2)}")
-            return stats
-            
+
+                points, next_offset = scroll_result
+
+                for point in points:
+                    source = point.payload.get('source')
+                    if source:
+                        ingested_files.add(source)
+
+                if not next_offset:
+                    break
+
+            logger.info(f"Retrieved {len(ingested_files)} ingested files")
+            return list(ingested_files)
         except Exception as e:
-            logger.error(f"Error getting collection stats: {str(e)}")
-            return {"error": str(e)}
+            logger.error(f"Error retrieving ingested files: {str(e)}", exc_info=True)
+            return []
+
+    def get_collection_stats(self) -> Dict:
+        """Get statistics about the transcripts collection"""
+        try:
+            if not self.client:
+                logger.error("Qdrant client not initialized")
+                return {"points_count": 0}
+
+            logger.debug("Retrieving collection stats")
+            info = self.client.get_collection(collection_name="transcripts")
+            stats = {
+                "points_count": info.points_count,
+                "vectors_count": info.vectors_count,
+                "status": info.status
+            }
+            logger.info(f"Collection stats: {stats}")
+            return stats
+        except Exception as e:
+            logger.error(f"Error retrieving collection stats: {str(e)}", exc_info=True)
+            return {"points_count": 0}

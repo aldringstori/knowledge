@@ -7,9 +7,10 @@ pandas
 deep-translator
 qdrant-client>=1.7.0
 numpy
-torch>=2.0.0
-transformers>=4.36.0
-sentence-transformers>=2.2.2
+transformers==4.26.0
+sentence-transformers==2.2.2
+huggingface-hub==0.13.2
+torch==1.13.1
 accelerate>=0.25.0
 bitsandbytes>=0.41.0
 einops>=0.7.0
@@ -19,3 +20,4 @@ langchain-text-splitters>=0.0.1
 langchain-core>=0.1.10
 python-dotenv>=1.0.0
 python-docx
+markdown

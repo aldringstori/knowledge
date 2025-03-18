@@ -4,7 +4,6 @@ from .rag_manager import RAGManager
 from .model_manager import ModelManager
 from .chat_history import ChatHistory
 from .context_processor import ContextProcessor
-from .embeddings import EmbeddingsManager
 
 def render(config):
     """Initialize and render chat interface"""

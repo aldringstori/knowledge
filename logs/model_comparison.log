@@ -1,0 +1,22 @@
+2025-03-15 17:22:21,690 - model_comparison - INFO - Starting comparison with 3 models
+2025-03-15 17:22:21,690 - model_comparison - INFO - Starting comparison with 3 models
+2025-03-15 17:22:21,804 - model_comparison - INFO - Added model to queue: deepseek-r1:14b
+2025-03-15 17:22:21,804 - model_comparison - INFO - Added model to queue: deepseek-r1:14b
+2025-03-15 17:22:21,997 - model_comparison - INFO - Added model to queue: deepseek-r1:8b
+2025-03-15 17:22:21,997 - model_comparison - INFO - Added model to queue: deepseek-r1:8b
+2025-03-15 17:22:22,047 - model_comparison - INFO - Added model to queue: deepseek-r1:latest
+2025-03-15 17:22:22,047 - model_comparison - INFO - Added model to queue: deepseek-r1:latest
+2025-03-15 17:22:22,055 - model_comparison - INFO - Sending request to model: deepseek-r1:14b
+2025-03-15 17:22:22,055 - model_comparison - INFO - Sending request to model: deepseek-r1:14b
+2025-03-15 17:22:22,064 - model_comparison - INFO - Started worker thread
+2025-03-15 17:22:22,064 - model_comparison - INFO - Started worker thread
+2025-03-15 17:23:06,199 - model_comparison - INFO - Received response from model: deepseek-r1:14b
+2025-03-15 17:23:06,199 - model_comparison - INFO - Received response from model: deepseek-r1:14b
+2025-03-15 17:23:06,282 - model_comparison - INFO - Sending request to model: deepseek-r1:8b
+2025-03-15 17:23:06,282 - model_comparison - INFO - Sending request to model: deepseek-r1:8b
+2025-03-15 17:23:30,781 - model_comparison - INFO - Received response from model: deepseek-r1:8b
+2025-03-15 17:23:30,781 - model_comparison - INFO - Received response from model: deepseek-r1:8b
+2025-03-15 17:23:32,237 - model_comparison - INFO - Sending request to model: deepseek-r1:latest
+2025-03-15 17:23:32,237 - model_comparison - INFO - Sending request to model: deepseek-r1:latest
+2025-03-15 17:23:56,305 - model_comparison - INFO - Received response from model: deepseek-r1:latest
+2025-03-15 17:23:56,305 - model_comparison - INFO - Received response from model: deepseek-r1:latest

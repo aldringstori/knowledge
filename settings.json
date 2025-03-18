@@ -1,5 +1,7 @@
 {
     "download_folder": "/server/knowledge/transcriptions",
     "model_path": "/server/knowledge/models",
-    "qdrant_path": "/server/knowledge/qdrant_data"
+    "qdrant_path": "/server/knowledge/qdrant_data",
+    "transcription_folder": "/server/knowledge/transcriptions",
+    "name_extractor": ""
 }

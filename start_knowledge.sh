@@ -1,8 +1,13 @@
 #!/bin/bash
 # start_knowledge.sh
 
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 PROJECT_DIR="/server/knowledge"
-VENV_ACTIVATE="$PROJECT_DIR/venv_knowledge/bin/activate"
+VENV_ACTIVATE="$HOME/.pyenv/versions/venv_knowledge/bin/activate"
 APP_SCRIPT="$PROJECT_DIR/knowledge.py"
 
 if [ ! -f "$VENV_ACTIVATE" ]; then

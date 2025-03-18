@@ -1,4 +1,3 @@
-# File: ./modules/chat/chat_ui.py
 import streamlit as st
 from typing import Dict, List, Optional
 import os
@@ -6,7 +5,6 @@ import glob
 import time
 import requests
 from utils.logging_setup import logger
-from .embeddings import test_embeddings, get_embeddings
 from .model_manager import ModelManager
 from .qdrant_db import QdrantDB
 
@@ -16,7 +14,6 @@ class ChatUI:
         self.model_manager = ModelManager()
         self.db = QdrantDB(config['qdrant_path'])
         
-        # Add model status to session state
         if 'model_loaded' not in st.session_state:
             st.session_state.model_loaded = False
         if 'model_name' not in st.session_state:
@@ -41,6 +38,35 @@ class ChatUI:
             logger.error(f"Error updating available models: {str(e)}")
             return False
 
+    def check_nomic_embeddings(self) -> bool:
+        """Test if nomic-embed-text:latest is available on Ollama server"""
+        try:
+            response = requests.post(
+                "http://localhost:11434/api/embeddings",
+                json={"model": "nomic-embed-text:latest", "prompt": "Test embedding"}
+            )
+            response.raise_for_status()
+            embedding = response.json().get("embedding")
+            return len(embedding) == 768
+        except requests.RequestException:
+            return False
+
+    def generate_embedding(self, text: str) -> Optional[List[float]]:
+        """Generate embedding using nomic-embed-text:latest from Ollama server"""
+        try:
+            response = requests.post(
+                "http://localhost:11434/api/embeddings",
+                json={"model": "nomic-embed-text:latest", "prompt": text}
+            )
+            response.raise_for_status()
+            embedding = response.json().get("embedding")
+            if not embedding or len(embedding) != 768:
+                raise ValueError(f"Invalid embedding size: {len(embedding) if embedding else 'None'}")
+            return embedding
+        except requests.RequestException as e:
+            logger.error(f"Failed to generate embedding from Ollama: {str(e)}")
+            return None
+
     def ingest_documents(self) -> bool:
         """Ingest documents from transcripts folder with enhanced debugging"""
         try:
@@ -49,7 +75,6 @@ class ChatUI:
                 logger.error(f"Transcriptions directory not found: {transcript_path}")
                 return False
 
-            # Find all text files
             files = glob.glob(os.path.join(transcript_path, "**/*.txt"), recursive=True)
             if not files:
                 logger.warning("No transcript files found")
@@ -57,16 +82,13 @@ class ChatUI:
 
             logger.info(f"Found {len(files)} transcript files to process")
             
-            # Get collection stats before ingestion
             before_stats = self.db.get_collection_stats()
             logger.info(f"Collection stats before ingestion: {before_stats}")
 
-            # Track successful and failed files
             success_count = 0
             failed_count = 0
             chunk_count = 0
             
-            # Process each file
             for file_path in files:
                 try:
                     logger.info(f"Processing file: {os.path.basename(file_path)}")
@@ -76,7 +98,6 @@ class ChatUI:
 
                     logger.info(f"File {os.path.basename(file_path)}: {len(text)} characters, {len(text.split())} words")
 
-                    # Split into chunks
                     words = text.split()
                     chunk_size = 300
                     overlap = 50
@@ -97,7 +118,7 @@ class ChatUI:
                             logger.info(f"Processing chunk {i+1}/{len(chunks)}: {preview}")
                             
                             start_time = time.time()
-                            embeddings = get_embeddings(chunk_text)
+                            embeddings = self.generate_embedding(chunk_text)
                             embed_time = time.time() - start_time
                             
                             if embeddings:
@@ -153,7 +174,7 @@ class ChatUI:
             logger.info(f"Generating response for prompt: {prompt}")
             
             start_time = time.time()
-            prompt_embedding = get_embeddings(prompt)
+            prompt_embedding = self.generate_embedding(prompt)
             embedding_time = time.time() - start_time
             
             if not prompt_embedding:
@@ -265,7 +286,7 @@ Provide a direct answer using only the information from the transcript content."
                     else:
                         st.error("Failed to fetch models. Is Ollama running?")
             else:
-                if st.button("🔄 Refresh Models"):
+                if st.button("🔍 Refresh Models"):
                     if self.update_available_models():
                         st.success("Model list updated!")
                     else:
@@ -356,9 +377,9 @@ Provide a direct answer using only the information from the transcript content."
             if st.sidebar.button("Test Embeddings"):
                 with st.sidebar:
                     with st.spinner("Testing embeddings..."):
-                        if test_embeddings():
+                        if self.check_nomic_embeddings():
                             st.success("✅ Embeddings test passed")
-                            st.info("Embedding dimension: 384")
+                            st.info("Embedding dimension: 768")  # Nomic uses 768 dimensions
                         else:
                             st.error("❌ Embeddings test failed")
             if st.sidebar.button("Clear Collection", help="⚠️ This will delete all stored documents"):
@@ -369,7 +390,7 @@ Provide a direct answer using only the information from the transcript content."
 
         if 'embeddings_tested' not in st.session_state:
             with st.spinner("Testing embeddings..."):
-                if test_embeddings():
+                if self.check_nomic_embeddings():
                     st.session_state.embeddings_tested = True
                 else:
                     st.error("Error: Embeddings system not working properly")
@@ -401,7 +422,7 @@ Provide a direct answer using only the information from the transcript content."
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
-        if prompt := st.chat_input("Ask about your transcripts"):
+        if prompt := st.text_input("Ask about your transcripts"):
             if not st.session_state.model_loaded:
                 st.error("Please load the model first using the 'Load Model' button.")
                 return
