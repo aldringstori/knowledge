@@ -1,47 +1,21 @@
-# docker-compose.yaml
-version: '3.8'
+
 services:
-  app:
+  knowledge-app:
     build: .
     ports:
       - "8501:8501"
-    volumes:
-      - /bkp/knowledge/transcriptions:/bkp/knowledge/transcriptions
-      - /bkp/knowledge/models:/bkp/knowledge/models
     environment:
-      - QDRANT_HOST=qdrant
-      - MODEL_PORT=11440
-    depends_on:
-      - qdrant
-      - model
-
-  qdrant:
-    image: qdrant/qdrant
-    ports:
-      - "6333:6333"
+      - APP_PORT=8501
+      - APP_HOST=0.0.0.0
+      - DOWNLOAD_FOLDER=/app/transcriptions
+      - TRANSCRIPTION_FOLDER=/app/transcriptions
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+      - STREAMLIT_SERVER_HEADLESS=true
+      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
     volumes:
-      - type: bind
-        source: /bkp/knowledge/qdrant_data
-        target: /qdrant/storage
-    environment:
-      - QDRANT_ALLOW_UNDERSIZED_MEMORY=true
-
-  model:
-    image: ollama/ollama
-    ports:
-      - "11440:11434"
-    volumes:
-      - type: bind
-        source: /bkp/knowledge/ollama_data
-        target: /root/.ollama
-    command: serve
-    deploy:
-      resources:
-        limits:
-          memory: 13G
-        reservations:
-          cpus: '20'
-
-volumes:
-  qdrant_data:
-  ollama_data:
+      - /mnt/s/transcriptions:/app/transcriptions
+    restart: unless-stopped
+    container_name: knowledge-app

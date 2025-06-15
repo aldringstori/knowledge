@@ -4,29 +4,41 @@ from utils.common import get_video_title, fetch_transcript, save_transcript_to_t
 
 
 def render_url(video_url: str, config: dict):
-    """Process a single video URL"""
+    """Process a single video URL and return transcript, filename, and error status."""
+    transcript_text = None
+    output_filename = None
+    error_message = None
     try:
         logger.info(f"Processing video URL: {video_url}")
-        transcript = fetch_transcript(video_url)
+        transcript_text = fetch_transcript(video_url)
 
-        if transcript:
-            filename = get_video_title(video_url)
-            save_path = save_transcript_to_text(transcript, filename, config['download_folder'])
-            if save_path:
-                st.success(f"Transcript saved to {save_path}")
-                logger.info(f"Transcript saved to {save_path}")
-                return True
+        if transcript_text:
+            video_title = get_video_title(video_url) # Use the actual video title for the filename
+            # Use output_filename_prefix from config if available, otherwise use video_title
+            filename_prefix = config.get('output_filename_prefix', video_title)
+            output_filename = save_transcript_to_text(transcript_text, filename_prefix, config.get('output_path', config['download_folder']))
+            
+            if output_filename:
+                st.success(f"Transcript saved to {output_filename}")
+                logger.info(f"Transcript saved to {output_filename}")
             else:
-                st.error("Failed to save transcript")
-                logger.error("Failed to save transcript")
+                error_message = "Failed to save transcript"
+                st.error(error_message)
+                logger.error(error_message)
         else:
-            st.error("No transcript available for this video")
-            logger.error("Failed to fetch transcript")
-        return False
+            error_message = "No transcript available for this video"
+            st.error(error_message)
+            logger.error(error_message)
+        
     except Exception as e:
-        logger.error(f"Error processing video: {str(e)}")
-        st.error(f"Error processing video: {str(e)}")
-        return False
+        error_message = f"Error processing video: {str(e)}"
+        logger.error(error_message)
+        st.error(error_message)
+        # Ensure transcript_text is None if an error occurred before or during fetching
+        transcript_text = None 
+        output_filename = None
+
+    return transcript_text, output_filename, error_message
 
 
 def render(config):

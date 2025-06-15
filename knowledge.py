@@ -47,17 +47,13 @@ from utils.config import (
     get_transcript_files
 )
 from modules import (
-    chat,
     single_video,
     single_short,
     channel_videos,
     channel_shorts,
     playlist,
     file_converter,
-    summarize,
-    model_comparison,
-    data_treatment,
-    ai_blog
+    summarize
 )
 
 def detect_url_type(url: str) -> str:
@@ -138,22 +134,18 @@ def main():
     config = get_config()
     print("Loaded config in main:", config)
 
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
-        "Chat",
+    tab1, tab2, tab3, tab4 = st.tabs([
         "Download",
-        "Summarize",
+        "Summarize", 
         "File Converter",
-        "Data Treatment",
-        "Logs",
-        "Model Comparison",
-        "AI Blog"
+        "Logs"
     ])
 
     with tab1:
-        chat.render(config)
-
-    with tab2:
         st.header("Download YouTube Content")
+        
+        st.info("📋 **Note**: This app uses the YouTube Transcript API. Some videos may fail due to YouTube's anti-bot measures or missing captions. The app will retry automatically and work with multiple languages, translating to English when needed.")
+        
         url = st.text_input("Enter YouTube URL", key="download_url")
         process_button = st.button("Process and Download")
         if url and process_button:
@@ -181,27 +173,23 @@ def main():
             else:
                 st.error("Invalid or unsupported YouTube URL")
 
-    with tab3:
+    with tab2:
         summarize.render(config)
 
-    with tab4:
+    with tab3:
         st.header("File Converter")
         file_converter.render(config)
 
-    with tab5:
-        data_treatment.render(config)
-
-    with tab6:
+    with tab4:
         render_logs_tab()
 
-    with tab7:
-        model_comparison.render(config)
-
-    with tab8:
-        ai_blog.render(config)
-
-    save_config(config)
-    logger.info("Configuration saved.")
+    # Only save basic config data, not function objects
+    try:
+        basic_config = {k: v for k, v in config.items() if not callable(v)}
+        save_config(basic_config)
+        logger.info("Configuration saved.")
+    except Exception as e:
+        logger.error(f"Error saving config: {str(e)}")
 
 if __name__ == "__main__":
     main()

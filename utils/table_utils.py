@@ -22,28 +22,32 @@ def process_item(item_data, folder_name, item_type='video'):
         item_type (str): Type of item ('video', 'short', or 'playlist')
 
     Returns:
-        tuple: (success, message, filename)
+        tuple: (success, message, filename, url_fetched, video_downloaded)
     """
     try:
         url = item_data['url']
         title = item_data['title']
+        url_fetched = True  # URL was successfully fetched to get here
+        video_downloaded = False
 
         if item_type == 'short':
             url = url.replace("/shorts/", "/watch?v=")
             video_id = get_video_id_from_url(url)
             if not video_id:
-                return False, "Invalid video ID", None
+                return False, "Invalid video ID", None, url_fetched, video_downloaded
 
             try:
                 transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
                 transcript = transcript_list.find_transcript(['en']).fetch()
                 text = ' '.join([entry['text'] for entry in transcript])
+                video_downloaded = True
             except Exception as e:
-                return False, str(e), None
+                return False, str(e), None, url_fetched, video_downloaded
         else:
             text = fetch_transcript(url)
             if not text:
-                return False, "No transcript available", None
+                return False, "No transcript available", None, url_fetched, video_downloaded
+            video_downloaded = True
 
         save_path = save_transcript_to_text(
             text,
@@ -53,18 +57,18 @@ def process_item(item_data, folder_name, item_type='video'):
 
         if save_path:
             filename = os.path.basename(save_path)
-            return True, "Success", filename
-        return False, "Failed to save transcript", None
+            return True, "Success", filename, url_fetched, video_downloaded
+        return False, "Failed to save transcript", None, url_fetched, video_downloaded
 
     except Exception as e:
         error_msg = f"Error processing {title}: {str(e)}"
         logger.error(error_msg)
-        return False, error_msg, None
+        return False, error_msg, None, True, False
 
 
 def create_data_table():
     """Create an empty DataFrame with the required columns"""
-    return pd.DataFrame(columns=['Title', 'Status', 'Message', 'Saved File'])
+    return pd.DataFrame(columns=['Title', 'URL Fetched', 'Video Downloaded', 'Status', 'Message', 'Saved File'])
 
 
 def update_table_state(table_data):
@@ -88,6 +92,16 @@ def display_table():
                     "Title",
                     width="medium",
                     help="Item title"
+                ),
+                "URL Fetched": st.column_config.TextColumn(
+                    "URL Fetched",
+                    width="small",
+                    help="Whether the video URL was successfully fetched"
+                ),
+                "Video Downloaded": st.column_config.TextColumn(
+                    "Video Downloaded",
+                    width="small",
+                    help="Whether the video transcript was successfully downloaded"
                 ),
                 "Status": st.column_config.TextColumn(
                     "Status",
@@ -126,11 +140,13 @@ def process_items_with_progress(items, folder_name, item_type='video'):
     st.session_state.status_table = create_data_table()
 
     for i, item in enumerate(items):
-        success, message, filename = process_item(item, folder_name, item_type)
+        success, message, filename, url_fetched, video_downloaded = process_item(item, folder_name, item_type)
 
         # Update table state
         update_table_state({
             'Title': item['title'],
+            'URL Fetched': '✅' if url_fetched else '❌',
+            'Video Downloaded': '✅' if video_downloaded else '❌',
             'Status': '✅' if success else '❌',
             'Message': message,
             'Saved File': filename if filename else 'N/A'

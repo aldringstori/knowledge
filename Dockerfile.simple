@@ -1,0 +1,40 @@
+# Simple Dockerfile with Qdrant included
+FROM ubuntu:24.04
+
+WORKDIR /app
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
+    curl \
+    wget \
+    supervisor \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Qdrant
+RUN wget -O /tmp/qdrant.tar.gz https://github.com/qdrant/qdrant/releases/download/v1.12.2/qdrant-x86_64-unknown-linux-gnu.tar.gz && \
+    tar -xzf /tmp/qdrant.tar.gz -C /usr/local/bin/ && \
+    chmod +x /usr/local/bin/qdrant && \
+    rm /tmp/qdrant.tar.gz
+
+# Create directories
+RUN mkdir -p /qdrant/storage /var/log/supervisor
+
+# Copy requirements and install Python packages
+COPY requirements.txt .
+RUN python3 -m pip install --break-system-packages --no-cache-dir -r requirements.txt
+
+# Copy application files
+COPY . .
+
+# Copy supervisor config
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+EXPOSE 8501 6333
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

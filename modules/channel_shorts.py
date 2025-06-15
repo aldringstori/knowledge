@@ -1,94 +1,47 @@
 
+import streamlit as st
+import pandas as pd
+from utils.logging_setup import logger
+from utils.common import (
+    create_folder,
+    sanitize_filename,
+    get_video_id_from_url
+)
+import os
+import re
+import time
 
+
+def get_channel_name(url):
+    """Extract channel name from URL"""
+    match = re.search(r'youtube\.com/[@]?([^/]+)/?', url)
+    return match.group(1) if match else "UnknownChannel"
+
+
+def convert_shorts_urls(shorts_data):
+    """Convert shorts URLs - functionality not available"""
+    st.error("YouTube Shorts processing is not available in this version")
+    logger.error("Shorts processing not available - browser automation removed")
+    return None
+
+
+def download_transcripts(converted_data, folder_name):
+    """Download transcripts - functionality not available"""
+    st.error("YouTube Shorts transcript downloading is not available in this version")
+    logger.error("Shorts transcript downloading not available - browser automation removed")
+    return []
+
+
+def display_table(data, container, step):
+    """Display table - functionality not available"""
+    pass
 
 
 def collect_shorts_urls(channel_url):
-    """Step 1: Collect all shorts URLs from channel"""
-    driver = None
-    try:
-        logger.info(f"Starting collection of shorts from: {channel_url}")
-        progress_text = st.empty()
-        progress_bar = st.progress(0)
-        table_container = st.empty()
-        shorts_data = []
-
-        # Initialize Chrome
-        logger.info("Setting up Chrome driver...")
-        progress_text.text("Initializing Chrome driver...")
-        driver = setup_chrome_driver()
-
-        logger.info("Loading channel URL...")
-        progress_text.text("Loading channel URL...")
-        driver.get(channel_url)
-        time.sleep(5)
-
-        logger.info("Starting scroll process...")
-        progress_text.text("Scrolling to load more shorts...")
-        last_height = driver.execute_script("return document.documentElement.scrollHeight")
-        scroll_attempts = 0
-        max_scroll_attempts = 10
-
-        shorts_selectors = [
-            "a.ytd-rich-grid-slim-media",
-            "a#video-title-link",
-            "a.ytd-grid-video-renderer"
-        ]
-
-        while scroll_attempts < max_scroll_attempts:
-            logger.info(f"Scroll attempt {scroll_attempts + 1}/{max_scroll_attempts}")
-            driver.execute_script("window.scrollTo(0, document.documentElement.scrollHeight);")
-            time.sleep(2)
-
-            # Try each selector
-            for selector in shorts_selectors:
-                logger.info(f"Trying selector: {selector}")
-                shorts = driver.find_elements(By.CSS_SELECTOR, selector)
-                logger.info(f"Found {len(shorts)} elements with selector {selector}")
-
-                for short in shorts:
-                    try:
-                        url = short.get_attribute('href')
-                        title = short.get_attribute('title')
-                        logger.info(f"Found element - URL: {url}, Title: {title}")
-
-                        if url and title and '/shorts/' in url.lower():
-                            new_entry = {
-                                'title': sanitize_filename(title),
-                                'url': url,
-                                'status': '⏳'
-                            }
-                            if new_entry not in shorts_data:
-                                shorts_data.append(new_entry)
-                                logger.info(f"Added new short: {title}")
-                                display_table(shorts_data, table_container, step=1)
-                                progress_text.text(f"Found {len(shorts_data)} shorts...")
-                    except Exception as e:
-                        logger.error(f"Error processing short element: {str(e)}")
-                        continue
-
-            new_height = driver.execute_script("return document.documentElement.scrollHeight")
-            progress_bar.progress((scroll_attempts + 1) / max_scroll_attempts)
-
-            if new_height == last_height:
-                logger.info("Reached end of page - no new content loaded")
-                break
-            last_height = new_height
-            scroll_attempts += 1
-
-        logger.info("Closing Chrome driver...")
-        driver.quit()
-        progress_text.empty()
-
-        # Remove duplicates
-        unique_shorts = list({s['url']: s for s in shorts_data}.values())
-        logger.info(f"Final count: {len(unique_shorts)} unique shorts")
-        return unique_shorts
-
-    except Exception as e:
-        logger.error(f"Error collecting shorts URLs: {str(e)}")
-        if driver:
-            driver.quit()
-        raise
+    """Shorts collection - functionality not available"""
+    st.error("YouTube Shorts URL collection is not available in this version")
+    logger.error("Shorts collection not available - browser automation removed")
+    return []
 
 
 def process_shorts_channel(channel_url: str, config: dict):

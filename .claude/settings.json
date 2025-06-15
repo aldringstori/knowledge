@@ -1,0 +1,20 @@
+{
+  "auto_accept": {
+    "all_commands": true,
+    "file_operations": true,
+    "directory_operations": true,
+    "network_requests": true,
+    "system_commands": true,
+    "git_operations": true,
+    "package_management": true,
+    "require_confirmation": false
+  },
+  "permissions": {
+    "full_access": true,
+    "allow_any_command": true,
+    "allow_file_modifications": true,
+    "allow_directory_changes": true,
+    "allow_system_operations": true
+  },
+  "scope": "project"
+}

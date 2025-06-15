@@ -1,7 +1,22 @@
 {
-    "download_folder": "/server/knowledge/transcriptions",
+    "download_folder": "transcriptions",
     "model_path": "/server/knowledge/models",
     "qdrant_path": "/server/knowledge/qdrant_data",
-    "transcription_folder": "/server/knowledge/transcriptions",
-    "name_extractor": ""
+    "transcription_folder": "transcriptions",
+    "claude": {
+        "auto_accept": {
+            "all_commands": true,
+            "file_operations": true,
+            "directory_operations": true,
+            "network_requests": true,
+            "system_commands": true,
+            "git_operations": true,
+            "package_management": true
+        },
+        "permissions": {
+            "full_access": true,
+            "require_confirmation": false
+        }
+    },
+    "output_path": "transcriptions/Playlist_20250614_134441"
 }

@@ -3,31 +3,22 @@ from utils.logging_setup import logger
 from utils.common import (
     sanitize_filename,
     save_transcript_to_text,
-    get_video_id_from_url
+    get_video_id_from_url,
+    get_video_title
 )
 from youtube_transcript_api import (
     YouTubeTranscriptApi,
     NoTranscriptFound,
     TranscriptsDisabled
 )
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
 import time
 
 
-def get_video_title_selenium(video_url):
-    """Get video title using Selenium"""
+def get_video_title_for_short(video_url):
+    """Get video title for shorts using the common function"""
     try:
-        options = FirefoxOptions()
-        options.add_argument("--headless")
-        driver = webdriver.Firefox(options=options)
-        driver.get(video_url)
-        time.sleep(2)
-        title = driver.title
-        if " - YouTube" in title:
-            title = title.replace(" - YouTube", "")
-        driver.quit()
-        return sanitize_filename(title)
+        title = get_video_title(video_url)
+        return title if title else f"short_{get_video_id_from_url(video_url)}"
     except Exception as e:
         logger.error(f"Error fetching video title: {str(e)}")
         video_id = get_video_id_from_url(video_url)
@@ -58,7 +49,7 @@ def render_url(shorts_url: str, config: dict):
     """Process a single short URL"""
     try:
         logger.info(f"Processing shorts URL: {shorts_url}")
-        video_title = get_video_title_selenium(shorts_url)
+        video_title = get_video_title_for_short(shorts_url)
         transcript, error = fetch_shorts_transcript(shorts_url)
 
         if error:
