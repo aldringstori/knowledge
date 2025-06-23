@@ -63,13 +63,74 @@ data_treatment_handler.setFormatter(data_treatment_formatter)
 data_treatment_logger.addHandler(data_treatment_handler)
 
 
+# Module-specific loggers
+module_loggers = {}
+
+def get_module_logger(module_name):
+    """
+    Get or create a module-specific logger
+    
+    Args:
+        module_name: Name of the module (e.g., 'playlist', 'single_video')
+    
+    Returns:
+        Logger instance for the module
+    """
+    if module_name not in module_loggers:
+        # Create new module logger
+        module_logger = logging.getLogger(module_name)
+        module_logger.setLevel(logging.DEBUG)
+        module_logger.propagate = False  # Don't propagate to root logger
+        
+        # Create file handler for this module
+        module_handler = RotatingFileHandler(
+            os.path.join(LOG_DIR, f"{module_name}.log"),
+            maxBytes=10485760,  # 10MB
+            backupCount=5
+        )
+        module_handler.setLevel(logging.DEBUG)
+        module_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        module_handler.setFormatter(module_formatter)
+        module_logger.addHandler(module_handler)
+        
+        # Also add console handler for immediate feedback
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.INFO)
+        console_formatter = logging.Formatter(f'[{module_name.upper()}] %(levelname)s - %(message)s')
+        console_handler.setFormatter(console_formatter)
+        module_logger.addHandler(console_handler)
+        
+        module_loggers[module_name] = module_logger
+    
+    return module_loggers[module_name]
+
 # Helper functions to get specific loggers
 def get_qdrant_logger():
     return qdrant_logger
 
-
 def get_data_treatment_logger():
     return data_treatment_logger
+
+def get_playlist_logger():
+    return get_module_logger('playlist')
+
+def get_single_video_logger():
+    return get_module_logger('single_video')
+
+def get_single_short_logger():
+    return get_module_logger('single_short')
+
+def get_channel_videos_logger():
+    return get_module_logger('channel_videos')
+
+def get_channel_shorts_logger():
+    return get_module_logger('channel_shorts')
+
+def get_file_converter_logger():
+    return get_module_logger('file_converter')
+
+def get_summarize_logger():
+    return get_module_logger('summarize')
 
 
 def get_session_logs(session_id=None, max_lines=100):
@@ -83,11 +144,19 @@ def get_session_logs(session_id=None, max_lines=100):
     Returns:
         List of log lines
     """
-    log_files = [
-        os.path.join(LOG_DIR, "main.log"),
-        os.path.join(LOG_DIR, "qdrant.log"),
-        os.path.join(LOG_DIR, "data_treatment.log")
-    ]
+    # Get all log files in the logs directory
+    log_files = []
+    try:
+        for file in os.listdir(LOG_DIR):
+            if file.endswith('.log'):
+                log_files.append(os.path.join(LOG_DIR, file))
+    except Exception:
+        # Fallback to known log files
+        log_files = [
+            os.path.join(LOG_DIR, "main.log"),
+            os.path.join(LOG_DIR, "qdrant.log"),
+            os.path.join(LOG_DIR, "data_treatment.log")
+        ]
 
     # Only include files that exist
     log_files = [f for f in log_files if os.path.exists(f)]
@@ -118,7 +187,7 @@ def get_session_logs(session_id=None, max_lines=100):
     return all_logs[-max_lines:] if all_logs else []
 
 
-def read_log_file(log_file, max_lines=None):
+def read_log_file(log_file="main.log", max_lines=None):
     """
     Read a log file and return its contents
 
@@ -151,7 +220,7 @@ def read_log_file(log_file, max_lines=None):
         return [f"Error reading log file: {str(e)}\n"]
 
 
-def clear_log_file(log_file):
+def clear_log_file(log_file="main.log"):
     """
     Clear the contents of a log file
 
@@ -174,16 +243,28 @@ def clear_log_file(log_file):
         return False
 
 
-def clear_session_logs(session_id):
+def clear_session_logs(session_id=None):
     """
-    Clear the logs for a specific session
-
+    Clear the logs for a specific session or all session logs
+    
     Args:
-        session_id: Session ID to clear logs for
-
+        session_id: Session ID to clear logs for (None to clear all session logs)
+    
     Returns:
         bool: True if successful, False otherwise
     """
+    if session_id is None:
+        # Clear all session logs
+        try:
+            for file in os.listdir(LOG_DIR):
+                if file.startswith('session_') and file.endswith('.log'):
+                    os.remove(os.path.join(LOG_DIR, file))
+            return True
+        except Exception as e:
+            logger.error(f"Error clearing session logs: {str(e)}")
+            return False
+    
+    # Clear specific session log
     session_log = os.path.join(LOG_DIR, f"session_{session_id}.log")
 
     if not os.path.exists(session_log):

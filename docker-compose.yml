@@ -16,6 +16,7 @@ services:
       - PYTHONUNBUFFERED=1
       - PYTHONDONTWRITEBYTECODE=1
     volumes:
-      - /mnt/s/transcriptions:/app/transcriptions
+      - /mnt/s/transcriptions:/app/transcriptions:rw
+    user: "1000:1000"  # Ensure container runs with proper user ID
     restart: unless-stopped
     container_name: knowledge-app

@@ -12,7 +12,7 @@ from utils.common import (
 from youtube_transcript_api import YouTubeTranscriptApi
 
 
-def process_item(item_data, folder_name, item_type='video'):
+def process_item(item_data, folder_name, item_type='video', config=None):
     """
     Process a single video/short/playlist item and return status information
 
@@ -20,6 +20,7 @@ def process_item(item_data, folder_name, item_type='video'):
         item_data (dict): Dictionary containing item information
         folder_name (str): Folder path to save transcript
         item_type (str): Type of item ('video', 'short', or 'playlist')
+        config (dict): Configuration dictionary with settings like headless_mode
 
     Returns:
         tuple: (success, message, filename, url_fetched, video_downloaded)
@@ -44,7 +45,9 @@ def process_item(item_data, folder_name, item_type='video'):
             except Exception as e:
                 return False, str(e), None, url_fetched, video_downloaded
         else:
-            text = fetch_transcript(url)
+            # Get headless mode from config
+            headless_mode = config.get('headless_mode', False) if config else False
+            text = fetch_transcript(url, headless=headless_mode)
             if not text:
                 return False, "No transcript available", None, url_fetched, video_downloaded
             video_downloaded = True
@@ -120,7 +123,7 @@ def display_table():
         )
 
 
-def process_items_with_progress(items, folder_name, item_type='video'):
+def process_items_with_progress(items, folder_name, item_type='video', config=None):
     """
     Process a list of items with progress tracking and table display
 
@@ -128,6 +131,7 @@ def process_items_with_progress(items, folder_name, item_type='video'):
         items (list): List of items to process
         folder_name (str): Folder path to save transcripts
         item_type (str): Type of items ('video', 'short', or 'playlist')
+        config (dict): Configuration dictionary with settings like headless_mode
 
     Returns:
         list: List of status dictionaries
@@ -140,7 +144,7 @@ def process_items_with_progress(items, folder_name, item_type='video'):
     st.session_state.status_table = create_data_table()
 
     for i, item in enumerate(items):
-        success, message, filename, url_fetched, video_downloaded = process_item(item, folder_name, item_type)
+        success, message, filename, url_fetched, video_downloaded = process_item(item, folder_name, item_type, config)
 
         # Update table state
         update_table_state({
@@ -211,7 +215,7 @@ def render_with_progress(
 
         st.info(f"Found {len(items)} {item_type}s")
 
-        status_data = process_items_with_progress(items, folder_name, item_type)
+        status_data = process_items_with_progress(items, folder_name, item_type, config)
 
         successful = sum(1 for s in status_data if s['Status'] == '✅')
         st.success(f"Downloaded {successful} out of {len(items)} transcripts to {folder_name}")

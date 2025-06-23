@@ -8,3 +8,4 @@ python-docx
 markdown
 selenium
 webdriver-manager
+youtube-transcript-api

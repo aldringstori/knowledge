@@ -58,6 +58,16 @@ knowledge/
 5. Monitor progress in the visual table with checkmarks
 6. Find downloaded transcripts in the `transcriptions/` folder
 
+## YouTube Class Updater
+
+If transcript extraction starts failing due to YouTube interface changes, run the class updater:
+
+```bash
+python update_youtube_classes.py
+```
+
+This script automatically detects and updates YouTube's dynamic class names for reliable transcript extraction. See `YOUTUBE_CLASS_UPDATER.md` for detailed usage instructions.
+
 ## Browser Support
 
 The application uses Selenium WebDriver and supports:

@@ -1,7 +1,10 @@
 
 import streamlit as st
 import pandas as pd
-from utils.logging_setup import logger
+from utils.logging_setup import get_channel_shorts_logger
+
+# Get module-specific logger
+logger = get_channel_shorts_logger()
 from utils.common import (
     create_folder,
     sanitize_filename,

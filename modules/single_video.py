@@ -1,5 +1,9 @@
 import streamlit as st
-from utils.logging_setup import logger
+from utils.logging_setup import get_single_video_logger
+from utils.channel_manager import ChannelManager
+
+# Get module-specific logger
+logger = get_single_video_logger()
 from utils.common import get_video_title, fetch_transcript, save_transcript_to_text
 
 
@@ -10,10 +14,11 @@ def render_url(video_url: str, config: dict):
     error_message = None
     try:
         logger.info(f"Processing video URL: {video_url}")
-        transcript_text = fetch_transcript(video_url)
+        headless_mode = config.get('headless_mode', False)
+        transcript_text = fetch_transcript(video_url, headless=headless_mode)
 
         if transcript_text:
-            video_title = get_video_title(video_url) # Use the actual video title for the filename
+            video_title = get_video_title(video_url, headless=headless_mode) # Use the actual video title for the filename
             # Use output_filename_prefix from config if available, otherwise use video_title
             filename_prefix = config.get('output_filename_prefix', video_title)
             output_filename = save_transcript_to_text(transcript_text, filename_prefix, config.get('output_path', config['download_folder']))
@@ -21,6 +26,15 @@ def render_url(video_url: str, config: dict):
             if output_filename:
                 st.success(f"Transcript saved to {output_filename}")
                 logger.info(f"Transcript saved to {output_filename}")
+                
+                # Track video download if it's from a monitored channel
+                try:
+                    cm = ChannelManager()
+                    if cm.track_video_download(video_url, video_title, output_filename):
+                        logger.info(f"Video tracked for channel management: {video_title}")
+                except Exception as e:
+                    logger.warning(f"Could not track video for channel management: {e}")
+                    
             else:
                 error_message = "Failed to save transcript"
                 st.error(error_message)

@@ -1,6 +1,12 @@
 FROM python:3.11-slim
 
+# Create a non-root user
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
 WORKDIR /app
+
+# Set ownership of the app directory
+RUN chown -R appuser:appuser /app
 
 # Install basic system dependencies
 RUN apt-get update && apt-get install -y \
@@ -16,8 +22,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
-# Create necessary directories
-RUN mkdir -p /app/transcriptions
+# Create necessary directories with proper permissions
+RUN mkdir -p /app/transcriptions /app/logs && \
+    chown -R appuser:appuser /app && \
+    chmod -R 755 /app
+
+# Switch to non-root user
+USER appuser
 
 # Expose port
 EXPOSE 8501

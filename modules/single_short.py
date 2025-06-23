@@ -1,5 +1,8 @@
 import streamlit as st
-from utils.logging_setup import logger
+from utils.logging_setup import get_single_short_logger
+
+# Get module-specific logger
+logger = get_single_short_logger()
 from utils.common import (
     sanitize_filename,
     save_transcript_to_text,

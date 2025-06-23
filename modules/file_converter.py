@@ -1,6 +1,9 @@
 import streamlit as st
 import os
-from utils.logging_setup import logger
+from utils.logging_setup import get_file_converter_logger
+
+# Get module-specific logger
+logger = get_file_converter_logger()
 from utils.common import save_transcript_to_text
 import PyPDF2
 from docx import Document

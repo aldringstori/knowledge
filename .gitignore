@@ -38,10 +38,12 @@ wheels/
 *.manifest
 *.spec
 
-# Environment variables
-.env
+# Environment variables (keep .env.example but ignore actual .env)
 .env.local
 .env.*.local
+
+# Settings backup
+settings.json.backup
 
 # Logs
 *.log
