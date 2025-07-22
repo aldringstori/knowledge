@@ -21,50 +21,84 @@ console_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - 
 console_handler.setFormatter(console_formatter)
 logger.addHandler(console_handler)
 
-# File handler for main.log
-file_handler = RotatingFileHandler(
-    os.path.join(LOG_DIR, "main.log"),
-    maxBytes=10485760,  # 10MB
-    backupCount=5
-)
-file_handler.setLevel(logging.INFO)
-file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-file_handler.setFormatter(file_formatter)
-logger.addHandler(file_handler)
+# File handler for main.log (with error handling)
+try:
+    file_handler = RotatingFileHandler(
+        os.path.join(LOG_DIR, "main.log"),
+        maxBytes=10485760,  # 10MB
+        backupCount=5
+    )
+    file_handler.setLevel(logging.INFO)
+    file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    file_handler.setFormatter(file_formatter)
+    logger.addHandler(file_handler)
+except PermissionError:
+    # If we can't write to the log file, just use console logging
+    print("Warning: Cannot write to log file due to permissions. Using console logging only.")
+    pass
 
 # Create and configure Qdrant logger
 qdrant_logger = logging.getLogger("qdrant")
 qdrant_logger.setLevel(logging.DEBUG)
 qdrant_logger.propagate = False  # Don't propagate to root logger
 
-qdrant_handler = RotatingFileHandler(
-    os.path.join(LOG_DIR, "qdrant.log"),
-    maxBytes=10485760,  # 10MB
-    backupCount=5
-)
-qdrant_handler.setLevel(logging.DEBUG)
-qdrant_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-qdrant_handler.setFormatter(qdrant_formatter)
-qdrant_logger.addHandler(qdrant_handler)
+try:
+    qdrant_handler = RotatingFileHandler(
+        os.path.join(LOG_DIR, "qdrant.log"),
+        maxBytes=10485760,  # 10MB
+        backupCount=5
+    )
+    qdrant_handler.setLevel(logging.DEBUG)
+    qdrant_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    qdrant_handler.setFormatter(qdrant_formatter)
+    qdrant_logger.addHandler(qdrant_handler)
+except PermissionError:
+    # If we can't write to the log file, just use console logging
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.DEBUG)
+    console_formatter = logging.Formatter('[QDRANT] %(levelname)s - %(message)s')
+    console_handler.setFormatter(console_formatter)
+    qdrant_logger.addHandler(console_handler)
 
 # Create and configure Data Treatment logger
 data_treatment_logger = logging.getLogger("data_treatment")
 data_treatment_logger.setLevel(logging.DEBUG)
 data_treatment_logger.propagate = False  # Don't propagate to root logger
 
-data_treatment_handler = RotatingFileHandler(
-    os.path.join(LOG_DIR, "data_treatment.log"),
-    maxBytes=10485760,  # 10MB
-    backupCount=5
-)
-data_treatment_handler.setLevel(logging.DEBUG)
-data_treatment_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-data_treatment_handler.setFormatter(data_treatment_formatter)
-data_treatment_logger.addHandler(data_treatment_handler)
+try:
+    data_treatment_handler = RotatingFileHandler(
+        os.path.join(LOG_DIR, "data_treatment.log"),
+        maxBytes=10485760,  # 10MB
+        backupCount=5
+    )
+    data_treatment_handler.setLevel(logging.DEBUG)
+    data_treatment_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    data_treatment_handler.setFormatter(data_treatment_formatter)
+    data_treatment_logger.addHandler(data_treatment_handler)
+except PermissionError:
+    # If we can't write to the log file, just use console logging
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.DEBUG)
+    console_formatter = logging.Formatter('[DATA_TREATMENT] %(levelname)s - %(message)s')
+    console_handler.setFormatter(console_formatter)
+    data_treatment_logger.addHandler(console_handler)
 
 
 # Module-specific loggers
 module_loggers = {}
+
+def setup_logger(module_name):
+    """
+    Setup and return a logger for the given module name.
+    This is an alias for get_module_logger for backward compatibility.
+    
+    Args:
+        module_name: Name of the module
+    
+    Returns:
+        Logger instance for the module
+    """
+    return get_module_logger(module_name)
 
 def get_module_logger(module_name):
     """
@@ -82,16 +116,20 @@ def get_module_logger(module_name):
         module_logger.setLevel(logging.DEBUG)
         module_logger.propagate = False  # Don't propagate to root logger
         
-        # Create file handler for this module
-        module_handler = RotatingFileHandler(
-            os.path.join(LOG_DIR, f"{module_name}.log"),
-            maxBytes=10485760,  # 10MB
-            backupCount=5
-        )
-        module_handler.setLevel(logging.DEBUG)
-        module_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-        module_handler.setFormatter(module_formatter)
-        module_logger.addHandler(module_handler)
+        # Create file handler for this module (with error handling)
+        try:
+            module_handler = RotatingFileHandler(
+                os.path.join(LOG_DIR, f"{module_name}.log"),
+                maxBytes=10485760,  # 10MB
+                backupCount=5
+            )
+            module_handler.setLevel(logging.DEBUG)
+            module_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+            module_handler.setFormatter(module_formatter)
+            module_logger.addHandler(module_handler)
+        except PermissionError:
+            # If we can't write to the log file, skip file handler
+            pass
         
         # Also add console handler for immediate feedback
         console_handler = logging.StreamHandler()

@@ -17,12 +17,57 @@ from utils.table_utils import render_with_progress
 from utils.playlist_cache import PlaylistCache
 import time
 import os
+import zipfile
+import io
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from webdriver_manager.chrome import ChromeDriverManager
 from modules.single_video import render_url as default_single_video_processor
+
+
+def create_transcriptions_zip(output_path, playlist_title):
+    """Create a ZIP file containing all transcription files from the output directory"""
+    zip_buffer = io.BytesIO()
+    
+    try:
+        with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+            # Get all text files in the directory and subdirectories
+            file_count = 0
+            for root, dirs, files in os.walk(output_path):
+                for file in files:
+                    if file.endswith('.txt'):
+                        file_path = os.path.join(root, file)
+                        # Create archive name relative to output_path
+                        arcname = os.path.relpath(file_path, output_path)
+                        zip_file.write(file_path, arcname)
+                        file_count += 1
+            
+            # Add a summary file
+            summary_content = f"""Playlist: {playlist_title}
+Total transcription files: {file_count}
+Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+Files included:
+"""
+            for root, dirs, files in os.walk(output_path):
+                for file in files:
+                    if file.endswith('.txt'):
+                        file_path = os.path.join(root, file)
+                        arcname = os.path.relpath(file_path, output_path)
+                        # Get file size
+                        file_size = os.path.getsize(file_path)
+                        summary_content += f"- {arcname} ({file_size} bytes)\n"
+            
+            zip_file.writestr("_playlist_summary.txt", summary_content)
+            
+        zip_buffer.seek(0)
+        return zip_buffer.getvalue(), file_count
+        
+    except Exception as e:
+        logger.error(f"Error creating ZIP file: {e}")
+        return None, 0
 
 
 def get_playlist_title(playlist_url, driver):
@@ -347,8 +392,56 @@ def render_url(playlist_url: str, config: dict):
         user_agent=config.get('selenium_user_agent')
     )
     if driver is None:
-        st.error("Failed to setup Selenium driver for playlist processing")
-        logger.error("Failed to setup Selenium driver for playlist processing")
+        st.warning("⚠️ Selenium WebDriver not available - Playlist processing requires browser automation")
+        st.info("💡 **To enable full playlist processing:**")
+        
+        with st.expander("🔧 Setup Instructions"):
+            st.write("**Option 1: Add Selenium service to docker-compose.yml**")
+            st.code("""
+# Add to your docker-compose.yml:
+services:
+  knowledge-app:
+    # ... existing config ...
+    environment:
+      - SELENIUM_REMOTE_URL=http://selenium:4444/wd/hub
+    depends_on:
+      - selenium
+    networks:
+      - knowledge-net
+
+  selenium:
+    image: selenium/standalone-chrome:latest
+    ports:
+      - "4444:4444"
+    environment:
+      - SE_NODE_MAX_SESSIONS=2
+    volumes:
+      - /dev/shm:/dev/shm
+    networks:
+      - knowledge-net
+
+networks:
+  knowledge-net:
+    driver: bridge
+            """, language="yaml")
+            
+            st.write("**Option 2: Install Chrome in the main container**")
+            st.code("""
+# Add to Dockerfile before installing Python dependencies:
+RUN apt-get update && apt-get install -y \\
+    wget gnupg ca-certificates \\
+    && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/googlechrome-linux-keyring.gpg \\
+    && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/googlechrome-linux-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list \\
+    && apt-get update \\
+    && apt-get install -y google-chrome-stable
+            """, language="dockerfile")
+        
+        st.divider()
+        st.info("📝 **Alternative: Process individual videos**")
+        st.write("For now, you can extract individual video URLs from the playlist manually and process them one by one using the **Single Video** tab.")
+        st.write("**Example:** `https://youtube.com/watch?v=VIDEO_ID`")
+        
+        logger.warning("Selenium WebDriver not available for playlist processing - user informed about setup options")
         return
     
     try:
@@ -424,10 +517,10 @@ Title ID: {env_config.get('youtube_playlist_video_title_id')}""", language="text
                 logger.info(f"Converted to absolute path: {base_path}")
             
             if not os.path.exists(base_path):
-                create_folder(base_path)
+                base_path = create_folder(base_path)
             
             playlist_output_path = os.path.join(base_path, playlist_folder_name)
-            create_folder(playlist_output_path)
+            playlist_output_path = create_folder(playlist_output_path)
             config["output_path"] = playlist_output_path
 
             st.success(f"📁 Created folder: {playlist_output_path}")
@@ -435,16 +528,20 @@ Title ID: {env_config.get('youtube_playlist_video_title_id')}""", language="text
 
             # Save video URLs to file for backup/reference
             urls_file = os.path.join(playlist_output_path, "video_urls.txt")
-            with open(urls_file, 'w', encoding='utf-8') as f:
-                f.write(f"Playlist: {playlist_title_text}\n")
-                f.write(f"Total Videos: {total_videos}\n")
-                f.write(f"Extracted: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-                f.write("-" * 50 + "\n")
-                for i, video in enumerate(video_items):
-                    f.write(f"{i+1}. {video['title']}\n")
-                    f.write(f"   URL: {video['url']}\n\n")
-            
-            st.info(f"💾 Video URLs saved to: {urls_file}")
+            try:
+                with open(urls_file, 'w', encoding='utf-8') as f:
+                    f.write(f"Playlist: {playlist_title_text}\n")
+                    f.write(f"Total Videos: {total_videos}\n")
+                    f.write(f"Extracted: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+                    f.write("-" * 50 + "\n")
+                    for i, video in enumerate(video_items):
+                        f.write(f"{i+1}. {video['title']}\n")
+                        f.write(f"   URL: {video['url']}\n\n")
+                
+                st.info(f"💾 Video URLs saved to: {urls_file}")
+            except Exception as e:
+                st.warning(f"⚠️ Could not save video URLs file: {e}")
+                logger.warning(f"Failed to save video URLs file: {e}")
 
             # Filter videos to process (new videos + existing videos that haven't been downloaded)
             videos_to_process = cache.filter_unprocessed_videos(new_videos + existing_videos, playlist_output_path)
@@ -633,6 +730,54 @@ Title ID: {env_config.get('youtube_playlist_video_title_id')}""", language="text
                 st.session_state.playlist_progress_data = progress_data
                 st.session_state.playlist_videos_to_process = videos_to_process
                 st.session_state.playlist_output_path = playlist_output_path
+
+        # Add download all transcriptions button regardless of processing status
+        if 'playlist_output_path' in st.session_state and os.path.exists(st.session_state.playlist_output_path):
+            st.divider()
+            st.subheader("📦 Download All Transcriptions")
+            
+            # Count existing transcription files
+            transcript_files = []
+            for root, dirs, files in os.walk(st.session_state.playlist_output_path):
+                for file in files:
+                    if file.endswith('.txt') and not file.startswith('_'):
+                        transcript_files.append(file)
+            
+            if transcript_files:
+                st.info(f"📄 Found {len(transcript_files)} transcription files ready for download")
+                
+                col1, col2 = st.columns([1, 3])
+                with col1:
+                    if st.button("🗜️ Create ZIP", help="Create a ZIP file with all transcriptions", key="create_zip_btn"):
+                        with st.spinner("Creating ZIP file..."):
+                            zip_data, file_count = create_transcriptions_zip(
+                                st.session_state.playlist_output_path, 
+                                st.session_state.get('playlist_title', 'playlist')
+                            )
+                            
+                            if zip_data and file_count > 0:
+                                timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+                                zip_filename = f"transcriptions_{sanitize_filename(playlist_title_text)}_{timestamp}.zip"
+                                
+                                st.session_state.zip_data = zip_data
+                                st.session_state.zip_filename = zip_filename
+                                st.session_state.zip_file_count = file_count
+                                st.success(f"✅ ZIP file created with {file_count} transcription files!")
+                            else:
+                                st.error("❌ Failed to create ZIP file")
+                
+                with col2:
+                    if 'zip_data' in st.session_state:
+                        st.download_button(
+                            label=f"⬇️ Download ZIP ({st.session_state.zip_file_count} files)",
+                            data=st.session_state.zip_data,
+                            file_name=st.session_state.zip_filename,
+                            mime="application/zip",
+                            help="Download ZIP file containing all transcriptions",
+                            key="download_zip_btn"
+                        )
+            else:
+                st.warning("📭 No transcription files found in the output directory")
 
         elif video_items is None:
              st.error("❌ Could not retrieve video list from playlist due to an error.")

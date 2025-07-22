@@ -3,20 +3,34 @@ services:
   knowledge-app:
     build: .
     ports:
-      - "8501:8501"
+      - "${APP_PORT:-8501}:${APP_PORT:-8501}"
+    env_file:
+      - .env
     environment:
-      - APP_PORT=8501
-      - APP_HOST=0.0.0.0
-      - DOWNLOAD_FOLDER=/app/transcriptions
-      - TRANSCRIPTION_FOLDER=/app/transcriptions
-      - STREAMLIT_SERVER_PORT=8501
-      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
-      - STREAMLIT_SERVER_HEADLESS=true
-      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
-      - PYTHONUNBUFFERED=1
-      - PYTHONDONTWRITEBYTECODE=1
+      - SELENIUM_REMOTE_URL=http://selenium:4444/wd/hub
     volumes:
-      - /mnt/s/transcriptions:/app/transcriptions:rw
+      - /mnt/d/transcriptions:/app/transcriptions:rw
     user: "1000:1000"  # Ensure container runs with proper user ID
     restart: unless-stopped
     container_name: knowledge-app
+    depends_on:
+      - selenium
+    networks:
+      - knowledge-net
+
+  selenium:
+    image: selenium/standalone-chrome:latest
+    ports:
+      - "4444:4444"
+    environment:
+      - SE_NODE_MAX_SESSIONS=2
+    volumes:
+      - /dev/shm:/dev/shm
+    restart: unless-stopped
+    container_name: knowledge-selenium
+    networks:
+      - knowledge-net
+
+networks:
+  knowledge-net:
+    driver: bridge

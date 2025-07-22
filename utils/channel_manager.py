@@ -18,7 +18,18 @@ class ChannelManager:
         """Ensure data directory exists"""
         data_dir = os.path.dirname(self.channels_file)
         if data_dir and not os.path.exists(data_dir):
-            os.makedirs(data_dir, exist_ok=True)
+            try:
+                os.makedirs(data_dir, exist_ok=True)
+            except PermissionError:
+                # If we can't create the data directory, use a fallback location
+                logger.warning(f"Cannot create data directory {data_dir}, using fallback location")
+                # Use a writable location like /tmp or current directory
+                fallback_dir = "/tmp/knowledge_data"
+                os.makedirs(fallback_dir, exist_ok=True)
+                # Update the channels file path to use the fallback location
+                filename = os.path.basename(self.channels_file)
+                self.channels_file = os.path.join(fallback_dir, filename)
+                logger.info(f"Using fallback channels file: {self.channels_file}")
     
     def load_channels(self) -> Dict:
         """Load channels data from JSON file"""

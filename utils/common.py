@@ -18,7 +18,17 @@ from .logging_setup import logger
 def create_folder(folder_name):
     if not os.path.exists(folder_name):
         logger.info(f"Creating folder: {folder_name}")
-        os.makedirs(folder_name)
+        try:
+            os.makedirs(folder_name, mode=0o755)
+        except PermissionError:
+            # If we can't create in the intended location, use a fallback
+            fallback_dir = "/tmp/transcriptions"
+            fallback_path = os.path.join(fallback_dir, os.path.basename(folder_name))
+            logger.warning(f"Permission denied for {folder_name}, using fallback: {fallback_path}")
+            os.makedirs(fallback_dir, exist_ok=True)
+            os.makedirs(fallback_path, exist_ok=True)
+            return fallback_path
+    return folder_name
 
 
 def sanitize_filename(filename):
@@ -131,8 +141,8 @@ def get_video_title(video_url, headless=False):
     return f"video_{video_id}"
 
 
-def setup_selenium_driver(headless=False, use_gpu=True, window_size="1920,1080", user_agent=None):
-    """Setup Edge driver with configurable options for transcript scraping."""
+def setup_selenium_driver(headless=None, use_gpu=True, window_size="1920,1080", user_agent=None):
+    """Setup Chrome driver with configurable options for transcript scraping."""
     from .config import get_config
     
     # Get configuration from environment variables
@@ -142,95 +152,84 @@ def setup_selenium_driver(headless=False, use_gpu=True, window_size="1920,1080",
     if user_agent is None:
         user_agent = config.get('selenium_user_agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36')
     
+    # Auto-detect Docker environment and default to headless
+    if headless is None:
+        # Check if we're in a Docker container
+        is_docker = os.path.exists('/.dockerenv') or os.path.exists('/proc/1/cgroup')
+        headless = is_docker or config.get('selenium_headless_mode', False)
+    
+    # Check if remote Selenium is available
+    selenium_remote_url = os.getenv('SELENIUM_REMOTE_URL')
+    if selenium_remote_url:
+        try:
+            from selenium import webdriver
+            from selenium.webdriver.chrome.options import Options
+            
+            chrome_options = Options()
+            chrome_options.add_argument('--headless')  # Always headless for remote
+            chrome_options.add_argument('--no-sandbox')
+            chrome_options.add_argument('--disable-dev-shm-usage')
+            chrome_options.add_argument('--disable-gpu')
+            chrome_options.add_argument(f'--window-size={window_size}')
+            chrome_options.add_argument(f'--user-agent={user_agent}')
+            
+            driver = webdriver.Remote(
+                command_executor=selenium_remote_url,
+                options=chrome_options
+            )
+            logger.info(f"Remote Selenium driver setup successful at {selenium_remote_url}")
+            return driver
+            
+        except Exception as remote_error:
+            logger.warning(f"Failed to setup remote Selenium driver: {str(remote_error)}, trying local Chrome")
+    
+    # Try local Chrome if remote is not available
     try:
-        from selenium.webdriver.edge.service import Service as EdgeService
-        from selenium.webdriver.edge.options import Options as EdgeOptions
-        from webdriver_manager.microsoft import EdgeChromiumDriverManager
-        
-        edge_options = EdgeOptions()
+        from selenium.webdriver.chrome.service import Service
+        chrome_options = Options()
         
         # Configure headless mode
         if headless:
-            edge_options.add_argument('--headless')
-            logger.info("Edge driver configured in headless mode")
+            chrome_options.add_argument('--headless')
+            logger.info("Chrome driver configured in headless mode")
         else:
-            logger.info("Edge driver configured in visible mode")
+            logger.info("Chrome driver configured in visible mode")
         
-        # Basic security options
-        edge_options.add_argument('--no-sandbox')
-        edge_options.add_argument('--disable-dev-shm-usage')
+        # Basic security options for Docker
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument('--disable-setuid-sandbox')
         
         # GPU configuration
         if use_gpu and config.get('selenium_use_gpu', True):
             # Enable GPU acceleration
-            edge_options.add_argument('--enable-gpu')
-            edge_options.add_argument('--enable-gpu-rasterization')
-            edge_options.add_argument('--enable-gpu-memory-buffer-video-frames')
-            logger.info("Edge driver configured with GPU acceleration enabled")
+            chrome_options.add_argument('--enable-gpu')
+            chrome_options.add_argument('--enable-gpu-rasterization')
+            chrome_options.add_argument('--enable-gpu-memory-buffer-video-frames')
+            logger.info("Chrome driver configured with GPU acceleration enabled")
         else:
-            edge_options.add_argument('--disable-gpu')
-            edge_options.add_argument('--disable-gpu-sandbox')
-            logger.info("Edge driver configured with GPU acceleration disabled")
+            chrome_options.add_argument('--disable-gpu')
+            chrome_options.add_argument('--disable-gpu-sandbox')
+            logger.info("Chrome driver configured with GPU acceleration disabled")
         
         # Window and user agent configuration
-        edge_options.add_argument(f'--window-size={window_size}')
-        edge_options.add_argument(f'--user-agent={user_agent}')
+        chrome_options.add_argument(f'--window-size={window_size}')
+        chrome_options.add_argument(f'--user-agent={user_agent}')
         
         # Performance optimizations
-        edge_options.add_argument('--disable-extensions')
-        edge_options.add_argument('--disable-plugins')
-        edge_options.add_argument('--disable-images')  # Faster loading for transcript extraction
+        chrome_options.add_argument('--disable-extensions')
+        chrome_options.add_argument('--disable-plugins')
+        chrome_options.add_argument('--disable-images')  # Faster loading for transcript extraction
         
-        service = EdgeService(EdgeChromiumDriverManager().install())
-        driver = webdriver.Edge(service=service, options=edge_options)
+        service = Service(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=service, options=chrome_options)
+        logger.info("Chrome driver setup successful")
         return driver
         
-    except Exception as e:
-        logger.warning(f"Failed to setup Edge driver: {str(e)}, falling back to Chrome")
-        # Fallback to Chrome if Edge fails
-        try:
-            from selenium.webdriver.chrome.service import Service
-            chrome_options = Options()
-            
-            # Configure headless mode
-            if headless:
-                chrome_options.add_argument('--headless')
-                logger.info("Chrome driver configured in headless mode")
-            else:
-                logger.info("Chrome driver configured in visible mode")
-            
-            # Basic security options
-            chrome_options.add_argument('--no-sandbox')
-            chrome_options.add_argument('--disable-dev-shm-usage')
-            
-            # GPU configuration
-            if use_gpu and config.get('selenium_use_gpu', True):
-                # Enable GPU acceleration
-                chrome_options.add_argument('--enable-gpu')
-                chrome_options.add_argument('--enable-gpu-rasterization')
-                chrome_options.add_argument('--enable-gpu-memory-buffer-video-frames')
-                logger.info("Chrome driver configured with GPU acceleration enabled")
-            else:
-                chrome_options.add_argument('--disable-gpu')
-                chrome_options.add_argument('--disable-gpu-sandbox')
-                logger.info("Chrome driver configured with GPU acceleration disabled")
-            
-            # Window and user agent configuration
-            chrome_options.add_argument(f'--window-size={window_size}')
-            chrome_options.add_argument(f'--user-agent={user_agent}')
-            
-            # Performance optimizations
-            chrome_options.add_argument('--disable-extensions')
-            chrome_options.add_argument('--disable-plugins')
-            chrome_options.add_argument('--disable-images')  # Faster loading for transcript extraction
-            
-            service = Service(ChromeDriverManager().install())
-            driver = webdriver.Chrome(service=service, options=chrome_options)
-            return driver
-            
-        except Exception as chrome_error:
-            logger.error(f"Failed to setup Chrome driver as fallback: {str(chrome_error)}")
-            return None
+    except Exception as chrome_error:
+        logger.warning(f"Selenium WebDriver not available: {str(chrome_error)}")
+        logger.info("Falling back to YouTube Transcript API only")
+        return None
 
 
 def fetch_transcript(video_url, max_retries=None, headless=False):

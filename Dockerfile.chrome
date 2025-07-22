@@ -1,6 +1,19 @@
-FROM python:3.11-slim
+# Use a base image with Chrome pre-installed
+FROM selenium/standalone-chrome:latest
 
-# Create a non-root user
+# Switch to root to install Python and dependencies
+USER root
+
+# Install Python 3.11 and pip
+RUN apt-get update && apt-get install -y \
+    python3.11 \
+    python3.11-pip \
+    python3.11-venv \
+    && ln -sf /usr/bin/python3.11 /usr/bin/python \
+    && ln -sf /usr/bin/python3.11 /usr/bin/python3 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create app user
 RUN groupadd -r appuser && useradd -r -g appuser appuser
 
 WORKDIR /app
@@ -8,16 +21,9 @@ WORKDIR /app
 # Set ownership of the app directory
 RUN chown -R appuser:appuser /app
 
-# Install basic system dependencies
-RUN apt-get update && apt-get install -y \
-    wget \
-    curl \
-    git \
-    && rm -rf /var/lib/apt/lists/*
-
 # Copy requirements and install Python dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN python -m pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY . .
@@ -25,8 +31,7 @@ COPY . .
 # Create necessary directories with proper permissions
 RUN mkdir -p /app/transcriptions /app/logs && \
     chown -R appuser:appuser /app && \
-    chmod -R 755 /app && \
-    chmod 775 /app/transcriptions
+    chmod -R 755 /app
 
 # Switch to non-root user
 USER appuser
