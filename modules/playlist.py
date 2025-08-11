@@ -5,6 +5,7 @@ import traceback
 import time
 from utils.logging_setup import get_playlist_logger
 from utils.channel_manager import ChannelManager
+from utils.video_database import is_video_already_downloaded, mark_video_as_downloaded, get_video_database
 
 # Get module-specific logger
 logger = get_playlist_logger()
@@ -276,11 +277,30 @@ def retry_failed_videos():
         logger.info(f"Retrying video {i+1}/{len(failed_videos)}: {video_info['title']} ({video_info['url']})")
         
         try:
-            # Check if transcript now exists (maybe fixed in the meantime)
+            # First check if video was downloaded since the last attempt (database check)
+            if is_video_already_downloaded(video_info['url']):
+                db = get_video_database()
+                existing_video = db.get_downloaded_video(video_info['url'])
+                
+                if existing_video and existing_video.get('file_path') and os.path.exists(existing_video['file_path']):
+                    # Video exists in database and file exists
+                    processing_time = time.time() - start_time
+                    progress_data[original_index]["Transcript Downloaded"] = "✅"
+                    progress_data[original_index]["Status"] = "Already downloaded (retry)"
+                    progress_data[original_index]["File"] = os.path.basename(existing_video['file_path'])
+                    progress_data[original_index]["Duration"] = f"{processing_time:.1f}s"
+                    successful_retries += 1
+                    logger.info(f"✅ Retry successful (already downloaded): {video_info['title']}")
+                    continue
+                else:
+                    # Remove invalid database entry
+                    db.remove_video(video_info['url'])
+            
+            # Check if transcript now exists locally (maybe fixed in the meantime)
             expected_filename = os.path.join(playlist_output_path, f"{sanitize_filename(video_info['title'])}.txt")
             
             if os.path.exists(expected_filename):
-                # File now exists, mark as success
+                # File now exists, mark as success and add to database
                 processing_time = time.time() - start_time
                 progress_data[original_index]["Transcript Downloaded"] = "✅"
                 progress_data[original_index]["Status"] = "Success (retry)"
@@ -288,10 +308,22 @@ def retry_failed_videos():
                 progress_data[original_index]["Duration"] = f"{processing_time:.1f}s"
                 successful_retries += 1
                 logger.info(f"✅ Retry successful (file exists): {video_info['title']}")
+                
+                # Add to database
+                mark_video_as_downloaded(
+                    video_info['url'],
+                    video_info['title'],
+                    expected_filename,
+                    None,
+                    'playlist',
+                    playlist_url
+                )
             else:
                 # Retry processing
                 current_video_config = config.copy()
                 current_video_config['output_filename_prefix'] = video_info['title']
+                current_video_config['source_type'] = 'playlist'
+                current_video_config['source_url'] = playlist_url
                 
                 # Use single video processor for retry
                 transcript_data, output_filename, error_message = default_single_video_processor(
@@ -618,22 +650,68 @@ Title ID: {env_config.get('youtube_playlist_video_title_id')}""", language="text
                 logger.info(f"Processing video {i+1}/{len(videos_to_process)}: {video_info['title']} ({video_info['url']})")
                 
                 try:
-                    # Check if transcript already exists (resume functionality)
-                    expected_filename = os.path.join(playlist_output_path, f"{sanitize_filename(video_info['title'])}.txt")
-                    
-                    if os.path.exists(expected_filename):
-                        # File already exists, skip processing
-                        processing_time = time.time() - start_time
-                        progress_data[i]["Transcript Downloaded"] = "✅"
-                        progress_data[i]["Status"] = "Already exists"
-                        progress_data[i]["File"] = os.path.basename(expected_filename)
-                        progress_data[i]["Duration"] = f"{processing_time:.1f}s"
-                        successful_downloads += 1
-                        logger.info(f"⏭️ Skipped (already exists): {video_info['title']}")
+                    # First check if video was already downloaded (database check)
+                    if is_video_already_downloaded(video_info['url']):
+                        db = get_video_database()
+                        existing_video = db.get_downloaded_video(video_info['url'])
+                        
+                        if existing_video and existing_video.get('file_path') and os.path.exists(existing_video['file_path']):
+                            # Video exists in database and file exists
+                            processing_time = time.time() - start_time
+                            progress_data[i]["Transcript Downloaded"] = "✅"
+                            progress_data[i]["Status"] = "Already downloaded"
+                            progress_data[i]["File"] = os.path.basename(existing_video['file_path'])
+                            progress_data[i]["Duration"] = f"{processing_time:.1f}s"
+                            successful_downloads += 1
+                            logger.info(f"⏭️ Skipped (already downloaded): {video_info['title']} - {existing_video['file_path']}")
+                            
+                            # Update database with current context (playlist info)
+                            mark_video_as_downloaded(
+                                video_info['url'],
+                                video_info['title'],
+                                existing_video['file_path'],
+                                existing_video.get('duration'),
+                                'playlist',
+                                playlist_url
+                            )
+                        else:
+                            # Video in database but file doesn't exist, remove from database and process
+                            logger.info(f"Database entry exists but file missing, re-downloading: {video_info['title']}")
+                            db.remove_video(video_info['url'])
+                            # Continue to processing below
+                            needs_processing = True
                     else:
+                        # Check if transcript already exists locally (resume functionality)
+                        expected_filename = os.path.join(playlist_output_path, f"{sanitize_filename(video_info['title'])}.txt")
+                        
+                        if os.path.exists(expected_filename):
+                            # File exists locally but not in database, add to database and skip processing
+                            processing_time = time.time() - start_time
+                            progress_data[i]["Transcript Downloaded"] = "✅"
+                            progress_data[i]["Status"] = "Already exists"
+                            progress_data[i]["File"] = os.path.basename(expected_filename)
+                            progress_data[i]["Duration"] = f"{processing_time:.1f}s"
+                            successful_downloads += 1
+                            logger.info(f"⏭️ Skipped (already exists): {video_info['title']}")
+                            
+                            # Add to database for future reference
+                            mark_video_as_downloaded(
+                                video_info['url'],
+                                video_info['title'],
+                                expected_filename,
+                                None,
+                                'playlist',
+                                playlist_url
+                            )
+                        else:
+                            needs_processing = True
+                    
+                    if 'needs_processing' in locals() and needs_processing:
                         # Process video with current config
                         current_video_config = config.copy()
                         current_video_config['output_filename_prefix'] = video_info['title']
+                        current_video_config['source_type'] = 'playlist'
+                        current_video_config['source_url'] = playlist_url
                         
                         # Reuse single video logic for transcript download
                         transcript_data, output_filename, error_message = default_single_video_processor(

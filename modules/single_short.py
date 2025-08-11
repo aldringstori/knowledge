@@ -1,5 +1,7 @@
 import streamlit as st
+import os
 from utils.logging_setup import get_single_short_logger
+from utils.video_database import is_video_already_downloaded, mark_video_as_downloaded, get_video_database
 
 # Get module-specific logger
 logger = get_single_short_logger()
@@ -52,6 +54,35 @@ def render_url(shorts_url: str, config: dict):
     """Process a single short URL"""
     try:
         logger.info(f"Processing shorts URL: {shorts_url}")
+        
+        # Check if video was already downloaded
+        if is_video_already_downloaded(shorts_url):
+            db = get_video_database()
+            existing_video = db.get_downloaded_video(shorts_url)
+            
+            if existing_video:
+                # Check if the file still exists
+                if existing_video.get('file_path') and os.path.exists(existing_video['file_path']):
+                    st.info(f"✅ Video already downloaded: {existing_video.get('title', 'Unknown')}")
+                    st.info(f"📁 File location: {existing_video['file_path']}")
+                    logger.info(f"Skipping already downloaded short: {shorts_url}")
+                    
+                    # Update the database with current timestamp
+                    mark_video_as_downloaded(
+                        shorts_url, 
+                        existing_video.get('title'),
+                        existing_video['file_path'],
+                        existing_video.get('duration'),
+                        config.get('source_type', 'single'),
+                        config.get('source_url')
+                    )
+                    
+                    return True
+                else:
+                    logger.info(f"Existing transcript file not found, re-downloading: {shorts_url}")
+                    # Remove the orphaned database entry
+                    db.remove_video(shorts_url)
+        
         video_title = get_video_title_for_short(shorts_url)
         transcript, error = fetch_shorts_transcript(shorts_url)
 
@@ -67,6 +98,21 @@ def render_url(shorts_url: str, config: dict):
             if save_path:
                 st.success(f"Transcript saved to {save_path}")
                 logger.info(f"Transcript saved to {save_path}")
+                
+                # Mark video as downloaded in database
+                try:
+                    mark_video_as_downloaded(
+                        shorts_url,
+                        video_title,
+                        save_path,
+                        duration=None,  # Duration not available in this context
+                        source_type=config.get('source_type', 'single'),
+                        source_url=config.get('source_url')
+                    )
+                    logger.info(f"Short marked as downloaded in database: {video_title}")
+                except Exception as e:
+                    logger.warning(f"Could not mark short as downloaded in database: {e}")
+                
                 return True
             else:
                 st.error("Failed to save transcript")

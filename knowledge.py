@@ -112,6 +112,15 @@ def render_logs_tab():
 
 def main():
     st.title("YouTube Transcript Assistant")
+    
+    # Initialize video database
+    try:
+        from utils.video_database import get_video_database
+        db = get_video_database()
+        logger.info("Video database initialized successfully")
+    except Exception as e:
+        logger.warning(f"Could not initialize video database: {e}")
+        st.warning("⚠️ Database initialization failed - duplicate detection may not work properly")
 
     with st.sidebar:
         st.header("🔧 Browser Settings")
