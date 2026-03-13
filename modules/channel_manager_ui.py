@@ -1,8 +1,20 @@
 import streamlit as st
 import pandas as pd
+import os
+import time
 from datetime import datetime
 from utils.channel_manager import ChannelManager
 from utils.logging_setup import setup_logger
+from utils.video_database import get_video_database
+from utils.config import get_config
+from utils.common import (
+    fetch_transcript,
+    save_transcript_to_text,
+    sanitize_filename,
+    create_folder,
+    get_video_id_from_url,
+    setup_selenium_driver,
+)
 
 logger = setup_logger(__name__)
 
@@ -231,7 +243,11 @@ def render_channel_details(cm: ChannelManager):
     
     if channel_info['description']:
         st.write(f"**Description:** {channel_info['description']}")
-    
+
+    # Check for new videos button
+    if st.button("🔍 Check for New Videos", key=f"check_new_{channel_id}"):
+        _run_channel_check(cm, channel_id, channel_info)
+
     # Display downloaded videos
     st.subheader("Downloaded Videos")
     videos = cm.get_channel_videos(channel_id)
@@ -274,6 +290,126 @@ def render_channel_details(cm: ChannelManager):
                 urls = "\n".join(df_videos['url'].tolist())
                 st.code(urls, language="text")
                 st.info("URLs displayed above - copy manually")
+
+def _fetch_channel_video_list(channel_url):
+    """Fetch video URLs from a channel using Selenium (headless)."""
+    from selenium.webdriver.common.by import By
+    import random
+
+    if not channel_url.endswith('/videos'):
+        channel_url = channel_url.rstrip('/') + '/videos'
+
+    driver = None
+    video_urls = []
+    try:
+        driver = setup_selenium_driver(headless=True)
+        if not driver:
+            return None
+        driver.get(channel_url)
+        time.sleep(3)
+
+        last_height = driver.execute_script("return document.documentElement.scrollHeight")
+        for _ in range(10):
+            driver.execute_script("window.scrollTo(0, document.documentElement.scrollHeight);")
+            time.sleep(random.uniform(2, 4))
+            new_height = driver.execute_script("return document.documentElement.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+
+        for selector in ['a[href^="/watch?v="]', 'a[id="video-title-link"]']:
+            try:
+                links = driver.find_elements(By.CSS_SELECTOR, selector)
+                if links:
+                    break
+            except Exception:
+                links = []
+
+        seen = set()
+        for link in links:
+            try:
+                href = link.get_attribute('href')
+                if href and '/watch?v=' in href:
+                    vid = get_video_id_from_url(href)
+                    if vid and vid not in seen:
+                        seen.add(vid)
+                        title = link.get_attribute('title') or link.text or "Unknown"
+                        video_urls.append({
+                            "id": vid,
+                            "title": sanitize_filename(title.strip()),
+                            "url": f"https://www.youtube.com/watch?v={vid}",
+                        })
+            except Exception:
+                continue
+        return video_urls
+    except Exception as e:
+        logger.error(f"Error fetching channel videos: {e}")
+        return None
+    finally:
+        if driver:
+            try:
+                driver.quit()
+            except Exception:
+                pass
+
+
+def _run_channel_check(cm, channel_id, channel_info):
+    """Run a check for new videos on a single channel with Streamlit progress."""
+    config = get_config()
+    video_db = get_video_database()
+    channel_url = channel_info['url']
+    channel_name = channel_info['name']
+
+    with st.spinner(f"Fetching video list from {channel_name}..."):
+        videos = _fetch_channel_video_list(channel_url)
+
+    if videos is None:
+        st.error("Failed to fetch video list from channel.")
+        return
+    if not videos:
+        st.warning("No videos found on channel page.")
+        return
+
+    # Filter to new videos only
+    new_videos = [
+        v for v in videos
+        if not video_db.is_video_downloaded(v["url"])
+        and not cm.is_video_downloaded(channel_id, v["url"])
+    ]
+
+    if not new_videos:
+        cm.update_last_checked(channel_id)
+        st.success(f"No new videos found. All {len(videos)} videos already downloaded.")
+        return
+
+    st.info(f"Found {len(new_videos)} new video(s) out of {len(videos)} total.")
+    progress = st.progress(0)
+    status_text = st.empty()
+    new_count = 0
+
+    for i, video in enumerate(new_videos):
+        status_text.text(f"Processing: {video['title'][:60]}...")
+        progress.progress((i + 1) / len(new_videos))
+
+        transcript = fetch_transcript(video["url"], headless=True)
+        if transcript:
+            download_folder = config.get('download_folder', 'transcriptions')
+            channel_folder = os.path.join(download_folder, sanitize_filename(channel_name))
+            create_folder(channel_folder)
+            file_path = save_transcript_to_text(transcript, sanitize_filename(video["title"]), channel_folder)
+            video_db.add_downloaded_video(
+                video["url"], title=video["title"], file_path=file_path,
+                source_type='channel', source_url=channel_url
+            )
+            cm.add_downloaded_video(channel_id, video["url"], video["title"], file_path)
+            new_count += 1
+        time.sleep(config.get('download_delay_seconds', 3))
+
+    cm.update_last_checked(channel_id)
+    status_text.empty()
+    st.success(f"Done! Downloaded {new_count} new transcript(s), {len(new_videos) - new_count} failed.")
+    st.rerun()
+
 
 def render_url(url: str, config: dict):
     """Interface for the main app routing"""

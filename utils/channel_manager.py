@@ -1,6 +1,6 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple
 from utils.logging_setup import get_module_logger
 
@@ -77,6 +77,7 @@ class ChannelManager:
                 "description": description,
                 "added_date": datetime.now().isoformat(),
                 "last_checked": None,
+                "check_interval_days": 7,
                 "video_count": 0,
                 "downloaded_videos": {},
                 "status": "active"
@@ -225,6 +226,44 @@ class ChannelManager:
             "last_updated": self.channels_data["metadata"].get("last_updated", "Never")
         }
     
+    def get_channels_due_for_check(self) -> List[Dict]:
+        """Get active channels where last_checked is older than check_interval_days or never checked"""
+        due_channels = []
+        now = datetime.now()
+
+        for channel_id, data in self.channels_data["channels"].items():
+            if data.get("status", "active") != "active":
+                continue
+
+            interval_days = data.get("check_interval_days", 7)
+            last_checked = data.get("last_checked")
+
+            if last_checked is None:
+                is_due = True
+            else:
+                try:
+                    last_checked_dt = datetime.fromisoformat(last_checked)
+                    is_due = (now - last_checked_dt) >= timedelta(days=interval_days)
+                except (ValueError, TypeError):
+                    is_due = True
+
+            if is_due:
+                due_channels.append({
+                    "channel_id": channel_id,
+                    "name": data["name"],
+                    "url": data["url"],
+                    "last_checked": last_checked,
+                    "check_interval_days": interval_days
+                })
+
+        return due_channels
+
+    def update_last_checked(self, channel_id: str):
+        """Update the last_checked timestamp for a channel"""
+        if channel_id in self.channels_data["channels"]:
+            self.channels_data["channels"][channel_id]["last_checked"] = datetime.now().isoformat()
+            self.save_channels()
+
     @staticmethod
     def extract_channel_id(url: str) -> Optional[str]:
         """Extract channel ID from YouTube URL"""

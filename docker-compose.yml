@@ -9,7 +9,7 @@ services:
     environment:
       - SELENIUM_REMOTE_URL=http://selenium:4444/wd/hub
     volumes:
-      - /mnt/d/transcriptions:/app/transcriptions:rw
+      - ./transcriptions:/app/transcriptions:rw
     user: "1000:1000"  # Ensure container runs with proper user ID
     restart: unless-stopped
     container_name: knowledge-app
