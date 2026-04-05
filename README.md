@@ -3,15 +3,20 @@
 An open source software made with Python and Streamlit to download transcriptions from YouTube videos, YouTube shorts, and playlists.
 
 ## Features
-
-- Download transcripts from individual YouTube videos
-- Download transcripts from YouTube shorts
-- Download transcripts from entire playlists
-- Download transcripts from channel videos and shorts
-- Convert text files to different formats
-- Progress tracking with visual table showing URL fetching and download status
-- Automatic retry mechanism for failed downloads
-- Support for multiple languages with automatic translation to English
+| ✨ Features              | Implemented|                         Description                                       |
+| -----------------------  | -----------| ------------------------------------------------------------------------- |
+| Individual videos        |     ✅     | Single youtube video transcription download                               |
+| Individual shorts        |     ✅     | Single youtube shorts transcription download                              |
+| Massive channel          |     ✅     | Bulk/Massive Youtube channel all videos                                   |
+| Massive shorts           |     ✅     | All shorts from a channel transcriptions download                         |
+| Playlists                |     ✅     | All transcriptions from a playlist transcriptions download                |
+| Queue multiple channels  |     ✅     | Put multiple channels into a queue for download                           |
+| Convert pdf books to txt |     ✅     | Convert pdfs or entire books to txt                                       | 
+| Ingest and chat RAG      |     ✅     | Convert pdfs or entire books to txt                                       | 
+| Convert text files to different formats
+| Progress tracking with visual table showing URL fetching and download status
+| Automatic retry mechanism for failed downloads
+| Support for multiple languages with automatic translation to English
 
 ## Project Structure
 
